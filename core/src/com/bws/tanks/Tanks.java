@@ -6,27 +6,24 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Tanks extends Game {
-	SpriteBatch batch;
-	Texture img;
-	A
+
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		Render.app = this;
+		Render.batch = new SpriteBatch();
+		this.setScreen(new PantallaMapa());
+	
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		super.render();
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		super.dispose();
+		Render.batch.dispose();
 	}
 }
