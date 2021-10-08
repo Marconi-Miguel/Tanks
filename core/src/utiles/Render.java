@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.quang.Quang;
+import com.bws.tanks.Tanks;
 
 public abstract class Render {
 	public static SpriteBatch batch;
-	public static Quang app;
+	public static Tanks app;
 	public static World mundo;
 	
 	public static void limpiarPantalla(float r, float g, float b) {
