@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class Tanks extends Game {
 	SpriteBatch batch;
 	Texture img;
+	A
 	
 	@Override
 	public void create () {
