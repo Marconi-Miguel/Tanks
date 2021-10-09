@@ -3,12 +3,12 @@ package utiles;
 import java.util.Random;
 
 public abstract class Recursos {
+	//lo dejo como ejemplo
 	public static final String FUENTEMENU= "fuentes/BlackCloverFont.ttf";
 	public static final String LOGO= "Logo OF.jpg";
 	public static final String MENU= "fondo.png";
 	public static final String MAPA1= "mapas/mapa1/mapaof.tmx";
 	public static final String P1ATLAS= "pj1 movs/Pj1Sprites.atlas";
-	public static final String P2ATLAS= "pj2 movs/pj1Sprites.atlas";
 	public static final String CUADROATLAS ="cuadroTexto/cuadroTexto.atlas";
 	public static final String JSONSTAGE = "Stage/Stage.json";
 	//recursos de las habilidades
