@@ -11,10 +11,9 @@ public abstract class Render {
 	public static Tanks app;
 	public static World mundo;
 	
-	public static void limpiarPantalla(float r, float g, float b) {
-		Gdx.gl.glClearColor(r, g, b, 1);
+	public static void cleanScreen() {
+		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
 	}
 	
 }
