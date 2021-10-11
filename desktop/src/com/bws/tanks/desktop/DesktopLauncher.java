@@ -7,6 +7,7 @@ import com.bws.tanks.Tanks;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.resizable = false;
 		new LwjglApplication(new Tanks(), config);
 		//a
 	}
