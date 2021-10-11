@@ -5,13 +5,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
+
+import elements.ImageClass;
+
 import java.util.ArrayList;
 
 public abstract class Render {
 	public static SpriteBatch batch;
 	public static Tanks app;
 	public static World mundo;
-	ArrayList<Image> images = new ArrayList<Image>();
+	ArrayList<ImageClass> images = new ArrayList<ImageClass>();
 	int renderID;
 	
 	public static void cleanScreen() {
@@ -25,7 +28,7 @@ public abstract class Render {
 		}
 	}
 	
-	public void addImage(Image image) {
+	public static void addImage(ImageClass shell) {
 		
 	}
 	

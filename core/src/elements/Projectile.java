@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Projectile extends Image{
+public class Projectile extends ImageClass{
 	
 	Texture texture;
 	Sprite sprite;

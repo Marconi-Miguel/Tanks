@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import TankData.Hull;
 import input.VehicleController;
 
-public class Tank extends Image {
+public class Tank extends ImageClass {
 	
 	public VehicleController controller;
 	Texture texture;
