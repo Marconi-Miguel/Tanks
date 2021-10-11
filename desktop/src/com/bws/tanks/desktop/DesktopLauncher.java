@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.resizable = false;
 		new LwjglApplication(new Tanks(), config);
-		//holaaaaaaaaaaaa
+		//chauuuu
 	}
 }
 
