@@ -1,8 +1,8 @@
-package utiles;
+package utilities;
 
 import java.util.Random;
 
-public abstract class Recursos {
+public abstract class Resources {
 	//lo dejo como ejemplo
 	public static final String FUENTEMENU= "fuentes/BlackCloverFont.ttf";
 	public static final String LOGO= "Logo OF.jpg";

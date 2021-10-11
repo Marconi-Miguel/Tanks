@@ -1,17 +1,17 @@
-package utiles;
+package utilities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Imagen {
+public class Image {
 	private Texture t;
 	public Sprite s;
-	public Imagen(String ruta) {
+	public Image(String ruta) {
 		t= new Texture(ruta);
 		s= new Sprite(t);
 	}
-	public Imagen(TextureRegion region) {
+	public Image(TextureRegion region) {
 		s= new Sprite(region);
 	}
 	public void dibujar() {

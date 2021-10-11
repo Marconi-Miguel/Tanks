@@ -1,4 +1,4 @@
-package utiles;
+package utilities;
 
 public abstract class Config {
 	public static int alto = 720;

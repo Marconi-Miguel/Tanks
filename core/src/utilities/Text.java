@@ -1,4 +1,4 @@
-package utiles;
+package utilities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-public class Texto {
+public class Text {
 	private BitmapFont fuente;
 	private float x = 0, y = 0;
 	private String texto = "";
 	GlyphLayout layout;
 
-	public Texto(String rutaFuente, int dimension, Color color, boolean sombra) {
+	public Text(String rutaFuente, int dimension, Color color, boolean sombra) {
 
 		FreeTypeFontGenerator generador = new FreeTypeFontGenerator(Gdx.files.internal(rutaFuente));
 		FreeTypeFontGenerator.FreeTypeFontParameter parametros = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -28,7 +28,7 @@ public class Texto {
 		fuente = generador.generateFont(parametros);
 	}
 
-	public Texto(String rutaFuente, float dimension, Color color, boolean sombra) {
+	public Text(String rutaFuente, float dimension, Color color, boolean sombra) {
 
 		FreeTypeFontGenerator generador = new FreeTypeFontGenerator(Gdx.files.internal(rutaFuente));
 		FreeTypeFontGenerator.FreeTypeFontParameter parametros = new FreeTypeFontGenerator.FreeTypeFontParameter();
