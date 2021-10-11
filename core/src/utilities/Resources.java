@@ -1,12 +1,20 @@
 package utilities;
 
-import java.util.Random;
-
-public abstract class Resources {
-	//lo dejo como ejemplo
-
-	//recursos de las habilidades
-	public static final String RAYO = "habilidades/Rayo/Rayo.atlas";
-	// toma desde el min hasta el max ambos incluidos
+public class Resources {
 	
+	//GAME ICON
+	public static final String GAMEICON = "images/misc/icon.png";
+	
+	//HULLS /////////////////////////////////////////
+	public static final String BASICHULL = "images/hulls/basic.png";
+	
+	//CANNONS /////////////////////////////////////////
+	public static final String BASICCANNON = "images/cannons/basic.png";
+	public static final String BASICCANNON_FIRE = "images/cannons/basic_fire.png";
+	
+	//CANNON SFX//////////////////////////////////////
+	public static final String BASICCANNON_FIRE_SFX = "audio/sfx/cannon/basic_fire.mp3";
+	
+	//SHELLS ////////////////////////////////////////
+	public static final String BASICSHELL = "images/shells/basic.png";
 }
