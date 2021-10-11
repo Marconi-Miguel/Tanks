@@ -1,4 +1,4 @@
-package utiles;
+package utilities;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -8,9 +8,9 @@ import com.badlogic.gdx.physics.box2d.World;
 
 
 
-public class Mundo2D {
+public class World2D {
 
-	public Mundo2D(World mundo, TiledMap mapa) {
+	public World2D(World mundo, TiledMap mapa) {
 		// abajo se crearan objetos Interactivos
 		// Salidas // for each que saca cada cuadro creado por el tiledSoftware y le asigna un nuevo objeto
 		//         // el numero que cambia es el numero de la capa de la que se quiere sacar los cuadros
