@@ -12,6 +12,7 @@ public abstract class Render {
 	public static Tanks app;
 	public static World mundo;
 	ArrayList<Image> images = new ArrayList<Image>();
+	int renderID;
 	
 	public static void cleanScreen() {
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
@@ -22,6 +23,10 @@ public abstract class Render {
 		for(int i=0; i<images.size(); i++){
 			images.get(i).draw();
 		}
+	}
+	
+	public void addImage(Image image) {
+		
 	}
 	
 }
