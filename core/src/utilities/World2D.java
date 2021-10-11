@@ -19,7 +19,7 @@ public class World2D {
 		// for (MapObject object : mapa.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
 		// 	Rectangle rect = ((RectangleMapObject) object).getRectangle();
 		// 	new Paredes(mundo, mapa, rect);
-			
+		
 		// }
 		//salida
 		// for (MapObject object : mapa.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {

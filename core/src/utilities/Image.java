@@ -11,12 +11,15 @@ public class Image {
 		t= new Texture(ruta);
 		s= new Sprite(t);
 	}
+	
 	public Image(TextureRegion region) {
 		s= new Sprite(region);
 	}
-	public void dibujar() {
+
+	public void draw() {
 		s.draw(Render.batch);
 	}
+
 	public void setTransparencia (float a){
 		s.setAlpha(a);
 	}

@@ -3,8 +3,8 @@ package com.bws.tanks;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import pantallas.PantallaMapa;
-import utiles.Render;
+import screens.MapScreen;
+import utilities.Render;
 
 public class Tanks extends Game {
 
@@ -13,7 +13,7 @@ public class Tanks extends Game {
 	public void create () {
 		Render.app = this;
 		Render.batch = new SpriteBatch();
-		this.setScreen(new PantallaMapa());
+		this.setScreen(new MapScreen());
 	
 	}
 
