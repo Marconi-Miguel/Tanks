@@ -35,8 +35,15 @@ public class ImageClass {
 	public float getAncho(){
 		return s.getWidth();
 	}
+	public float getOriginX(){
+		return s.getX();
+	}
+	public float getOriginY(){
+		return s.getY();
+	}
 	public void setPosition(float x, float y) {
 		s.setPosition(x, y);
 	}
+	
 	
 }
