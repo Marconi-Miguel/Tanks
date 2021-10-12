@@ -6,9 +6,6 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
-import objetostiled.Cofre;
-import objetostiled.ObjetoInteractivo;
-
 public class ListenerMundo implements ContactListener {
 	private Fixture fixA;
 	private Fixture fixB;
@@ -22,20 +19,18 @@ public class ListenerMundo implements ContactListener {
 		fixA = contact.getFixtureA();
 		fixB = contact.getFixtureB();
 		
-		if (fixA.getUserData().equals("arriba") || fixB.getUserData().equals("arriba")) {
+		if (fixA.getUserData().equals("projectile") || fixB.getUserData().equals("projectile")) {
 			
-			Fixture arriba = (fixA.getUserData().equals("arriba")) ? fixA : fixB;
-			Fixture objeto = (arriba == fixA) ? fixB : fixA;
+//			Fixture projectile = (fixA.getUserData().equals("projectil")) ? fixA : fixB;
+//			Fixture objeto = ("projectil" == fixA) ? fixB : fixA;
+//			
+//			if (objeto.getUserData() != null && (objeto.getUserData() instanceof barril)) {
+//				
+//				actual = objeto;
+//				// se activa la interaccion con el tipo de objeto que sea
+//				((ObjetoInteractivo) objeto.getUserData()).explotar();
+//			}
 			
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof ObjetoInteractivo)) {
-				
-				actual = objeto;
-				// se activa la interaccion con el tipo de objeto que sea
-				((ObjetoInteractivo) objeto.getUserData()).interaccion();
-			}
-			if(objeto.getUserData() instanceof Cofre) {
-				((Cofre)objeto.getUserData()).setContactoFrente(true);
-			}
 			
 			
 			
@@ -69,47 +64,7 @@ public class ListenerMundo implements ContactListener {
 	@Override
 	public void endContact(Contact contact) {
 		
-		fixA = contact.getFixtureA();
-		fixB = contact.getFixtureB();
-		if (fixA.getUserData().equals("arriba") || fixB.getUserData().equals("arriba")) {
-
-			Fixture arriba = (fixA.getUserData().equals("arriba")) ? fixA : fixB;
-			Fixture objeto = (arriba == fixA) ? fixB : fixA;
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof ObjetoInteractivo)) {
-				// se activa la interaccion con el tipo de objeto que sea
-				((ObjetoInteractivo) objeto.getUserData()).interaccion();
-			}
-			if(objeto.getUserData() instanceof Cofre) {
-				((Cofre)objeto.getUserData()).setContactoFrente(false);
-			}
-
-			// se continua con las 3 direcciones restantes
-		} else if (fixA.getUserData().equals("abajo") || fixB.getUserData().equals("abajo")) {
-			Fixture abajo = (fixA.getUserData().equals("abajo")) ? fixA : fixB;
-			Fixture objeto = (abajo == fixA) ? fixB : fixA;
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof ObjetoInteractivo)) {
-				System.out.print("abajo ");
-				((ObjetoInteractivo) objeto.getUserData()).interaccion();
-			}
-		} else if (fixA.getUserData().equals("izquierda") || fixB.getUserData().equals("izquierda")) {
-			Fixture izquierda = (fixA.getUserData().equals("izquierda")) ? fixA : fixB;
-			Fixture objeto = (izquierda == fixA) ? fixB : fixA;
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof ObjetoInteractivo)) {
-				System.out.print("izquierda ");
-				((ObjetoInteractivo) objeto.getUserData()).interaccion();
-			}
-		} else if (fixA.getUserData().equals("derecha") || fixB.getUserData().equals("derecha")) {
-			Fixture derecha = (fixA.getUserData().equals("derecha")) ? fixA : fixB;
-			Fixture objeto = (derecha == fixA) ? fixB : fixA;
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof ObjetoInteractivo)) {
-				System.out.print("derecha ");
-				((ObjetoInteractivo) objeto.getUserData()).interaccion();
-			}
-		}
 		
-		
-		actual = null;
-
 	}
 	public Fixture getActual() {
 		return actual;

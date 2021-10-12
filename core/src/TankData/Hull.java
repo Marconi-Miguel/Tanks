@@ -16,5 +16,6 @@ public class Hull {
 	public float accelRate;
 	public int slots;
 	
+	
 
 }

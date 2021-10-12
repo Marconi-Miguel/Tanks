@@ -27,6 +27,7 @@ public class Tank extends ImageClass {
 
 	
 	public Tank(Hull hull, VehicleController controller,int x, int y) {
+		super()
 		this.texture = hull.texture;
 		sprite = new Sprite(this.texture);
 		sprite.setX(x);
