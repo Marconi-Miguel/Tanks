@@ -3,11 +3,11 @@ package input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
-public class Keyboard extends InputAdapter {
+public class PlayerInputManager extends InputAdapter {
 
 	VehicleController controller;
 	
-	public Keyboard(VehicleController controller) {
+	public PlayerInputManager(VehicleController controller) {
 		this.controller = controller;
 	}
 	

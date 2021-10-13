@@ -19,11 +19,6 @@ public abstract class Render {
 	public static World mundo;
 	public static ArrayList<Sprite> renderList = new ArrayList<Sprite>();
 	int renderID;
-	
-	public static void cleanScreen() {
-		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	}
 
 	public void render(){ //Render everything in the renderList
 		for(int i=0; i<renderList.size(); i++){
@@ -36,10 +31,9 @@ public abstract class Render {
 		}
 	}
 	
-	public static int getRandom(int min,int max) {
-		Random r = new Random();
-		int res = r.nextInt(max+1-min)+min;
-		return res;
+	public static void cleanScreen() {
+		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 	
 	public static void addSprite(Sprite sprite) {
