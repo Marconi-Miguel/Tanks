@@ -30,6 +30,15 @@ public abstract class Render {
 			
 		}
 	}
+	public void disposeList(){
+		for(int i=0; i<renderList.size(); i++){
+			if(renderList.get(i) != null) {
+				renderList.get(i).getTexture().dispose();;
+			}else {
+				renderList.remove(i);
+			}
+		}
+	}
 	
 	public static void cleanScreen() {
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
