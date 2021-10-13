@@ -10,7 +10,7 @@ public class Projectile extends Sprite{
 	
 	public float rotation;
 	public float speed;
-	//TODO register parent tank
+	public Tank parent;
 	
 
 	public Projectile(float x, float y, float rotation, String texture, float speed){
