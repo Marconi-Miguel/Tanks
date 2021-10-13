@@ -39,7 +39,7 @@ public class Cannon extends Attachable {
 				}
 			}, 0.03f);
 			Sprite shell = new Projectile(sprite.getX() + 45, sprite.getY() +80, tank.rotation, Resources.BASICSHELL, 1);
-			Render.addImage(shell);
+			Render.addSprite(shell);
 			Timer.schedule(new Task() {
 				public void run() {
 					ready = true;
