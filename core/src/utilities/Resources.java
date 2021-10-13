@@ -5,6 +5,8 @@ public class Resources {
 	//GAME ICON
 	public static final String GAMEICON = "images/misc/icon.png";
 	
+	//MAPS
+	public static final String MAP1= "Maps/mapaDessert.tmx";
 	//HULLS /////////////////////////////////////////
 	public static final String BASICHULL = "images/hulls/basic.png";
 	

@@ -16,7 +16,7 @@ import elements.Tank;
 public abstract class Render {
 	public static SpriteBatch batch;
 	public static Tanks app;
-	public static World mundo;
+	public static World world;
 	public static ArrayList<Sprite> renderList = new ArrayList<Sprite>();
 	int renderID;
 

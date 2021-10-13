@@ -15,14 +15,14 @@ public class World2D {
 		// Salidas // for each que saca cada cuadro creado por el tiledSoftware y le asigna un nuevo objeto
 		//         // el numero que cambia es el numero de la capa de la que se quiere sacar los cuadros
 		
-		// paredes
-		// for (MapObject object : mapa.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
-		// 	Rectangle rect = ((RectangleMapObject) object).getRectangle();
-		// 	new Paredes(mundo, mapa, rect);
+		// camino
+//		 for (MapObject object : mapa.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+//		 	Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//		 	new Paredes(mundo, mapa, rect);
+//		 }
 		
-		// }
 		//salida
-		// for (MapObject object : mapa.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
+		// for (MapObject object : mapa.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
 		// 	//saca el rectangulo
 		// 	Rectangle rect = ((RectangleMapObject) object).getRectangle();
 		// 	// al nuevo objeto se le asigna que propiedades tendra, en este caso salida
