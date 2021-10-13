@@ -24,7 +24,8 @@ public class MapScreen implements Screen {
 	// world2D
 	private World mundo;
 	private Box2DDebugRenderer b2dr;
-
+	// keyBoard 
+	
 	@Override
 	public void show() {
 

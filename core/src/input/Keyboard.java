@@ -39,7 +39,6 @@ public class Keyboard extends InputAdapter {
 			return false;
 		}
 	}
-	
 	/** keyUp = al dejar de pulsar una tecla */
 	@Override
 	public boolean keyUp(int keycode) {
