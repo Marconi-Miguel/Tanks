@@ -10,12 +10,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
 
+import elements.Tank;
+
 
 public abstract class Render {
 	public static SpriteBatch batch;
 	public static Tanks app;
 	public static World mundo;
 	public static ArrayList<Sprite> images = new ArrayList<Sprite>();
+	public static ArrayList<Tank> tanks = new ArrayList<Tank>();
 	int renderID;
 	
 	public static void cleanScreen() {
@@ -26,8 +29,10 @@ public abstract class Render {
 	public void renderList(){
 		for(int i=0; i<images.size(); i++){
 			images.get(i).draw(batch);
+			
 		}
 	}
+	
 	public static int getRandom(int min,int max) {
 		Random r = new Random();
 		int res = r.nextInt(max+1-min)+min;

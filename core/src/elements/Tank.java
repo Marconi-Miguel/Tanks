@@ -1,7 +1,5 @@
 package elements;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import TankData.Hull;
 import input.VehicleController;
 import utilities.Render;
@@ -38,7 +36,7 @@ public class Tank {
 		doMovement();
 		doCannon();
 		hull.draw(Render.batch);
-		updateObjects(Render.batch);//Update other sprites attached to this tank, such as cannon.
+		updateObjects();//Update other sprites attached to this tank, such as cannon.
 		//System.out.println("ACCEL: "+acceleration+" | SPEED: "+speed);
 	}
 	
@@ -139,10 +137,10 @@ public class Tank {
 		} //If a place was found, attach the object.
 	}
 	
-	void updateObjects(SpriteBatch batch) { //Fix attached objects position & rotation
+	void updateObjects() { //Fix attached objects position & rotation
 		for(int i=0; i<objects.length; i++) {
 			if (objects[i] != null){
-				objects[i].update(batch, hull.getX(), hull.getY(), hull.getOriginX(), hull.getOriginY() , hull.getRotation() );
+				objects[i].update(hull.getX(), hull.getY(), hull.getOriginX(), hull.getOriginY() , hull.getRotation() );
 			}
 		}
 	}
