@@ -2,9 +2,10 @@ package elements;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Projectile extends ImageClass{
+import utilities.Render;
+
+public class Projectile extends Sprite{
 	
 	
 	public float rotation;
@@ -13,16 +14,16 @@ public class Projectile extends ImageClass{
 	
 
 	public Projectile(float x, float y, float rotation, String texture, float speed){
-		super(texture);
+		super(new Texture(texture));
 		
 		this.rotation += rotation;
-		s.setX(x);
-		s.setY(y);
+		setX(x);
+		setY(y);
 		this.speed = speed;
 	}
 	
 	public void draw() {
-		super.draw();
+		super.draw(Render.batch);
 		doMovement();
 	}
 	
@@ -31,8 +32,8 @@ public class Projectile extends ImageClass{
 	void doMovement() {
 		float tempX = (float) Math.cos(Math.toRadians(rotation) ) * speed;
 		float tempY = (float) Math.sin(Math.toRadians(rotation) ) * speed;
-		setPosition(s.getX() + tempX * -1, s.getY() + tempY * -1);
-		s.setRotation(rotation+90);
+		setPosition(getX() + tempX * -1, getY() + tempY * -1);
+		setRotation(rotation+90);
 	}
 	
 }

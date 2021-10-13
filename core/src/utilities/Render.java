@@ -1,21 +1,21 @@
 package utilities;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
 
-import elements.ImageClass;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class Render {
 	public static SpriteBatch batch;
 	public static Tanks app;
 	public static World mundo;
-	ArrayList<ImageClass> images = new ArrayList<ImageClass>();
+	public static ArrayList<Sprite> images = new ArrayList<Sprite>();
 	int renderID;
 	
 	public static void cleanScreen() {
@@ -25,7 +25,7 @@ public abstract class Render {
 
 	public void renderList(){
 		for(int i=0; i<images.size(); i++){
-			images.get(i).draw();
+			images.get(i).draw(batch);
 		}
 	}
 	public static int getRandom(int min,int max) {
@@ -34,8 +34,8 @@ public abstract class Render {
 		return res;
 	}
 	
-	public static void addImage(ImageClass shell) {
-		
+	public static void addImage(Sprite shell) {
+		images.add(shell);
 	}
 	
 }

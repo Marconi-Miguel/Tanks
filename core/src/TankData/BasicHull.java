@@ -10,8 +10,8 @@ public class BasicHull extends Hull{
 		
 		//esto nose si quitarlo, lo comento preguntar despues
 //		originX = 45; originY = 138;
-		s.setX(45);
-		s.setY(138);
+		setX(45);
+		setY(138);
 		startRotation = 90;
 		
 		//Specs

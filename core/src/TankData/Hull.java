@@ -1,18 +1,19 @@
 package TankData;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import elements.ImageClass;
-
-public class Hull extends ImageClass{
+public class Hull extends Sprite{
 	public Hull(String texture){
-		super(texture);
+		super(new Texture(texture));
 	}
-//	public int originX;
-//	public int originY;
+	public int originX;
+	public int originY;
 	public int startRotation;
 	public int[] hitboxes;
 	
+	
+	public float rotation;
 	public int weaponSlots;
 	public float maxSpeed;
 	public float rotationSpeed;

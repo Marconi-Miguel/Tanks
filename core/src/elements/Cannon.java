@@ -2,6 +2,7 @@ package elements;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -37,7 +38,7 @@ public class Cannon extends Attachable {
 					idleCannon();
 				}
 			}, 0.03f);
-			ImageClass shell = new Projectile(sprite.getX() + 45, sprite.getY() +80, tank.rotation, Resources.BASICSHELL, 1);
+			Sprite shell = new Projectile(sprite.getX() + 45, sprite.getY() +80, tank.rotation, Resources.BASICSHELL, 1);
 			Render.addImage(shell);
 			Timer.schedule(new Task() {
 				public void run() {
