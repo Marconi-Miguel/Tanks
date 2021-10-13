@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
-public class ListenerMundo implements ContactListener {
+public class WorldListener implements ContactListener {
 	private Fixture fixA;
 	private Fixture fixB;
 	public Fixture actual;
