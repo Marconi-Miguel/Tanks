@@ -15,7 +15,7 @@ public abstract class Render {
 	public static SpriteBatch batch;
 	public static Tanks app;
 	public static World mundo;
-	public static ArrayList<Sprite> images = new ArrayList<Sprite>();
+	public static ArrayList<Sprite> renderList = new ArrayList<Sprite>();
 	int renderID;
 	
 	public static void cleanScreen() {
@@ -23,9 +23,14 @@ public abstract class Render {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 
-	public void renderList(){
-		for(int i=0; i<images.size(); i++){
-			images.get(i).draw(batch);
+	public void render(){ //Render everything in the renderList
+		for(int i=0; i<renderList.size(); i++){
+			if(renderList.get(i) != null) {
+				renderList.get(i).draw(batch);
+			}else {
+				renderList.remove(i);
+			}
+			
 		}
 	}
 	public static int getRandom(int min,int max) {
@@ -34,8 +39,8 @@ public abstract class Render {
 		return res;
 	}
 	
-	public static void addImage(Sprite shell) {
-		images.add(shell);
+	public static void addSprite(Sprite sprite) {
+		renderList.add(sprite);
 	}
 	
 }
