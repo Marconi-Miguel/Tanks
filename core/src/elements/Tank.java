@@ -1,17 +1,15 @@
 package elements;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import TankData.Hull;
 import input.VehicleController;
+import utilities.Render;
 
-public class Tank extends ImageClass {
+public class Tank {
 	
 	public VehicleController controller;
-	Texture texture;
-	public Sprite sprite;
+	Hull hull;
 	
 	float rotation;
 	float maxSpeed;
@@ -20,43 +18,36 @@ public class Tank extends ImageClass {
 	float speed;
 	float acceleration;
 	boolean forward; //direction. true if going forward, false if reverse.
-	
+	private enum estados{STOPPED, SPDNGUP, UPWARD, DOWNWARD, TOLEFT, TORIGHT }
 	//Array holding other elements of the tank, such as the cannon.
 	Attachable[] objects;
 	
-
 	
 	public Tank(Hull hull, VehicleController controller,int x, int y) {
-		super()
-		this.texture = hull.texture;
-		sprite = new Sprite(this.texture);
-		sprite.setX(x);
-		sprite.setY(y);
-		sprite.setOrigin(hull.originX,hull.originY);
+		
+		
+		hull.setPosition(x,y);
+		hull.setOrigin(hull.originX,hull.originY);
 		this.controller = controller;
 		objects = new Attachable[hull.slots];
 		
-		maxSpeed = hull.maxSpeed;
-		accelRate = hull.accelRate;
-		rotationSpeed = hull.rotationSpeed;
-		rotation = hull.startRotation;
+		
 	}
 	
-	public void Render(final SpriteBatch batch) {
+	public void Render() {
 		doMovement();
 		doCannon();
-		sprite.draw(batch);
-		updateObjects(batch);//Update other sprites attached to this tank, such as cannon.
+		hull.draw(Render.batch);
+		updateObjects(Render.batch);//Update other sprites attached to this tank, such as cannon.
 		//System.out.println("ACCEL: "+acceleration+" | SPEED: "+speed);
 	}
 	
 	public void setPosition(float x, float y) {
-		sprite.setX(x);
-		sprite.setY(y);
+		hull.setPosition(x,y);	
 	}
 	
 	public void rotate(float degrees) {	
-		sprite.rotate(degrees);
+		hull.rotate(degrees);
 		rotation += degrees;
 		 if (rotation >= 360){
 			 rotation = 0;
@@ -80,7 +71,7 @@ public class Tank extends ImageClass {
 		
 		float tempX = (float) Math.cos(Math.toRadians(rotation) ) * speed/40;
 		float tempY = (float) Math.sin(Math.toRadians(rotation) ) * speed/40;
-		setPosition(sprite.getX() + tempX * -1, sprite.getY() + tempY * -1);
+		setPosition(hull.getX() + tempX * -1, hull.getY() + tempY * -1);
 	}
 	
 	private void doSpeed() {
@@ -151,7 +142,7 @@ public class Tank extends ImageClass {
 	void updateObjects(SpriteBatch batch) { //Fix attached objects position & rotation
 		for(int i=0; i<objects.length; i++) {
 			if (objects[i] != null){
-				objects[i].update(batch, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY() ,sprite.getRotation() );
+				objects[i].update(batch, hull.getX(), hull.getY(), hull.getOriginX(), hull.getOriginY() , hull.getRotation() );
 			}
 		}
 	}
