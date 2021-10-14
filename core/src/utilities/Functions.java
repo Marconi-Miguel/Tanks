@@ -10,4 +10,9 @@ public class Functions {
 		float random = min + r.nextFloat() * (max - min);
 		return (float) random;
 	}
+	public static float randomInt(int min, int max) {
+		Random r = new Random();
+		int random = min + r.nextInt() * (max - min);
+		return random;
+	}
 }
