@@ -1,16 +1,18 @@
 package tiledObjects;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Camino extends InteractiveObject {
+public class Road extends InteractiveObject {
 	
-	public Camino( TiledMap map, Rectangle limites) {
+	public Road( TiledMap map, Rectangle limites) {
 		super( map, limites);
 		//crea su caja 2d
 		fixture.setUserData(this);
 		
 	}
+
 
 	@Override
 	public void interaction() {

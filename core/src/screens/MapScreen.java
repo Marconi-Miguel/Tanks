@@ -14,10 +14,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import input.PlayerInputManager;
 import listeners.WorldListener;
+import tiledObjects.World2D;
 import utilities.Config;
 import utilities.Render;
 import utilities.Resources;
-import utilities.World2D;
 
 public class MapScreen implements Screen {
 
@@ -42,25 +42,28 @@ public class MapScreen implements Screen {
 	//
 	
 	public MapScreen() {
+		
 		// se setea el tipo de camara
 			camera = new OrthographicCamera();
-		// then camera zoom
-			gamePort = new FitViewport(Config.WIDTH / 2 / Config.PPM, Config.HEIGHT / 2 / Config.PPM, camera);
+		
 			// load tiledMap
 			mapLoader = new TmxMapLoader();
 			map = mapLoader.load(Resources.MAP1);
+			// then camera zoom
+			gamePort = new FitViewport(Config.WIDTH/Config.PPM, Config.HEIGHT/Config.PPM , camera);
 			// order the render which map is going to draw
-			renderer = new OrthogonalTiledMapRenderer(map, 1 / Config.PPM);
+			renderer = new OrthogonalTiledMapRenderer(map,1/Config.PPM);
 			// centers the camera to the new map 
-			camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+			camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2,  0);
 			// set map properties 
 			Render.world = new World(new Vector2(0, 0), true);
 			world = Render.world;
 			//render which draws box2d Textures
 			b2dr = new Box2DDebugRenderer();
 			
+			
 			// creates 2dmap per layers
-			world2d = new World2D(world, map);
+			world2d = new World2D(map);
 			
 			// set the world contact listener
 			world.setContactListener(worldListener);
@@ -70,23 +73,35 @@ public class MapScreen implements Screen {
 	@Override
 	public void show() {
 		b = Render.batch;
-		camera.position.set(Config.WIDTH/2,Config.HEIGHT/2,0);
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+		System.out.println(gamePort.getWorldWidth());
 	}
 
 	@Override
 	public void render(float delta) {
+		gamePort.apply();
+		update(delta);
 		Render.cleanScreen();
 		b.setProjectionMatrix(camera.combined);
 		// loads map
 		renderer.render();
 		// loads box2dDebugLines hitboxes
 		b2dr.render(world, camera.combined);
+		
+	}
+
+	private void update(float delta) {
+		camera.update();
+		//60 ticks in a second if im right
+		world.step(1/60f,6,2);
+		// sets whats the renderer gonna draw, that shows in camera
+		renderer.setView(camera);
+		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-
+		gamePort.update(width,height);
 	}
 
 	@Override

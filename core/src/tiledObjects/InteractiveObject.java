@@ -53,30 +53,7 @@ public abstract class InteractiveObject {
 		setFilter(Config.DEFAULT_BIT);
 	}
 	
-	public InteractiveObject( TiledMap map, Circle limits) {
-		this.limits = limits;
-		this.world = Render.world;
-		
-		this.map = map;
-		// propiedades del cuerpo box2d
-		FixtureDef fdef = new FixtureDef();
-		// declarar el cuerpo y contiene propiedades lo necesario para crear el resto
-		BodyDef bdef = new BodyDef();
-		// la forma de los cuerpos
-		CircleShape shape = new CircleShape();
-		// contiene las propiedades que tendra este objeto
 
-		bdef.type = BodyDef.BodyType.StaticBody;
-		//set as circle Shape
-		bdef.position.set((limits.x + limits.radius)/Config.PPM, (limits.y + limits.radius)/ Config.PPM );
-		// crea el cuerpo despues de determinar propiedades arriba
-		shape.setRadius(limits.radius/Config.PPM);
-		body = world.createBody(bdef);
-		fdef.shape = shape;
-		fixture = body.createFixture(fdef);
-		fixture.setUserData("default");
-		setFilter(Config.DEFAULT_BIT);
-	}
 
 	public abstract void interaction();
 
