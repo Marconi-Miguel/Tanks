@@ -7,6 +7,7 @@ public class Hull extends Sprite{
 	public Hull(String texture){
 		super(new Texture(texture));
 	}
+	
 	public int originX;
 	public int originY;
 	public int startRotation;
@@ -19,7 +20,6 @@ public class Hull extends Sprite{
 	public float rotationSpeed;
 	public float accelRate;
 	public int slots;
-	
 	
 
 }
