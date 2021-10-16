@@ -49,18 +49,19 @@ public class MapScreen implements Screen {
 			// load tiledMap
 			mapLoader = new TmxMapLoader();
 			map = mapLoader.load(Resources.MAP1);
-			// then camera zoom
-			gamePort = new FitViewport(Config.WIDTH/Config.PPM, Config.HEIGHT/Config.PPM , camera);
+			
 			// order the render which map is going to draw
 			renderer = new OrthogonalTiledMapRenderer(map,1/Config.PPM);
-			// centers the camera to the new map 
-			camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2,  0);
+			
 			// set map properties 
 			Render.world = new World(new Vector2(0, 0), true);
 			world = Render.world;
 			//render which draws box2d Textures
 			b2dr = new Box2DDebugRenderer();
-			
+			// then camera zoom
+						gamePort = new FitViewport(64*30/Config.PPM, 64*30/Config.PPM , camera);
+			// centers the camera to the new map 
+						camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2,  0);
 			
 			// creates 2dmap per layers
 			world2d = new World2D(map);
@@ -74,7 +75,7 @@ public class MapScreen implements Screen {
 	public void show() {
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-		System.out.println(gamePort.getWorldWidth());
+		System.out.println(64*30);
 	}
 
 	@Override
