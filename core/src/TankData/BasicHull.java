@@ -6,7 +6,7 @@ public class BasicHull extends Hull{
 	
 	public BasicHull(){
 		//Sprite config
-		super(Resources.BASICHULL);
+		super(Resources.BASICHULLDARK);
 		
 		//esto nose si quitarlo, lo comento preguntar despues
 //		originX = 45; originY = 138;
