@@ -10,7 +10,7 @@ public class WorldListener implements ContactListener {
 	private Fixture fixA;
 	private Fixture fixB;
 	public Fixture actual;
-
+	
 	@Override
 	public void beginContact(Contact contact) {
 		
