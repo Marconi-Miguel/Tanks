@@ -12,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import TankData.BasicHull;
+import TankData.Hull;
 import input.PlayerInputManager;
 import listeners.WorldListener;
 import tiledObjects.World2D;
@@ -39,7 +41,8 @@ public class MapScreen implements Screen {
 	private World2D world2d;
 	//object listener
 	private WorldListener worldListener;
-	//
+	//hull testing
+	private Hull hull;
 	
 	public MapScreen() {
 		
@@ -68,6 +71,7 @@ public class MapScreen implements Screen {
 			
 			// set the world contact listener
 			world.setContactListener(worldListener);
+			hull = new BasicHull();
 			
 	}
 	
@@ -75,7 +79,7 @@ public class MapScreen implements Screen {
 	public void show() {
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-		System.out.println(64*30);
+		
 	}
 
 	@Override
@@ -88,6 +92,11 @@ public class MapScreen implements Screen {
 		renderer.render();
 		// loads box2dDebugLines hitboxes
 		b2dr.render(world, camera.combined);
+		// drawing
+		
+		b.begin();
+		hull.draw(b);
+		b.end();
 		
 	}
 

@@ -8,9 +8,9 @@ public abstract class Config {
     
     // filtros utilizando BITWISE:
     public static final short DEFAULT_BIT = 1;
-    public static final short BARRIL_BIT = 2;
-    public static final short BOLSA_BIT = 4;
-    public static final short SALIDA_BIT = 8;
+    public static final short TANK_BIT = 2;
+    public static final short ROAD_BIT = 4;
+    public static final short WALL_BIT = 8;
     
     // 0000 1100
 }

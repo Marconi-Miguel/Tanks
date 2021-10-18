@@ -11,7 +11,7 @@ public class Resources {
 	//MAPS
 	public static final String MAP1= "Maps/mapaDessert.tmx";
 	//HULLS /////////////////////////////////////////
-	public static final String BASICHULL = "Tanks/Blue/tankBody_blue_outline.png";
+	public static final String BASICHULL = "Tanks/tank_bigRed.png";
 
 	//CANNONS /////////////////////////////////////////
 	public static final String BASICCANNON = "images/cannons/basic.png";
