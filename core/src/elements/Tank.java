@@ -16,7 +16,7 @@ public class Tank {
 	float speed;
 	float acceleration;
 	boolean forward; //direction. true if going forward, false if reverse.
-	private enum states{STOPPED, SPDNGUP, UPWARD, DOWNWARD, TOLEFT, TORIGHT, FIRE }
+
 	private states currentState = states.STOPPED;
 	//Array holding other elements of the tank, such as the cannon.
 	Attachable[] objects;
