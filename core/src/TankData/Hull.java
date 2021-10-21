@@ -47,7 +47,7 @@ public class Hull extends Sprite {
 		System.out.println("W:" + getWidth()/Config.PPM);
 		System.out.println("H:" + getHeight()/ Config.PPM );
 		setBounds(2, 2, getWidth()/Config.PPM, getHeight()/ Config.PPM );
-		setSize(getWidth()/Config.PPM, getHeight()/ Config.PPM);
+		
 		createBody();
 
 		fixtureDef();
