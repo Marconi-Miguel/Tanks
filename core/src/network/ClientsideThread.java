@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-public class ClientThread extends Thread {
+public class ClientsideThread extends Thread {
 	
 	private DatagramSocket socket;
 	private boolean end = false;
@@ -15,7 +15,7 @@ public class ClientThread extends Thread {
 	private boolean connected;
 
 	
-	public ClientThread(String serverIP) {
+	public ClientsideThread(String serverIP) {
 		try {
 			socket = new DatagramSocket();
 			this.serverIP = serverIP;
@@ -71,6 +71,7 @@ public class ClientThread extends Thread {
 	private void handleDisconnection() {
 		connected = false;
 		System.out.println("disconnected");
+		this.end = true;
 	}
 
 }

@@ -23,7 +23,7 @@ public class Hull extends Sprite {
 	private Sprite dmged2;
 	Sprite dmged3;
 
-	public int originX;
+	public int originX;	
 	public int originY;
 	public int startRotation;
 
@@ -117,7 +117,7 @@ public class Hull extends Sprite {
 
 	}
 
-	public void desAparecer() {
+	public void dissapear() {
 		Render.world.destroyBody(b2body);
 		b2body = null;
 	}

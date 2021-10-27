@@ -6,15 +6,14 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class ServerThread extends Thread {
+public class ServersideThread extends Thread {
 	
 	private DatagramSocket socket;
 	private boolean fin = false;
 	
-	private InetAddress[] clientIP = new InetAddress[4];
-	private int[] clientPort = new int[4];
+	private ServerClient[] clients = new ServerClient[4];
 	
-	public ServerThread() {
+	public ServersideThread() {
 		try {
 			socket = new DatagramSocket(9995);
 			System.out.println("Servidor creado");
@@ -67,51 +66,51 @@ public class ServerThread extends Thread {
 	}
 	
 	public void broadcast(String msg) { //send message to all connected clients.
-		for (int i=0;i<clientIP.length;i++) {
-			sendMessage(msg,clientIP[i],clientPort[i]);
+		for (int i=0;i<clients.length;i++) {
+			sendMessage(msg,clients[i].IP,clients[i].port);
 		}
 	}
 	
 //////////////Client validation////////////////////////////////////
 	
 	public boolean isClient(InetAddress ip) {
-		for (int i=0;i<clientIP.length;i++) {
-			if(clientIP[i]==ip) {return true;}
+		for (int i=0;i<clients.length;i++) {
+			if(clients[i].IP==ip) {return true;}
 		}
 		return false;
 	}
 	
-	public int getClientIndex(InetAddress ip) {
-		for (int i=0;i<clientIP.length;i++) {
-			if(clientIP[i]==ip) {return i;}
+	public int getClientID(InetAddress ip) {
+		for (int i=0;i<clients.length;i++) {
+			if(clients[i].IP==ip) {return i;}
 		}
 		return -1;
 	}
 	
 	public boolean slotAvailable() {
-		for (int i=0;i<clientIP.length;i++) {
-			if(clientIP[i]==null) {return true;}
+		for (int i=0;i<clients.length;i++) {
+			if(clients[i]==null) {return true;}
 		}
 		return false;
 	}
 	
 	public void addClient(InetAddress ip, int port) {
-		for (int i=0;i<clientIP.length;i++) {
-			if(clientIP[i]==null) {
-				clientIP[i] = ip;
-				clientPort[i] = port;
+		for (int i=0;i<clients.length;i++) {
+			if(clients[i]==null) {
+				ServerClient newClient = new ServerClient(ip, port);
+				clients[i] = newClient;
 				break;
 			}
 		}
 	}
 	
 	public void removeClient(int index) {
-		clientIP[index] = null;
-		clientPort[index] = -1;
+		//TODO: Consider some kind of dispose() ?
+		clients[index] = null;
 	}
 	
 	public void disconnectClient(int index) {
-		sendMessage("disconnected",clientIP[index],clientPort[index]);
+		sendMessage("disconnected",clients[index].IP,clients[index].port);
 		removeClient(index);
 	}
 	
@@ -127,7 +126,9 @@ public class ServerThread extends Thread {
 	}
 	
 	private void handleDisconnection(DatagramPacket packet) {
-		removeClient(getClientIndex(packet.getAddress()) );
+		removeClient(getClientID(packet.getAddress()) );
 	}
-
+	
+	
+	//////////
 }
