@@ -3,12 +3,14 @@ package input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
+import elements.Tank;
+
 public class PlayerInputManager extends InputAdapter {
 
-	VehicleController controller;
+	Tank tank;
 	
-	public PlayerInputManager(VehicleController controller) {
-		this.controller = controller;
+	public PlayerInputManager(Tank tank) {
+		this.tank = tank;
 	}
 	
 	@Override
@@ -16,23 +18,23 @@ public class PlayerInputManager extends InputAdapter {
 		switch (keycode) {
 		
 		case Input.Keys.D:
-				controller.right = true;
+				tank.right = true;
 		return true;
 		
 		case Input.Keys.A:
-			controller.left = true;
+			tank.left = true;
 		return true;
 	
 		case Input.Keys.W:
-			controller.up = true;
+			tank.up = true;
 		return true;
 			
 		case Input.Keys.S:
-			controller.down = true;
+			tank.down = true;
 		return true;
 		
 		case Input.Keys.SPACE:
-			controller.fire = true;
+			tank.fire = true;
 		return true;
 		
 		default:
@@ -45,23 +47,23 @@ public class PlayerInputManager extends InputAdapter {
 		switch (keycode) {
 		
 		case Input.Keys.D:
-			controller.right = false;
+			tank.right = false;
 		return true;
 	
 		case Input.Keys.A:
-			controller.left = false;
+			tank.left = false;
 		return true;
 
 		case Input.Keys.W:
-			controller.up = false;
+			tank.up = false;
 		return true;
 		
 		case Input.Keys.S:
-			controller.down = false;
+			tank.down = false;
 		return true;
 		
 		case Input.Keys.SPACE:
-			controller.fire = false;
+			tank.fire = false;
 		return true;
 		
 		default:

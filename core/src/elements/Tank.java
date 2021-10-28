@@ -5,8 +5,6 @@ import input.VehicleController;
 import utilities.Render;
 
 public class Tank {
-	
-	public VehicleController controller;
 	Hull hull;
 	
 	float rotation;
@@ -16,18 +14,19 @@ public class Tank {
 	float speed;
 	float acceleration;
 	boolean forward; //direction. true if going forward, false if reverse.
+	
+	public boolean up,down,right,left,fire; //control variables
 
 
 	//Array holding other elements of the tank, such as the cannon.
 	Attachable[] objects;
 	
 	
-	public Tank(Hull hull, VehicleController controller,int x, int y) {
+	public Tank(Hull hull,int x, int y) {
 		
 		
 		hull.setPosition(x,y);
 		hull.setOrigin(hull.originX,hull.originY);
-		this.controller = controller;
 		objects = new Attachable[hull.slots];
 		
 		
@@ -59,11 +58,11 @@ public class Tank {
 	////movement functions
 	private void doMovement() {
 		doSpeed();
-		if(controller.right) {
+		if(right) {
 			rotate(rotationSpeed * -1);
 		}
 		
-		if(controller.left) {
+		if(left) {
 			rotate(rotationSpeed);
 			
 		}
@@ -74,9 +73,9 @@ public class Tank {
 	}
 	
 	private void doSpeed() {
-		if (controller.up && !controller.down) { //If pressing W, go forward.
+		if (up && !down) { //If pressing W, go forward.
 			accelerate(true);
-		}else if (controller.down && !controller.up) { //If pressing S, go reverse
+		}else if (down && !up) { //If pressing S, go reverse
 			accelerate(false);
 		}else if (!checkStop() ){ //Slowly stop if not accelerating or ready to stop.
 			slowDown();
@@ -115,7 +114,7 @@ public class Tank {
 	/////////////Cannon-related functions.
 	
 	void doCannon() {
-		if (controller.fire) {
+		if (fire) {
 			for(int i=0;i<objects.length;i++) {
 				if(objects[i].objectType == "Cannon") {
 					Cannon cannon = (Cannon) objects[i];
