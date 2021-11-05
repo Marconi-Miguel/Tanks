@@ -41,7 +41,7 @@ public class ClientsideThread extends Thread {
 	private void processMessage(DatagramPacket packet) {
 		String msg = new String(packet.getData()).trim();
 		switch(msg) {
-		case "disconnect":
+		case NetworkCodes.DISCONNECT:
 			handleDisconnection();
 		break;
 		///
@@ -72,4 +72,9 @@ public class ClientsideThread extends Thread {
 		this.end = true;
 	}
 
+//////////// network syncing //////////////////////////////////////////
+	
+	private void sendInputs() {
+		
+	}
 }

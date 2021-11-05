@@ -14,8 +14,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import TankData.BasicHull;
 import TankData.Hull;
+import input.Player;
 import input.PlayerInputManager;
 import listeners.WorldListener;
+import network.Clientside;
+import network.ClientsideThread;
+import network.Serverside;
 import tiledObjects.World2D;
 import utilities.Config;
 import utilities.Render;
@@ -45,6 +49,13 @@ public class MapScreen implements Screen {
 	private Hull hull;
 	
 	public MapScreen() {
+		
+		/////NETWROK TEST
+		Serverside server = new Serverside();
+		Player localPlayer = new Player("testPlayer");
+		localPlayer.connect("localhost");
+		
+		/////NETWORK TEST
 		
 		// se setea el tipo de camara
 			camera = new OrthographicCamera();
@@ -77,6 +88,7 @@ public class MapScreen implements Screen {
 	
 	@Override
 	public void show() {
+		
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		

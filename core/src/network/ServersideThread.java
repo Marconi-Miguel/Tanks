@@ -9,26 +9,45 @@ import java.net.SocketException;
 public class ServersideThread extends Thread {
 	
 	private DatagramSocket socket;
-	private boolean fin = false;
+	private boolean fin,serverCreated = false;
 	
 	private ServerClient[] clients = new ServerClient[4];
 	
 	public ServersideThread() {
+		serverCreated = startServer();
+	}
+	
+	private boolean startServer() { //attempt to create a datagram socket.
 		try {
 			socket = new DatagramSocket(9995);
-			System.out.println("Servidor creado");
+			System.out.println("SOCKET ESTABLISHED, SERVER UP.");
+			return true; //server created.
 		} catch (SocketException e) {
 			e.printStackTrace();
+			return false; //unable to create
 		}
 	}
 	
+	private void checkSocket() {//TODO: Make sure the socket check doesn't become an infinite loop.
+		//while (!serverCreated) { //If the socket is unexistant. 
+			System.out.println("WARNING: UNABLE TO CREATE SOCKET... RETRYING");
+			serverCreated = startServer(); //attempt to create a socket.
+			try {
+				Thread.sleep(1000); //wait a second before checking again.
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		//}//do not continue until it is created.
+	}
+	
 	@Override
-	public void run() {
+	public void run() { 
+		checkSocket(); //Make sure a socket actually exists before anything else.
 		do {
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data,data.length);
 			try {
-				System.out.println("Server standing by");
+				System.out.println("Server standing by.");
 				socket.receive(packet);
 				processMessage(packet);
 			} catch (IOException e) {
@@ -40,13 +59,14 @@ public class ServersideThread extends Thread {
 //////////Messaging////////////////////////////////////////
 	private void processMessage(DatagramPacket packet) {
 		String msg = new String(packet.getData()).trim();
-		switch(msg) {
-		case "connect":
-			handleConnection(packet);
+		String args = msg.substring(NetworkCodes.CODELENGTH,msg.length()); //Everything after the network code are the arguments (args) of the network message.
+		switch(msg.substring(0,NetworkCodes.CODELENGTH)) { //switches the first part of the message, the network code
+		case NetworkCodes.CONNECT: //connect
+			handleConnection(packet,args);
 		break;
 		///
-		case "disconnect":
-			handleDisconnection(packet);
+		case NetworkCodes.DISCONNECT: //disconnect
+			handleDisconnection(packet,args);
 		break;
 		///
 		default:
@@ -94,10 +114,11 @@ public class ServersideThread extends Thread {
 		return false;
 	}
 	
-	public void addClient(InetAddress ip, int port) {
+	public void addClient(InetAddress ip, int port, String username) {
 		for (int i=0;i<clients.length;i++) {
 			if(clients[i]==null) {
 				ServerClient newClient = new ServerClient(ip, port);
+				newClient.username = username;
 				clients[i] = newClient;
 				break;
 			}
@@ -116,16 +137,16 @@ public class ServersideThread extends Thread {
 	
 	
 	////////////processMessage functions//////////////////////////////////////////
-	private void handleConnection(DatagramPacket packet) {
+	private void handleConnection(DatagramPacket packet, String args) {
 		if(slotAvailable()) {
-			addClient(packet.getAddress(),packet.getPort());
+			addClient(packet.getAddress(),packet.getPort(), args);
 			sendMessage("connected",packet.getAddress(),packet.getPort());
 		}else {
 			sendMessage("connectionRejected",packet.getAddress(),packet.getPort());
 		}
 	}
 	
-	private void handleDisconnection(DatagramPacket packet) {
+	private void handleDisconnection(DatagramPacket packet, String msg) {
 		removeClient(getClientID(packet.getAddress()) );
 	}
 	

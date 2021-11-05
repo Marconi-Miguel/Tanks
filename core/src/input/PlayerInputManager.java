@@ -7,10 +7,10 @@ import elements.Tank;
 
 public class PlayerInputManager extends InputAdapter {
 
-	Tank tank;
+	Player localPlayer;
 	
-	public PlayerInputManager(Tank tank) {
-		this.tank = tank;
+	public PlayerInputManager(Player player) {
+		this.localPlayer = player;
 	}
 	
 	@Override
@@ -18,23 +18,23 @@ public class PlayerInputManager extends InputAdapter {
 		switch (keycode) {
 		
 		case Input.Keys.D:
-				tank.right = true;
+				localPlayer.inputs.replace(InputKeys.RIGHT, true);
 		return true;
 		
 		case Input.Keys.A:
-			tank.left = true;
+			//localPlayer.left = true;
 		return true;
 	
 		case Input.Keys.W:
-			tank.up = true;
+			//localPlayer.up = true;
 		return true;
 			
 		case Input.Keys.S:
-			tank.down = true;
+			//localPlayer.down = true;
 		return true;
 		
 		case Input.Keys.SPACE:
-			tank.fire = true;
+			//localPlayer.fire = true;
 		return true;
 		
 		default:
@@ -47,23 +47,23 @@ public class PlayerInputManager extends InputAdapter {
 		switch (keycode) {
 		
 		case Input.Keys.D:
-			tank.right = false;
+			localPlayer.inputs.replace(InputKeys.RIGHT, false);
 		return true;
 	
 		case Input.Keys.A:
-			tank.left = false;
+			//localPlayer.left = false;
 		return true;
 
 		case Input.Keys.W:
-			tank.up = false;
+			//localPlayer.up = false;
 		return true;
 		
 		case Input.Keys.S:
-			tank.down = false;
+			//localPlayer.down = false;
 		return true;
 		
 		case Input.Keys.SPACE:
-			tank.fire = false;
+			//localPlayer.fire = false;
 		return true;
 		
 		default:

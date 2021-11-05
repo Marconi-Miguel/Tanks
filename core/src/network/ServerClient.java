@@ -1,8 +1,10 @@
 package network;
 
 import java.net.InetAddress;
+import java.util.Map;
 
 import elements.Tank;
+import input.InputKeys;
 
 public class ServerClient {
 	
@@ -10,6 +12,9 @@ public class ServerClient {
 	Tank tank;
 	InetAddress IP;
 	int port;
+	
+	//Input
+	public Map<InputKeys, Boolean> inputs;
 	
 	
 	
