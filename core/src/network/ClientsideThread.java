@@ -12,7 +12,6 @@ public class ClientsideThread extends Thread {
 	private DatagramSocket socket;
 	private boolean end = false;
 	private String serverIP;
-	private boolean connected;
 
 	
 	public ClientsideThread(String serverIP) {
@@ -69,7 +68,6 @@ public class ClientsideThread extends Thread {
 ////////////processMessage functions//////////////////////////////////////////
 	
 	private void handleDisconnection() {
-		connected = false;
 		System.out.println("disconnected");
 		this.end = true;
 	}

@@ -1,7 +1,6 @@
 package elements;
 
 import TankData.Hull;
-import input.VehicleController;
 import utilities.Render;
 
 public class Tank {
