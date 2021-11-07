@@ -32,11 +32,14 @@ public class Player {
 
 	
 	public Player(String username) {
+		PIM = new PlayerInputManager(this);
+		PNM = new PlayerNetworkManager(this);
 		initializeInputs();
 		this.username = username;
-		localClient = new Clientside();
+		localClient = new Clientside(this);
 	}
 	
+	///Input functions
 	
 	
 	///Network functions

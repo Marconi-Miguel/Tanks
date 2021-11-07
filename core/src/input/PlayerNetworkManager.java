@@ -8,8 +8,8 @@ public class PlayerNetworkManager {
 	ClientsideThread thread;
 	
 	
-	public PlayerNetworkManager() {
-		client = new Clientside();
+	public PlayerNetworkManager(Player player) {
+		client = new Clientside(player);
 		thread = client.getThread();
 	}
 	

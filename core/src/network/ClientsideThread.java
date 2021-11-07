@@ -7,14 +7,19 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import input.InputKeys;
+import input.Player;
+
 public class ClientsideThread extends Thread {
 	
 	private DatagramSocket socket;
 	private boolean end = false;
 	private String serverIP;
+	private Player playerClient;
 
 	
-	public ClientsideThread(String serverIP) {
+	public ClientsideThread(Player playerClient, String serverIP) {
+		this.playerClient = playerClient;
 		try {
 			socket = new DatagramSocket();
 			this.serverIP = serverIP;
@@ -25,7 +30,10 @@ public class ClientsideThread extends Thread {
 	
 	@Override
 	public void run() {
-		do {
+		while (!end) {
+			System.out.println(playerClient.inputs.get(InputKeys.RIGHT));
+		}
+		//do {
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data,data.length);
 			try {
@@ -34,7 +42,7 @@ public class ClientsideThread extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}while(!end);
+		//}while(!end);
 	}
 
 //////////Messaging////////////////////////////////////////
