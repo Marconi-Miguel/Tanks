@@ -10,6 +10,7 @@ public class ServersideThread extends Thread {
 	
 	private DatagramSocket socket;
 	private boolean fin,serverCreated = false;
+	int serverAddress = 9995;
 	
 	private ServerClient[] clients = new ServerClient[4];
 	
@@ -19,30 +20,37 @@ public class ServersideThread extends Thread {
 	
 	private boolean startServer() { //attempt to create a datagram socket.
 		try {
-			socket = new DatagramSocket(9995);
-			System.out.println("SOCKET ESTABLISHED, SERVER UP.");
+			socket = new DatagramSocket(serverAddress);
+			System.out.println("SOCKET ESTABLISHED ON "+serverAddress);
+			serverCreated = true;
 			return true; //server created.
 		} catch (SocketException e) {
-			e.printStackTrace();
+			//e.printStackTrace(); too much spam
+			System.out.println("WARNING: UNABLE TO CREATE SOCKET ON "+serverAddress+" ... RETRYING");
 			return false; //unable to create
 		}
 	}
 	
 	private void checkSocket() {//TODO: Make sure the socket check doesn't become an infinite loop.
 		//while (!serverCreated) { //If the socket is unexistant. 
-			System.out.println("WARNING: UNABLE TO CREATE SOCKET... RETRYING");
+			
 			serverCreated = startServer(); //attempt to create a socket.
 			try {
 				Thread.sleep(1000); //wait a second before checking again.
+				serverAddress++;
+				startServer();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				startServer();//retry anyways.
 			}
 		//}//do not continue until it is created.
 	}
 	
 	@Override
 	public void run() { 
-		checkSocket(); //Make sure a socket actually exists before anything else.
+		while (!serverCreated) {
+			checkSocket(); //Make sure a socket actually exists before anything else.
+		}
 		do {
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data,data.length);
