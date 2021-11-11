@@ -16,7 +16,8 @@ public class PlayerInputManager extends InputAdapter {
 		switch (keycode) {
 		
 		case Input.Keys.D:
-				localPlayer.inputs.replace(InputKeys.RIGHT, true);
+				localPlayer.inputs.replace(InputKeys.RIGHT, false,true);
+				
 		return true;
 		
 		case Input.Keys.A:

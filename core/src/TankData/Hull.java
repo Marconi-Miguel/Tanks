@@ -42,10 +42,10 @@ public class Hull extends Sprite {
 		super(new Texture(texture));
 		this.hp = hp;
 		this.world = Render.world;
-		System.out.println("w:" + getWidth());
-		System.out.println("h:" + getHeight());
-		System.out.println("W:" + getWidth()/Config.PPM);
-		System.out.println("H:" + getHeight()/ Config.PPM );
+//		System.out.println("w:" + getWidth());
+//		System.out.println("h:" + getHeight());
+//		System.out.println("W:" + getWidth()/Config.PPM);
+//		System.out.println("H:" + getHeight()/ Config.PPM );
 		setBounds(2, 2, getWidth()/Config.PPM, getHeight()/ Config.PPM );
 		
 		createBody();
