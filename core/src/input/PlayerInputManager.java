@@ -3,8 +3,6 @@ package input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
-import elements.Tank;
-
 public class PlayerInputManager extends InputAdapter {
 
 	Player localPlayer;

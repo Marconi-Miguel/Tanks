@@ -1,7 +1,10 @@
 package screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -17,8 +20,6 @@ import TankData.Hull;
 import input.Player;
 import input.PlayerInputManager;
 import listeners.WorldListener;
-import network.Clientside;
-import network.ClientsideThread;
 import network.Serverside;
 import tiledObjects.World2D;
 import utilities.Config;
@@ -47,7 +48,10 @@ public class MapScreen implements Screen {
 	private WorldListener worldListener;
 	//hull testing
 	private Hull hull;
-	
+	//setting inputListener
+	private PlayerInputManager PIM;
+	//test
+	private Sprite imgTest;
 	public MapScreen() {
 		
 		/////NETWROK TEST
@@ -56,8 +60,16 @@ public class MapScreen implements Screen {
 		localPlayer.connect("localhost");
 		
 		/////NETWORK TEST
-		
-		// se setea el tipo de camara
+		/////setting PIM AS IP
+		PIM = new PlayerInputManager(localPlayer);
+		Gdx.input.setInputProcessor(PIM);
+		/////
+		//img test
+		//testing
+				imgTest = new Sprite(new Texture("tank_bigRed.png"));
+		//
+		//
+		// setting map
 			camera = new OrthographicCamera();
 		
 			// load tiledMap
@@ -105,10 +117,12 @@ public class MapScreen implements Screen {
 		// loads box2dDebugLines hitboxes
 		b2dr.render(world, camera.combined);
 		// drawing
-		
+		//testing
 		b.begin();
 		hull.draw(b);
+		imgTest.draw(b);
 		b.end();
+		//testing
 		
 	}
 

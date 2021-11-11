@@ -1,7 +1,6 @@
 package utilities;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,13 +9,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
 
-import elements.Tank;
+import input.Player;
 
 
 public abstract class Render {
 	public static SpriteBatch batch;
 	public static Tanks app;
 	public static World world;
+	public static Player player;
 	public static ArrayList<Sprite> renderList = new ArrayList<Sprite>();
 	int renderID;
 
