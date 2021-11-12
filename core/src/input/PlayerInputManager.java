@@ -19,23 +19,22 @@ public class PlayerInputManager extends InputAdapter {
 		
 		case Input.Keys.D:
 				localPlayer.inputs.replace(InputKeys.RIGHT, false,true);
-				
 		return true;
 		
 		case Input.Keys.A:
-			//localPlayer.left = true;
+			localPlayer.inputs.replace(InputKeys.LEFT, false,true);
 		return true;
 	
 		case Input.Keys.W:
-			//localPlayer.up = true;
+			localPlayer.inputs.replace(InputKeys.UP, false,true);
 		return true;
 			
 		case Input.Keys.S:
-			//localPlayer.down = true;
+			localPlayer.inputs.replace(InputKeys.DOWN, false,true);
 		return true;
 		
 		case Input.Keys.SPACE:
-			//localPlayer.fire = true;
+			localPlayer.inputs.replace(InputKeys.FIRE, false,true);
 		return true;
 		
 		default:
@@ -48,23 +47,23 @@ public class PlayerInputManager extends InputAdapter {
 		switch (keycode) {
 		
 		case Input.Keys.D:
-			localPlayer.inputs.replace(InputKeys.RIGHT, false);
+			localPlayer.inputs.replace(InputKeys.RIGHT, true,false);
 		return true;
 	
 		case Input.Keys.A:
-			//localPlayer.left = false;
+			localPlayer.inputs.replace(InputKeys.LEFT, true,false);
 		return true;
 
 		case Input.Keys.W:
-			//localPlayer.up = false;
+			localPlayer.inputs.replace(InputKeys.UP, true,false);
 		return true;
 		
 		case Input.Keys.S:
-			//localPlayer.down = false;
+			localPlayer.inputs.replace(InputKeys.DOWN, true,false);
 		return true;
 		
 		case Input.Keys.SPACE:
-			//localPlayer.fire = false;
+			localPlayer.inputs.replace(InputKeys.FIRE, true,false);
 		return true;
 		
 		default:
