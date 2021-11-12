@@ -6,10 +6,12 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+import input.InputKeys;
+
 public class ServersideThread extends Thread {
 	
 	private DatagramSocket socket;
-	private boolean fin,serverCreated = false;
+	private boolean end,serverCreated = false;
 	int socketPort = 9995;
 	
 	private ServerClient[] clients = new ServerClient[4];
@@ -56,7 +58,7 @@ public class ServersideThread extends Thread {
 			checkSocket(); //Make sure a socket actually exists before anything else.
 		}
 		do {
-			if (socket.isClosed()) {break;}
+			if (socket.isClosed()) {end = true;}
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data,data.length);
 			try {
@@ -68,7 +70,7 @@ public class ServersideThread extends Thread {
 				}
 				//e.printStackTrace();
 			}
-		}while(!fin);
+		}while(!end);
 	}
 
 //////////Messaging////////////////////////////////////////
@@ -176,7 +178,8 @@ public class ServersideThread extends Thread {
 	
 	private void handleUserInput(DatagramPacket packet, String packagedArgs) { //packaged args is the string with multiple arguments divided with /
 		String[] args = packagedArgs.split("/");
-		ServerClient requestingClient = null;
+		ServerClient requestingClient = clients[getClientID(packet.getAddress())];
+		requestingClient.inputs.replace(InputKeys.valueOf(args[0]), !Boolean.parseBoolean(args[1]),Boolean.parseBoolean(args[1]) );
 		
 	}
 	

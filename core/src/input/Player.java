@@ -14,18 +14,12 @@ public class Player extends Client{ //The player is a "local client"
 	ClientsideThread thread;
 	
 	//public Map<InputKeys, Boolean>  inputs = new HashMap<InputKeys, Boolean>(); //make a map (dictionary) that accepts booleans named as the input enums. (huh?)
-	private void initializeInputs() {
-		InputKeys[] array = InputKeys.values(); //Take all the enums InputKeys and put them in an array.
-		for(int i=0; i<array.length;i++) { 
-			inputs.put(array[i], false); //Use the array of enums to put each enum in the inputs list.
-		}
-	}
+
 
 	
 	public Player(String username) {
 		PIM = new PlayerInputManager(this);
 		PNM = new PlayerNetworkManager();
-		initializeInputs();
 		this.username = username;
 		localClient = new Clientside();
 	}
