@@ -99,7 +99,9 @@ public class MapScreen implements Screen {
 		// set the world contact listener
 		world.setContactListener(worldListener);
 		// working with tank
-		tank = new Tank(new Hull(Resources.BASICHULL, 0), 1, 1, localPlayer);
+		tank = new Tank(new Hull(Resources.BASICHULL, 100), 1, 1, localPlayer);
+		tank.setPosition(0, 0);
+
 
 	}
 

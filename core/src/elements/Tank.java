@@ -1,11 +1,13 @@
 package elements;
 
 import TankData.Hull;
+import input.InputKeys;
 import input.Player;
+import utilities.Config;
 import utilities.Render;
 
 public class Tank {
-	Hull hull;
+	public Hull hull;
 	Player owner;
 	float rotation;
 	float maxSpeed;
@@ -25,7 +27,9 @@ public class Tank {
 	public Tank(Hull hull,int x, int y, Player player) {
 		
 		owner = player;
-		hull.setPosition(x,y);
+		this.hull = hull;
+		rotationSpeed = 1;
+		hull.setPosition(0,0);
 		hull.setOrigin(hull.originX,hull.originY);
 		objects = new Attachable[hull.slots];
 		
@@ -35,7 +39,7 @@ public class Tank {
 	public void Render() {
 		doMovement();
 		doCannon();
-		//hull.draw(Render.batch); this is the original way to draw the tank.
+		hull.draw(Render.batch); // this is the original way to draw the tank.
 		updateObjects();//Update other sprites attached to this tank, such as cannon.
 		//System.out.println("ACCEL: "+acceleration+" | SPEED: "+speed);
 	}
@@ -58,18 +62,17 @@ public class Tank {
 	////movement functions
 	private void doMovement() {
 		doSpeed();
-		if(right) {
+		if(owner.inputs.get(InputKeys.RIGHT)) {
 			rotate(rotationSpeed * -1);
 		}
 		
-		if(left) {
+		if(owner.inputs.get(InputKeys.LEFT)) {
 			rotate(rotationSpeed);
-			
 		}
 		
-		float tempX = (float) Math.cos(Math.toRadians(rotation) ) * speed/40;
-		float tempY = (float) Math.sin(Math.toRadians(rotation) ) * speed/40;
-		setPosition(hull.getX() + tempX * -1, hull.getY() + tempY * -1);
+		float tempX = (float) Math.cos(Math.toRadians(rotation) ) ;
+		float tempY = (float) Math.sin(Math.toRadians(rotation) ) ;
+//		setPosition((hull.getX() + tempX * -1)/Config.PPM,(hull.getY() + tempY * -1)/Config.PPM);
 	}
 	
 	private void doSpeed() {
