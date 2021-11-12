@@ -1,28 +1,19 @@
 package input;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import elements.Tank;
 import network.Clientside;
 import network.ClientsideThread;
 import network.NetworkCodes;
 
-public class Player {
+public class Player extends Client{ //The player is a "local client"
 	
-	String username;
 	public static PlayerInputManager PIM;
 	public static PlayerNetworkManager PNM;
-	Tank playerTank;
 	
 	///Network
 	Clientside localClient;
 	ClientsideThread thread;
 	
-	//Input
-	
-	
-	public Map<InputKeys, Boolean>  inputs = new HashMap<InputKeys, Boolean>(); //make a map (dictionary) that accepts booleans named as the input enums. (huh?)
+	//public Map<InputKeys, Boolean>  inputs = new HashMap<InputKeys, Boolean>(); //make a map (dictionary) that accepts booleans named as the input enums. (huh?)
 	private void initializeInputs() {
 		InputKeys[] array = InputKeys.values(); //Take all the enums InputKeys and put them in an array.
 		for(int i=0; i<array.length;i++) { 
