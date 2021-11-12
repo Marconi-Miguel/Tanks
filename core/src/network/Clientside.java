@@ -11,8 +11,8 @@ public class Clientside {
 		this.localPlayer = localPlayer;
 	}
 	
-	public void startConnection(String serverIP, int serverPort) {
-		hc = new ClientsideThread(localPlayer,serverIP,serverPort);
+	public void startThread() {
+		hc = new ClientsideThread(localPlayer);
 		hc.start();
 	}
 
