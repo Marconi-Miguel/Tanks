@@ -13,6 +13,7 @@ public class NetworkCodes {
 	public static final String CONNECT = "CNNCT-";
 	public static final String DISCONNECT = "DCNCT-";
 	public static final String INPUT = "INPUT-";
+	public static final String FORBIDDEN = "FRBDN-";
 	
 
 
