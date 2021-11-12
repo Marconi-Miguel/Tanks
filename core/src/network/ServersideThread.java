@@ -112,7 +112,7 @@ public class ServersideThread extends Thread {
 	
 	public boolean isClient(InetAddress ip) {
 		for (int i=0;i<clients.length;i++) {
-			if(clients[i].IP==ip) {return true;}
+			if(clients[i] != null && clients[i].IP==ip) {return true;}
 		}
 		return false;
 	}
