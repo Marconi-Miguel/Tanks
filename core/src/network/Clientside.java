@@ -1,14 +1,15 @@
 package network;
 
 import input.Player;
+import utilities.Render;
 
 public class Clientside {
 	
 	private ClientsideThread hc;
 	Player playerClient; //The player linked to this client.
 	
-	public Clientside(Player playerClient) {
-		this.playerClient = playerClient;
+	public Clientside() {
+		this.playerClient = Render.player;
 	}
 	
 	public void startConnection(String serverIP) {

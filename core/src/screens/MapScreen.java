@@ -57,12 +57,13 @@ public class MapScreen implements Screen {
 
 		///// NETWROK TEST
 		Serverside server = new Serverside();
-		Player localPlayer = new Player("testPlayer");
-		localPlayer.connect("localhost");
-
+		Render.player = new Player("testPlayer");
+//		Player localPlayer = new Player("testPlayer");
+		Render.player.connect("localhost");
+		
 		///// NETWORK TEST
 		///// setting PIM AS IP
-		PIM = new PlayerInputManager(localPlayer);
+		PIM = new PlayerInputManager();
 		Gdx.input.setInputProcessor(PIM);
 		/////
 		// img test

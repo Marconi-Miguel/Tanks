@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 
 import input.InputKeys;
 import input.Player;
+import utilities.Render;
 
 public class ClientsideThread extends Thread {
 	
@@ -31,7 +32,7 @@ public class ClientsideThread extends Thread {
 	@Override
 	public void run() {
 		while (!end) {
-			System.out.println(playerClient.inputs.get(InputKeys.RIGHT));
+			System.out.println(Render.player.inputs.get(InputKeys.RIGHT));
 		}
 		//do {
 			byte[] data = new byte[1024];
