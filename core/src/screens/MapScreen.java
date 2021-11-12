@@ -60,7 +60,7 @@ public class MapScreen implements Screen {
 		Serverside server = new Serverside();
 		Render.player = new Player("testPlayer");
 //		Player localPlayer = new Player("testPlayer");
-		Render.player.connect("localhost");///// NETWORK TEST
+		Render.player.connect("localhost",9995);///// NETWORK TEST
 		
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(Player.PIM);

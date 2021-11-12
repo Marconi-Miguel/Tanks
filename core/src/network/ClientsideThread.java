@@ -7,21 +7,21 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import input.InputKeys;
 import input.Player;
-import utilities.Render;
 
 public class ClientsideThread extends Thread {
 
 	private DatagramSocket socket;
-	private boolean end = false;
+	private boolean end,connected = false;
 	private String serverIP;
-	private Player playerClient;
+	private int serverPort;
+	private Player localPlayer;
 
 
-	public ClientsideThread(Player playerClient, String serverIP) {
-		this.playerClient = playerClient;
+	public ClientsideThread(Player localPlayer, String serverIP, int serverPort) {
+		this.localPlayer = localPlayer;
 		this.serverIP = serverIP;
+		this.serverPort = serverPort;
 		try {
 			socket = new DatagramSocket();
 		} catch (SocketException e) {
@@ -47,8 +47,11 @@ public class ClientsideThread extends Thread {
 //////////Messaging////////////////////////////////////////
 	private void processMessage(DatagramPacket packet) {
 		String msg = new String(packet.getData()).trim();
-		System.out.println(msg);
 		switch(msg) {
+		case NetworkCodes.CONNECT:
+			handleConnection();
+		break;
+		///
 		case NetworkCodes.DISCONNECT:
 			handleDisconnection();
 		break;
@@ -64,7 +67,7 @@ public class ClientsideThread extends Thread {
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
 		}
-		DatagramPacket packet = new DatagramPacket(data,data.length,ipServer,9995);
+		DatagramPacket packet = new DatagramPacket(data,data.length,ipServer,serverPort);
 
 		try {
 			socket.send(packet);
@@ -74,9 +77,15 @@ public class ClientsideThread extends Thread {
 	}
 
 ////////////processMessage functions//////////////////////////////////////////
+	
+	private void handleConnection() {
+		System.out.println("[CLIENT] Connected to "+serverIP+" as "+localPlayer.username);
+		connected = true;
+	}
 
 	private void handleDisconnection() {
-		System.out.println("disconnected");
+		System.out.println("[CLIENT] Disconnected.");
+		connected = false;
 		this.end = true;
 	}
 
