@@ -39,6 +39,7 @@ public class ServersideThread extends Thread {
 			System.out.println("[SERVER] Closing socket on port "+socketPort); //Close socket currently in use.
 			socket.close();
 		}
+		this.interrupt();//close the thread.
 	}
 	
 	public DatagramSocket getSocket() {
@@ -84,12 +85,16 @@ public class ServersideThread extends Thread {
 //////////Messaging////////////////////////////////////////
 	private void processMessage(DatagramPacket packet) {
 		String msg = new String(packet.getData()).trim();
-		String args = msg.substring(NetworkCodes.CODELENGTH,msg.length()); //Everything after the network code are the arguments (args) of the network message.
 		String networkCode = msg.substring(0,NetworkCodes.CODELENGTH); //The first part of the message is the network code.
-	//	if (!isClient(packet.getAddress()) && networkCode != NetworkCodes.CONNECT){ //If someone who's not a client attempts to do something other than connect.
-	//		sendMessage(NetworkCodes.FORBIDDEN,packet.getAddress(),packet.getPort()); //Notify the client they're not allowed to send message.
-	//		return; //end process.
-	//	}
+		String args = msg.substring(NetworkCodes.CODELENGTH,msg.length()); //Everything after the network code are the arguments (args) of the network message.
+		
+		if(!isClient(packet.getAddress()) && !networkCode.equals(NetworkCodes.CONNECT) ) {
+			sendMessage(NetworkCodes.FORBIDDEN,packet.getAddress(),packet.getPort());
+			return;
+		}
+		
+		//System.out.println("[SERVER RECEIVED]"+msg);
+		
 		switch(networkCode) { //switches the network code.
 		case NetworkCodes.CONNECT: //connect
 			handleConnection(packet,args);
@@ -174,9 +179,11 @@ public class ServersideThread extends Thread {
 	
 	////////////processMessage functions//////////////////////////////////////////
 	private void handleConnection(DatagramPacket packet, String args) {
-		if(slotAvailable()) {
+		if(isClient(packet.getAddress())) {//If the client was already connected, just tell them they connected so they can sync.
+			sendMessage(NetworkCodes.CONNECT+"Already connected.",packet.getAddress(),packet.getPort());
+		}else if(slotAvailable()) {
 			addClient(packet.getAddress(),packet.getPort(), args);
-			sendMessage(NetworkCodes.CONNECT,packet.getAddress(),packet.getPort());
+			sendMessage(NetworkCodes.CONNECT+"Connected as "+args,packet.getAddress(),packet.getPort());
 		}else {
 			sendMessage(NetworkCodes.ERROR+"Server full.",packet.getAddress(),packet.getPort());
 		}
