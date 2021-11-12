@@ -3,12 +3,14 @@ package input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
+import utilities.Render;
+
 public class PlayerInputManager extends InputAdapter {
 
 	Player localPlayer;
 	
-	public PlayerInputManager(Player player) {
-		this.localPlayer = player;
+	public PlayerInputManager() {
+		this.localPlayer = Render.player;
 	}
 	
 	@Override

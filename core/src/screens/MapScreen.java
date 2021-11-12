@@ -57,8 +57,9 @@ public class MapScreen implements Screen {
 
 		///// NETWROK TEST
 		Serverside server = new Serverside();
-		Player localPlayer = new Player("testPlayer");
-		localPlayer.connect("localhost");
+		Render.player = new Player("testPlayer");
+//		Player localPlayer = new Player("testPlayer");
+		Render.player.connect("localhost");
 
 		///// NETWORK TEST
 		///// setting PIM AS IP
@@ -70,8 +71,8 @@ public class MapScreen implements Screen {
 		imgTest.setPosition(0, 0);
 		imgTest.setSize(200, 200);
 		imgTest.setSize(imgTest.getWidth()/Config.PPM, imgTest.getHeight()/Config.PPM);
-		
-		
+
+
 		//
 		//
 		// setting map
