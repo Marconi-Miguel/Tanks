@@ -192,6 +192,7 @@ public class ServersideThread extends Thread {
 		}else if(slotAvailable()) {
 			addClient(packet.getAddress(),packet.getPort(), args);
 			sendMessage(NetworkCodes.CONNECT+"Connected as "+args,packet.getAddress(),packet.getPort());
+			System.out.println("[SERVER] "+args+" connected.");
 		}else {
 			sendMessage(NetworkCodes.ERROR+"Server full.",packet.getAddress(),packet.getPort());
 		}
