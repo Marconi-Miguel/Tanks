@@ -18,10 +18,10 @@ public class Player extends Client{ //The player is a "local client"
 
 	
 	public Player(String username) {
-		PIM = new PlayerInputManager(this);
-		PNM = new PlayerNetworkManager();
 		this.username = username;
-		localClient = new Clientside();
+		PIM = new PlayerInputManager(this);
+		PNM = new PlayerNetworkManager(this);
+		localClient = PNM.client;
 	}
 	
 	///Input functions
@@ -29,9 +29,9 @@ public class Player extends Client{ //The player is a "local client"
 	
 	///Network functions
 	
-	public void connect(String IP) {
+	public void connect(String IP, int port) {
 		if (thread == null){
-			localClient.startConnection(IP);
+			localClient.startConnection(IP,port);
 			thread = localClient.getThread();
 			PIM.thread = thread;
 			thread.sendMessage(NetworkCodes.CONNECT+username);

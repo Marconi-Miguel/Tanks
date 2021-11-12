@@ -11,7 +11,7 @@ public class Serverside {
 		hs.start();
 	}
 
-	public ServersideThread getHs() {
+	public static ServersideThread getHs() {
 		return hs;
 	}
 	

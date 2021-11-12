@@ -33,6 +33,14 @@ public class ServersideThread extends Thread {
 		}
 	}
 	
+	public void stopServer() {
+		broadcast(NetworkCodes.DISCONNECT+"Server closed.");
+		if (!socket.isClosed()) {
+			System.out.println("[SERVER] Closing socket on port "+socketPort); //Close socket currently in use.
+			socket.close();
+		}
+	}
+	
 	public DatagramSocket getSocket() {
 		return socket;
 	}
@@ -96,7 +104,7 @@ public class ServersideThread extends Thread {
 		break;
 		///
 		default:
-			sendMessage("unknown error",packet.getAddress(),packet.getPort());
+			sendMessage(NetworkCodes.ERROR+"Invalid network code.",packet.getAddress(),packet.getPort());
 		break;
 		}
 	}
@@ -113,7 +121,9 @@ public class ServersideThread extends Thread {
 	
 	public void broadcast(String msg) { //send message to all connected clients.
 		for (int i=0;i<clients.length;i++) {
-			sendMessage(msg,clients[i].IP,clients[i].port);
+			if(clients[i] != null) {
+				sendMessage(msg,clients[i].IP,clients[i].port);
+			}
 		}
 	}
 	
@@ -157,7 +167,7 @@ public class ServersideThread extends Thread {
 	}
 	
 	public void disconnectClient(int index) {
-		sendMessage("disconnected",clients[index].IP,clients[index].port);
+		sendMessage(NetworkCodes.DISCONNECT,clients[index].IP,clients[index].port);
 		removeClient(index);
 	}
 	
@@ -166,9 +176,9 @@ public class ServersideThread extends Thread {
 	private void handleConnection(DatagramPacket packet, String args) {
 		if(slotAvailable()) {
 			addClient(packet.getAddress(),packet.getPort(), args);
-			sendMessage("connected",packet.getAddress(),packet.getPort());
+			sendMessage(NetworkCodes.CONNECT,packet.getAddress(),packet.getPort());
 		}else {
-			sendMessage("connectionRejected",packet.getAddress(),packet.getPort());
+			sendMessage(NetworkCodes.ERROR+"Server full.",packet.getAddress(),packet.getPort());
 		}
 	}
 	
@@ -179,6 +189,7 @@ public class ServersideThread extends Thread {
 	private void handleUserInput(DatagramPacket packet, String packagedArgs) { //packaged args is the string with multiple arguments divided with /
 		String[] args = packagedArgs.split("/");
 		ServerClient requestingClient = clients[getClientID(packet.getAddress())];
+		//Below: Modify the user input keys according to the network message. (huh?)
 		requestingClient.inputs.replace(InputKeys.valueOf(args[0]), !Boolean.parseBoolean(args[1]),Boolean.parseBoolean(args[1]) );
 		
 	}
