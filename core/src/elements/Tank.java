@@ -68,7 +68,7 @@ public class Tank {
 	
 	////movement functions
 	private void doMovement() {
-		doSpeed();
+//		doSpeed();
 		if(owner.inputs.get(InputKeys.RIGHT)) {
 			rotate(rotationSpeed * -1);
 		}
@@ -76,30 +76,34 @@ public class Tank {
 		if(owner.inputs.get(InputKeys.LEFT)) {
 			rotate(rotationSpeed);
 		}
+		float tempX = (float) Math.cos(Math.toRadians(rotation));
+		float tempY = (float) Math.sin(Math.toRadians(rotation));
 		
-		float tempX = (float) Math.cos(Math.toRadians(rotation)) ;
-		float tempY = (float) Math.sin(Math.toRadians(rotation)) ;
-		setPosition((hull.getX() + tempX * -1)/Config.PPM,(hull.getY() + tempY * -1)/Config.PPM);
-	}
-	
-	private void doSpeed() {
 		if (owner.inputs.get(InputKeys.UP) && !owner.inputs.get(InputKeys.DOWN)) { //If pressing W, go forward.
 //			accelerate(true);
-			hull.b2body.setLinearVelocity(0, 1);
+			hull.b2body.setLinearVelocity(-tempY, tempX);
 		}else if (owner.inputs.get(InputKeys.DOWN)&& !owner.inputs.get(InputKeys.UP)) { //If pressing S, go reverse
 //			accelerate(false);
-			hull.b2body.setLinearVelocity(0, -1);
+			hull.b2body.setLinearVelocity( tempY, -tempX);
 		}else {
 			hull.b2body.setLinearVelocity(0, 0);
 		}
-		speed += acceleration;
-		if(speed > 0 && speed >= maxSpeed) {
-			speed = maxSpeed;
-		}else if (speed < 0 && speed <= (maxSpeed/2) * -1 ) {
-			speed = (maxSpeed/2) * -1;
-		}
 		
+		
+		
+//		setPosition((hull.getX() + tempX * -1)/Config.PPM,(hull.getY() + tempY * -1)/Config.PPM);
 	}
+	
+//	private void doSpeed() {
+//
+//		speed += acceleration;
+//		if(speed > 0 && speed >= maxSpeed) {
+//			speed = maxSpeed;
+//		}else if (speed < 0 && speed <= (maxSpeed/2) * -1 ) {
+//			speed = (maxSpeed/2) * -1;
+//		}
+//		
+//	}
 	
 //	void accelerate(boolean forward) {
 //		this.forward = forward;
