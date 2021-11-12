@@ -62,6 +62,7 @@ public class PlayerInputManager extends InputAdapter {
 		
 		case Input.Keys.SPACE:
 			localPlayer.inputs.replace(InputKeys.FIRE, true,false);
+			
 		return true;
 		
 		default:

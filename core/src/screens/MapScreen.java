@@ -62,8 +62,7 @@ public class MapScreen implements Screen {
 
 		///// NETWORK TEST
 		///// setting PIM AS IP
-		PIM = new PlayerInputManager(localPlayer);
-		Gdx.input.setInputProcessor(PIM);
+		Gdx.input.setInputProcessor(Player.PIM);
 		/////
 		// img test
 		// testing
