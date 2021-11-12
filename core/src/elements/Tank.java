@@ -35,7 +35,7 @@ public class Tank {
 	public void Render() {
 		doMovement();
 		doCannon();
-		hull.draw(Render.batch);
+		//hull.draw(Render.batch); this is the original way to draw the tank.
 		updateObjects();//Update other sprites attached to this tank, such as cannon.
 		//System.out.println("ACCEL: "+acceleration+" | SPEED: "+speed);
 	}

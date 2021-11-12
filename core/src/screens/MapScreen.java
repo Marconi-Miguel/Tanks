@@ -61,20 +61,19 @@ public class MapScreen implements Screen {
 		Render.player = new Player("testPlayer");
 //		Player localPlayer = new Player("testPlayer");
 		Render.player.connect("localhost");
-		
+
 		///// NETWORK TEST
-		// setting PIM AS IP
-		PIM = new PlayerInputManager();
-		Gdx.input.setInputProcessor(PIM);
-		//
+		///// setting PIM AS IP
+		Gdx.input.setInputProcessor(Player.PIM);
+		/////
 		// img test
 		// testing
 		imgTest = new Sprite(new Texture("Tanks/tank_bigRed.png"));
 		imgTest.setPosition(0, 0);
 		imgTest.setSize(200, 200);
 		imgTest.setSize(imgTest.getWidth()/Config.PPM, imgTest.getHeight()/Config.PPM);
-		
-		
+
+
 		//
 		//
 		// setting map

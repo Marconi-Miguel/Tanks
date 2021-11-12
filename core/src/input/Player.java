@@ -11,8 +11,8 @@ import network.NetworkCodes;
 public class Player {
 	
 	String username;
-	PlayerInputManager PIM;
-	PlayerNetworkManager PNM;
+	public static PlayerInputManager PIM;
+	public static PlayerNetworkManager PNM;
 	Tank playerTank;
 	
 	///Network

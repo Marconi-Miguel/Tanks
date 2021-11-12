@@ -12,13 +12,13 @@ import input.Player;
 import utilities.Render;
 
 public class ClientsideThread extends Thread {
-	
+
 	private DatagramSocket socket;
 	private boolean end = false;
 	private String serverIP;
 	private Player playerClient;
 
-	
+
 	public ClientsideThread(Player playerClient, String serverIP) {
 		this.playerClient = playerClient;
 		try {
@@ -28,13 +28,11 @@ public class ClientsideThread extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void run() {
-		while (!end) {
-			System.out.println(Render.player.inputs.get(InputKeys.RIGHT));
-		}
-		//do {
+		do {
+			
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data,data.length);
 			try {
@@ -43,7 +41,7 @@ public class ClientsideThread extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		//}while(!end);
+		}while(!end);
 	}
 
 //////////Messaging////////////////////////////////////////
@@ -56,7 +54,7 @@ public class ClientsideThread extends Thread {
 		///
 		}
 	}
-	
+
 	public void sendMessage(String msg) {
 		byte[] data = msg.getBytes();
 		InetAddress ipServer = null;
@@ -66,24 +64,26 @@ public class ClientsideThread extends Thread {
 			e1.printStackTrace();
 		}
 		DatagramPacket packet = new DatagramPacket(data,data.length,ipServer,9995);
-		
+
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 ////////////processMessage functions//////////////////////////////////////////
-	
+
 	private void handleDisconnection() {
 		System.out.println("disconnected");
 		this.end = true;
 	}
 
 //////////// network syncing //////////////////////////////////////////
-	
+
 	private void sendInputs() {
-		
+		//Inputs are sent as a String in the following order: RIGHT/LEFT/UP/DOWN/FIRE: The msg looks like: INPUT-boolean/boolean/boolean/boolean/boolean
+		//where each boolean is one of the input values.
+		sendMessage(NetworkCodes.INPUT);
 	}
 }
