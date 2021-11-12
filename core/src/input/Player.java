@@ -48,6 +48,7 @@ public class Player {
 		if (thread == null){
 			localClient.startConnection(IP);
 			thread = localClient.getThread();
+			PIM.thread = thread;
 			thread.sendMessage(NetworkCodes.CONNECT+username);
 		}
 	}

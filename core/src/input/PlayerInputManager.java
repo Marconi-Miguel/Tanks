@@ -3,11 +3,13 @@ package input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
+import network.ClientsideThread;
 import utilities.Render;
 
 public class PlayerInputManager extends InputAdapter {
 
 	Player localPlayer;
+	ClientsideThread thread;
 	
 	public PlayerInputManager() {
 		this.localPlayer = Render.player;
@@ -15,6 +17,7 @@ public class PlayerInputManager extends InputAdapter {
 	
 	@Override
 	public boolean keyDown(int keycode) {
+		if (thread == null) { return false; } //failsafe
 		switch (keycode) {
 		
 		case Input.Keys.D:
@@ -44,6 +47,7 @@ public class PlayerInputManager extends InputAdapter {
 	/** keyUp = al dejar de pulsar una tecla */
 	@Override
 	public boolean keyUp(int keycode) {
+		if (thread == null) { return false; } //failsafe
 		switch (keycode) {
 		
 		case Input.Keys.D:
@@ -64,7 +68,6 @@ public class PlayerInputManager extends InputAdapter {
 		
 		case Input.Keys.SPACE:
 			localPlayer.inputs.replace(InputKeys.FIRE, true,false);
-			
 		return true;
 		
 		default:
