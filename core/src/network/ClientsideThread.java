@@ -81,9 +81,4 @@ public class ClientsideThread extends Thread {
 
 //////////// network syncing //////////////////////////////////////////
 
-	private void sendInputs() {
-		//Inputs are sent as a String in the following order: RIGHT/LEFT/UP/DOWN/FIRE: The msg looks like: INPUT-boolean/boolean/boolean/boolean/boolean
-		//where each boolean is one of the input values.
-		sendMessage(NetworkCodes.INPUT);
-	}
 }
