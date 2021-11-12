@@ -69,6 +69,7 @@ public class ServersideThread extends Thread {
 		String msg = new String(packet.getData()).trim();
 		String args = msg.substring(NetworkCodes.CODELENGTH,msg.length()); //Everything after the network code are the arguments (args) of the network message.
 		String networkCode = msg.substring(0,NetworkCodes.CODELENGTH); //The first part of the message is the network code.
+		System.out.println(networkCode);
 		if (!isClient(packet.getAddress()) && networkCode != NetworkCodes.CONNECT){ //If someone who's not a client attempts to do something other than connect.
 			sendMessage(NetworkCodes.FORBIDDEN,packet.getAddress(),packet.getPort()); //Notify the client they're not allowed to send message.
 			return; //end process.

@@ -21,9 +21,10 @@ public class ClientsideThread extends Thread {
 
 	public ClientsideThread(Player playerClient, String serverIP) {
 		this.playerClient = playerClient;
+		this.serverIP = serverIP;
 		try {
 			socket = new DatagramSocket();
-			this.serverIP = serverIP;
+			sendMessage(NetworkCodes.CONNECT);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
