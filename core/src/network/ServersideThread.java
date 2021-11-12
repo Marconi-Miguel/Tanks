@@ -92,7 +92,7 @@ public class ServersideThread extends Thread {
 			sendMessage(NetworkCodes.FORBIDDEN+"Not connected to server.",packet.getAddress(),packet.getPort());
 			return;
 		}
-		//System.out.println("[SERVER RECEIVED]"+msg);
+		System.out.println("[SERVER RECEIVED]"+msg);
 		
 		switch(networkCode) { //switches the network code.
 		case NetworkCodes.CONNECT: //connect
@@ -207,7 +207,6 @@ public class ServersideThread extends Thread {
 		ServerClient requestingClient = clients[getClientID(packet.getAddress())];
 		//Below: Modify the user input keys according to the network message. (huh?)
 		requestingClient.inputs.replace(InputKeys.valueOf(args[0]), !Boolean.parseBoolean(args[1]),Boolean.parseBoolean(args[1]) );
-		
 	}
 	
 	//////////
