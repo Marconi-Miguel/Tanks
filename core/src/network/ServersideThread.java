@@ -149,7 +149,7 @@ public class ServersideThread extends Thread {
 	
 	public boolean usernameInUse(String username) {
 		for (int i=0;i<clients.length;i++) {
-			if(clients[i].username == username) {return true;}
+			if(clients[i] != null && clients[i].username == username) {return true;}
 		}
 		return false;
 	}
