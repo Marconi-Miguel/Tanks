@@ -1,7 +1,5 @@
 package com.bws.tanks;
 
-import java.net.DatagramSocket;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -27,11 +25,7 @@ public class Tanks extends Game {
 	
 	@Override
 	public void dispose () { //Called when game closes!
-		DatagramSocket serverSocket = Serverside.getSocket();
-		if (serverSocket != null && !serverSocket.isClosed()) {
-			System.out.println("[SERVER] Closing socket on port "+serverSocket.getLocalPort()); //Close socket currently in use.
-			serverSocket.close();
-		}
+		Serverside.getHs().stopServer();
 		super.dispose();
 		Render.batch.dispose();
 	}
