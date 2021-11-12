@@ -89,10 +89,9 @@ public class ServersideThread extends Thread {
 		String args = msg.substring(NetworkCodes.CODELENGTH,msg.length()); //Everything after the network code are the arguments (args) of the network message.
 		
 		if(!isClient(packet.getAddress()) && !networkCode.equals(NetworkCodes.CONNECT) ) {
-			sendMessage(NetworkCodes.FORBIDDEN,packet.getAddress(),packet.getPort());
+			sendMessage(NetworkCodes.FORBIDDEN+"Not connected to server.",packet.getAddress(),packet.getPort());
 			return;
 		}
-		
 		//System.out.println("[SERVER RECEIVED]"+msg);
 		
 		switch(networkCode) { //switches the network code.
@@ -148,6 +147,13 @@ public class ServersideThread extends Thread {
 		return -1;
 	}
 	
+	public boolean usernameInUse(String username) {
+		for (int i=0;i<clients.length;i++) {
+			if(clients[i].username == username) {return true;}
+		}
+		return false;
+	}
+	
 	public boolean slotAvailable() {
 		for (int i=0;i<clients.length;i++) {
 			if(clients[i]==null) {return true;}
@@ -181,7 +187,7 @@ public class ServersideThread extends Thread {
 	private void handleConnection(DatagramPacket packet, String args) {
 		if(isClient(packet.getAddress())) {//If the client was already connected, just tell them they connected so they can sync.
 			sendMessage(NetworkCodes.CONNECT+"Already connected.",packet.getAddress(),packet.getPort());
-		}else if(slotAvailable()) {
+		}else if(slotAvailable() && !usernameInUse(args) ) {
 			addClient(packet.getAddress(),packet.getPort(), args);
 			sendMessage(NetworkCodes.CONNECT+"Connected as "+args,packet.getAddress(),packet.getPort());
 		}else {
