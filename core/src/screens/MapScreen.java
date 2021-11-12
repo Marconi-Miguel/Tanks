@@ -3,7 +3,6 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -17,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import TankData.BasicHull;
 import TankData.Hull;
+import elements.Tank;
 import input.Player;
 import input.PlayerInputManager;
 import listeners.WorldListener;
@@ -52,25 +52,23 @@ public class MapScreen implements Screen {
 	// test
 	private Sprite imgTest;
 	// hull testing
-		private Hull hull;
+	private Tank tank;
 
 	public MapScreen() {
 
 		///// NETWORK TEST
 		Serverside server = new Serverside();
-//		Render.player = new Player("testPlayer");
+		
 		Player localPlayer = new Player("testPlayer");
-//		Render.player.connect("localhost",9995);///// NETWORK TEST
+		localPlayer.connect("localhost",9995);///// NETWORK TEST
 		
 		///// setting the PIM AS InputProcessor
-		Gdx.input.setInputProcessor(Player.PIM);
+		Gdx.input.setInputProcessor(localPlayer.PIM);
 		/////
 		// img test
 		// testing
-		imgTest = new Sprite(new Texture("Tanks/tank_bigRed.png"));
-		imgTest.setPosition(0, 0);
-		imgTest.setSize(200, 200);
-		imgTest.setSize(imgTest.getWidth()/Config.PPM, imgTest.getHeight()/Config.PPM);
+
+		
 
 
 		//
@@ -100,7 +98,8 @@ public class MapScreen implements Screen {
 
 		// set the world contact listener
 		world.setContactListener(worldListener);
-		hull = new BasicHull();
+		// working with tank
+		tank = new Tank(new Hull(Resources.BASICHULL, 0), 1, 1, localPlayer);
 
 	}
 
@@ -125,8 +124,8 @@ public class MapScreen implements Screen {
 		// drawing
 		// testing
 		b.begin();
-//		hull.draw(b);
-		imgTest.draw(b);
+		tank.Render();
+
 		b.end();
 		// testing
 
