@@ -187,7 +187,7 @@ public class ServersideThread extends Thread {
 	private void handleConnection(DatagramPacket packet, String args) {
 		if(isClient(packet.getAddress())) {//If the client was already connected, just tell them they connected so they can sync.
 			sendMessage(NetworkCodes.CONNECT+"Already connected.",packet.getAddress(),packet.getPort());
-		}else if(!usernameInUse(args) ){
+		}else if(usernameInUse(args) ){
 			sendMessage(NetworkCodes.ERROR+"Username in use.",packet.getAddress(),packet.getPort());
 		}else if(slotAvailable()) {
 			addClient(packet.getAddress(),packet.getPort(), args);
