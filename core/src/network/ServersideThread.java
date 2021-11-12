@@ -26,7 +26,7 @@ public class ServersideThread extends Thread {
 			return true; //server created.
 		} catch (SocketException e) {
 			//e.printStackTrace(); too much spam
-			System.out.println("WARNING: UNABLE TO CREATE SOCKET ON "+serverAddress+" ... RETRYING");
+			System.out.println("[SERVER] UNABLE TO CREATE SOCKET ON "+serverAddress+".");
 			return false; //unable to create
 		}
 	}
