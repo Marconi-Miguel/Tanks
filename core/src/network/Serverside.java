@@ -1,15 +1,21 @@
 package network;
 
+import java.net.DatagramSocket;
+
 public class Serverside {
 	
-	private ServersideThread hs;
+	private static ServersideThread hs;
 	
 	public Serverside() {
 		hs = new ServersideThread();
 		hs.start();
 	}
 
-	public ServersideThread getHs() {
+	public static ServersideThread getHs() {
 		return hs;
+	}
+	
+	public static DatagramSocket getSocket() {
+		return(hs.getSocket() );
 	}
 }

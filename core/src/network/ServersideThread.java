@@ -6,11 +6,13 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+import input.InputKeys;
+
 public class ServersideThread extends Thread {
 	
 	private DatagramSocket socket;
-	private boolean fin,serverCreated = false;
-	int serverAddress = 9995;
+	private boolean end,serverCreated = false;
+	int socketPort = 9995;
 	
 	private ServerClient[] clients = new ServerClient[4];
 	
@@ -20,15 +22,27 @@ public class ServersideThread extends Thread {
 	
 	private boolean startServer() { //attempt to create a datagram socket.
 		try {
-			socket = new DatagramSocket(serverAddress);
-			System.out.println("SOCKET ESTABLISHED ON "+serverAddress);
+			socket = new DatagramSocket(socketPort);
+			System.out.println("[SERVER] Socket established on port: "+socketPort);
 			serverCreated = true;
 			return true; //server created.
 		} catch (SocketException e) {
 			//e.printStackTrace(); too much spam
-			System.out.println("WARNING: UNABLE TO CREATE SOCKET ON "+serverAddress+" ... RETRYING");
+			System.out.println("[SERVER] Unable to create socket on port "+socketPort+".");
 			return false; //unable to create
 		}
+	}
+	
+	public void stopServer() {
+		broadcast(NetworkCodes.DISCONNECT+"Server closed.");
+		if (!socket.isClosed()) {
+			System.out.println("[SERVER] Closing socket on port "+socketPort); //Close socket currently in use.
+			socket.close();
+		}
+	}
+	
+	public DatagramSocket getSocket() {
+		return socket;
 	}
 	
 	private void checkSocket() {//TODO: Make sure the socket check doesn't become an infinite loop.
@@ -37,7 +51,7 @@ public class ServersideThread extends Thread {
 			serverCreated = startServer(); //attempt to create a socket.
 			try {
 				Thread.sleep(1000); //wait a second before checking again.
-				serverAddress++;
+				socketPort++;
 				startServer();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -52,23 +66,31 @@ public class ServersideThread extends Thread {
 			checkSocket(); //Make sure a socket actually exists before anything else.
 		}
 		do {
+			if (socket.isClosed()) {end = true;}
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data,data.length);
 			try {
-				System.out.println("Server standing by.");
 				socket.receive(packet);
 				processMessage(packet);
 			} catch (IOException e) {
-				e.printStackTrace();
+				if(!socket.isClosed()) { //ignore error if the socket was intentionally closed.
+				System.out.println("[SERVER] Socket Exception: Could not receive packet.");
+				}
+				//e.printStackTrace();
 			}
-		}while(!fin);
+		}while(!end);
 	}
 
 //////////Messaging////////////////////////////////////////
 	private void processMessage(DatagramPacket packet) {
 		String msg = new String(packet.getData()).trim();
 		String args = msg.substring(NetworkCodes.CODELENGTH,msg.length()); //Everything after the network code are the arguments (args) of the network message.
-		switch(msg.substring(0,NetworkCodes.CODELENGTH)) { //switches the first part of the message, the network code
+		String networkCode = msg.substring(0,NetworkCodes.CODELENGTH); //The first part of the message is the network code.
+	//	if (!isClient(packet.getAddress()) && networkCode != NetworkCodes.CONNECT){ //If someone who's not a client attempts to do something other than connect.
+	//		sendMessage(NetworkCodes.FORBIDDEN,packet.getAddress(),packet.getPort()); //Notify the client they're not allowed to send message.
+	//		return; //end process.
+	//	}
+		switch(networkCode) { //switches the network code.
 		case NetworkCodes.CONNECT: //connect
 			handleConnection(packet,args);
 		break;
@@ -77,8 +99,12 @@ public class ServersideThread extends Thread {
 			handleDisconnection(packet,args);
 		break;
 		///
+		case NetworkCodes.INPUT:
+			handleUserInput(packet,args);
+		break;
+		///
 		default:
-			sendMessage("error",packet.getAddress(),packet.getPort());
+			sendMessage(NetworkCodes.ERROR+"Invalid network code.",packet.getAddress(),packet.getPort());
 		break;
 		}
 	}
@@ -95,7 +121,9 @@ public class ServersideThread extends Thread {
 	
 	public void broadcast(String msg) { //send message to all connected clients.
 		for (int i=0;i<clients.length;i++) {
-			sendMessage(msg,clients[i].IP,clients[i].port);
+			if(clients[i] != null) {
+				sendMessage(msg,clients[i].IP,clients[i].port);
+			}
 		}
 	}
 	
@@ -103,7 +131,7 @@ public class ServersideThread extends Thread {
 	
 	public boolean isClient(InetAddress ip) {
 		for (int i=0;i<clients.length;i++) {
-			if(clients[i].IP==ip) {return true;}
+			if(clients[i] != null && clients[i].IP==ip) {return true;}
 		}
 		return false;
 	}
@@ -133,13 +161,13 @@ public class ServersideThread extends Thread {
 		}
 	}
 	
-	public void removeClient(int index) {
+	public void removeClient(int id) {
 		//TODO: Consider some kind of dispose() ?
-		clients[index] = null;
+		clients[id] = null;
 	}
 	
 	public void disconnectClient(int index) {
-		sendMessage("disconnected",clients[index].IP,clients[index].port);
+		sendMessage(NetworkCodes.DISCONNECT,clients[index].IP,clients[index].port);
 		removeClient(index);
 	}
 	
@@ -148,9 +176,9 @@ public class ServersideThread extends Thread {
 	private void handleConnection(DatagramPacket packet, String args) {
 		if(slotAvailable()) {
 			addClient(packet.getAddress(),packet.getPort(), args);
-			sendMessage("connected",packet.getAddress(),packet.getPort());
+			sendMessage(NetworkCodes.CONNECT,packet.getAddress(),packet.getPort());
 		}else {
-			sendMessage("connectionRejected",packet.getAddress(),packet.getPort());
+			sendMessage(NetworkCodes.ERROR+"Server full.",packet.getAddress(),packet.getPort());
 		}
 	}
 	
@@ -158,6 +186,13 @@ public class ServersideThread extends Thread {
 		removeClient(getClientID(packet.getAddress()) );
 	}
 	
+	private void handleUserInput(DatagramPacket packet, String packagedArgs) { //packaged args is the string with multiple arguments divided with /
+		String[] args = packagedArgs.split("/");
+		ServerClient requestingClient = clients[getClientID(packet.getAddress())];
+		//Below: Modify the user input keys according to the network message. (huh?)
+		requestingClient.inputs.replace(InputKeys.valueOf(args[0]), !Boolean.parseBoolean(args[1]),Boolean.parseBoolean(args[1]) );
+		
+	}
 	
 	//////////
 }
