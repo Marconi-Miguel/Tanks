@@ -46,12 +46,13 @@ public class MapScreen implements Screen {
 	private World2D world2d;
 	// object listener
 	private WorldListener worldListener;
-	// hull testing
-	private Hull hull;
+	
 	// setting inputListener
 	private PlayerInputManager PIM;
 	// test
 	private Sprite imgTest;
+	// hull testing
+		private Hull hull;
 
 	public MapScreen() {
 

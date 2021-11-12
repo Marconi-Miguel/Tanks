@@ -1,11 +1,12 @@
 package elements;
 
 import TankData.Hull;
+import input.Player;
 import utilities.Render;
 
 public class Tank {
 	Hull hull;
-	
+	Player owner;
 	float rotation;
 	float maxSpeed;
 	float rotationSpeed;
@@ -21,9 +22,9 @@ public class Tank {
 	Attachable[] objects;
 	
 	
-	public Tank(Hull hull,int x, int y) {
+	public Tank(Hull hull,int x, int y, Player player) {
 		
-		
+		owner = player;
 		hull.setPosition(x,y);
 		hull.setOrigin(hull.originX,hull.originY);
 		objects = new Attachable[hull.slots];
