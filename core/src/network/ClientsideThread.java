@@ -24,7 +24,6 @@ public class ClientsideThread extends Thread {
 		this.serverIP = serverIP;
 		try {
 			socket = new DatagramSocket();
-			sendMessage(NetworkCodes.CONNECT);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
