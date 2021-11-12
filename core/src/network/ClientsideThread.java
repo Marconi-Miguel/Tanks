@@ -47,6 +47,7 @@ public class ClientsideThread extends Thread {
 //////////Messaging////////////////////////////////////////
 	private void processMessage(DatagramPacket packet) {
 		String msg = new String(packet.getData()).trim();
+		System.out.println(msg);
 		switch(msg) {
 		case NetworkCodes.DISCONNECT:
 			handleDisconnection();
