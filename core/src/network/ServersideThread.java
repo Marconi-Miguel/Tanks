@@ -31,6 +31,10 @@ public class ServersideThread extends Thread {
 		}
 	}
 	
+	public DatagramSocket getSocket() {
+		return socket;
+	}
+	
 	private void checkSocket() {//TODO: Make sure the socket check doesn't become an infinite loop.
 		//while (!serverCreated) { //If the socket is unexistant. 
 			
@@ -52,6 +56,7 @@ public class ServersideThread extends Thread {
 			checkSocket(); //Make sure a socket actually exists before anything else.
 		}
 		do {
+			if (socket.isClosed()) {break;}
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data,data.length);
 			try {
@@ -59,7 +64,8 @@ public class ServersideThread extends Thread {
 				socket.receive(packet);
 				processMessage(packet);
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("[SERVER] ERROR: Socket Exception.");
+				//e.printStackTrace();
 			}
 		}while(!fin);
 	}

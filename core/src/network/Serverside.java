@@ -1,8 +1,10 @@
 package network;
 
+import java.net.DatagramSocket;
+
 public class Serverside {
 	
-	private ServersideThread hs;
+	private static ServersideThread hs;
 	
 	public Serverside() {
 		hs = new ServersideThread();
@@ -11,5 +13,9 @@ public class Serverside {
 
 	public ServersideThread getHs() {
 		return hs;
+	}
+	
+	public static DatagramSocket getSocket() {
+		return(hs.getSocket() );
 	}
 }
