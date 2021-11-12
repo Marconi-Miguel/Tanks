@@ -13,10 +13,6 @@ public class Player extends Client{ //The player is a "local client"
 	Clientside localClient;
 	ClientsideThread thread;
 	
-	//public Map<InputKeys, Boolean>  inputs = new HashMap<InputKeys, Boolean>(); //make a map (dictionary) that accepts booleans named as the input enums. (huh?)
-
-
-	
 	public Player(String username) {
 		this.username = username;
 		PIM = new PlayerInputManager(this);
@@ -29,12 +25,16 @@ public class Player extends Client{ //The player is a "local client"
 	
 	///Network functions
 	
-	public void connect(String IP, int port) {
+	public boolean connect(String IP, int port) {
 		if (thread == null){
-			localClient.startConnection(IP,port);
+			localClient.startThread();
 			thread = localClient.getThread();
 			PIM.thread = thread;
-			thread.sendMessage(NetworkCodes.CONNECT+username);
-		}
+			if(!thread.connect(IP, port) ) {
+				PIM.thread = null; //failsafe
+				thread.interrupt();
+				return false; //Unable to connect. No thraed.
+			}else { return true; } //Successful connection, thraed exists.
+		} else { return true; } //thread already exists, so it IS connected.
 	}
 }
