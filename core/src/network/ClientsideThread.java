@@ -113,5 +113,11 @@ public class ClientsideThread extends Thread {
 			return false; 
 		}
 	}
+	
+	public void disconnect() {
+		if(connected) {
+			sendMessage(NetworkCodes.DISCONNECT);
+		}
+	}
 
 }

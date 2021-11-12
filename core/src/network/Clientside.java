@@ -4,7 +4,7 @@ import input.Player;
 
 public class Clientside {
 	
-	private ClientsideThread hc;
+	private static ClientsideThread hc;
 	Player localPlayer; //The player linked to this client.
 	
 	public Clientside(Player localPlayer) {
@@ -16,7 +16,7 @@ public class Clientside {
 		hc.start();
 	}
 
-	public ClientsideThread getThread() {
+	public static ClientsideThread getThread() {
 		return hc;
 	}
 }
