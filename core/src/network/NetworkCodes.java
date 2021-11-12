@@ -1,6 +1,6 @@
 package network;
 
-public class NetworkCodes {
+public abstract class NetworkCodes {
 	
 	public static final int CODELENGTH = 6;
 	
