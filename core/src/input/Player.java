@@ -23,7 +23,7 @@ public class Player extends Client{ //The player is a "local client"
 
 	
 	public Player(String username) {
-		PIM = new PlayerInputManager();
+		PIM = new PlayerInputManager(this);
 		PNM = new PlayerNetworkManager();
 		initializeInputs();
 		this.username = username;

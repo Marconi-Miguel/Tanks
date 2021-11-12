@@ -12,8 +12,8 @@ public class PlayerInputManager extends InputAdapter {
 	Player localPlayer;
 	ClientsideThread thread;
 	
-	public PlayerInputManager() {
-		this.localPlayer = Render.player;
+	public PlayerInputManager(Player localPlayer) {//This is the proper way. Don't change it.
+		this.localPlayer = localPlayer;
 	}
 	
 	@Override
