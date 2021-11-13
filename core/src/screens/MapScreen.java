@@ -19,9 +19,9 @@ import TankData.Hull;
 import elements.Tank;
 import input.Player;
 import input.PlayerInputManager;
-import listeners.WorldListener;
 import network.Serverside;
 import tiledObjects.World2D;
+import tiledObjects.WorldListener;
 import utilities.Config;
 import utilities.Render;
 import utilities.Resources;
@@ -97,10 +97,12 @@ public class MapScreen implements Screen {
 		world2d = new World2D(map);
 
 		// set the world contact listener
+		worldListener = new WorldListener();
 		world.setContactListener(worldListener);
+		
 		// working with tank
 		tank = new Tank(new Hull(Resources.BASICHULL, 100),2,2, localPlayer);
-		System.out.println(tank.hull.getX());
+		
 
 
 	}

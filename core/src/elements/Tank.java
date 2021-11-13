@@ -76,56 +76,33 @@ public class Tank {
 		if(owner.inputs.get(InputKeys.LEFT)) {
 			rotate(rotationSpeed);
 		}
-		float tempX = (float) Math.cos(Math.toRadians(rotation));
-		float tempY = (float) Math.sin(Math.toRadians(rotation));
+		
+		float tempX = (float) Math.sin(Math.toRadians(rotation)) ;
+		float tempY = (float) Math.cos(Math.toRadians(rotation)) ;
+		
+		
+		
 		
 		if (owner.inputs.get(InputKeys.UP) && !owner.inputs.get(InputKeys.DOWN)) { //If pressing W, go forward.
-//			accelerate(true);
-			hull.b2body.setLinearVelocity(-tempY, tempX);
+			
+			tempX = (hull.isOnRoad() == true)?tempX :tempX /2 ;//here controls on road speed
+			tempY = (hull.isOnRoad() == true)?tempY :tempY /2;//
+			
+			hull.b2body.setLinearVelocity(-tempX, tempY);
 		}else if (owner.inputs.get(InputKeys.DOWN)&& !owner.inputs.get(InputKeys.UP)) { //If pressing S, go reverse
-//			accelerate(false);
-			hull.b2body.setLinearVelocity( tempY, -tempX);
+
+			tempX = (hull.isOnRoad() == true)?tempX :tempX /2;//here controls on road speed
+			tempY = (hull.isOnRoad() == true)?tempY :tempY /2;//
+			hull.b2body.setLinearVelocity( tempX, -tempY);
 		}else {
 			hull.b2body.setLinearVelocity(0, 0);
 		}
 		
 		
 		
-//		setPosition((hull.getX() + tempX * -1)/Config.PPM,(hull.getY() + tempY * -1)/Config.PPM);
+
 	}
 	
-//	private void doSpeed() {
-//
-//		speed += acceleration;
-//		if(speed > 0 && speed >= maxSpeed) {
-//			speed = maxSpeed;
-//		}else if (speed < 0 && speed <= (maxSpeed/2) * -1 ) {
-//			speed = (maxSpeed/2) * -1;
-//		}
-//		
-//	}
-	
-//	void accelerate(boolean forward) {
-//		this.forward = forward;
-//		float modifier;
-//		modifier = (forward)?1:-0.5f;//Handle forward/reverse and it's modifier. (-50% speed on reverse)
-//		
-//		if( ( (speed > 0 && !forward) || (speed < 0 && forward) ) && !checkStop() ) { //If changing directions.
-//			slowDown();
-//		}else if(speed > maxSpeed/5) {acceleration = accelRate * modifier;} //If it's up to speed, accelerate normally.
-//		else {acceleration = (accelRate/2.5f) * modifier;} //If its still or slow, accelerate slower.
-//	}
-//	
-//	void slowDown() {
-//		acceleration = (speed/10) * -1;
-//	}
-//	
-//	boolean checkStop() { //Check if the speed and acceleration mean the tank should stop.
-//		if (speed <= maxSpeed/100 && speed >= (maxSpeed/100 * -1) ) {
-//			
-//			return true;
-//		}else {return false;}
-//	}
 	
 	/////////////Cannon-related functions.
 	
