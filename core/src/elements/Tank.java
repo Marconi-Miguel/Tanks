@@ -29,8 +29,8 @@ public class Tank {
 		owner = player;
 		this.hull = hull;
 		rotationSpeed = 1;
-		hull.setPosition(0,0);
-		hull.setOrigin(hull.originX,hull.originY);
+		
+		
 		objects = new Attachable[hull.slots];
 		
 		
@@ -39,7 +39,14 @@ public class Tank {
 	public void Render() {
 		doMovement();
 		doCannon();
+		//apply to relate b2body with its sprite
+//				setPosition((hull.b2body.getPosition().x - (getWidth() - difAnchoRegion) / 2), 
+//						b2body.getPosition().y - ((getHeight() - difAltoRegion) / 4)); dont delete this, maybe it could help later
+		setPosition((hull.b2body.getPosition().x - hull.getWidth()  / 2), 
+				hull.b2body.getPosition().y - hull.getHeight()  / 2); 
+		
 		hull.draw(Render.batch); // this is the original way to draw the tank.
+		
 		updateObjects();//Update other sprites attached to this tank, such as cannon.
 		//System.out.println("ACCEL: "+acceleration+" | SPEED: "+speed);
 	}
@@ -61,7 +68,7 @@ public class Tank {
 	
 	////movement functions
 	private void doMovement() {
-		doSpeed();
+//		doSpeed();
 		if(owner.inputs.get(InputKeys.RIGHT)) {
 			rotate(rotationSpeed * -1);
 		}
@@ -69,50 +76,56 @@ public class Tank {
 		if(owner.inputs.get(InputKeys.LEFT)) {
 			rotate(rotationSpeed);
 		}
+		float tempX = (float) Math.cos(Math.toRadians(rotation));
+		float tempY = (float) Math.sin(Math.toRadians(rotation));
 		
-		float tempX = (float) Math.cos(Math.toRadians(rotation) ) ;
-		float tempY = (float) Math.sin(Math.toRadians(rotation) ) ;
+		if (owner.inputs.get(InputKeys.UP) && !owner.inputs.get(InputKeys.DOWN)) { //If pressing W, go forward.
+//			accelerate(true);
+			hull.b2body.setLinearVelocity(-tempY, tempX);
+		}else if (owner.inputs.get(InputKeys.DOWN)&& !owner.inputs.get(InputKeys.UP)) { //If pressing S, go reverse
+//			accelerate(false);
+			hull.b2body.setLinearVelocity( tempY, -tempX);
+		}else {
+			hull.b2body.setLinearVelocity(0, 0);
+		}
+		
+		
+		
 //		setPosition((hull.getX() + tempX * -1)/Config.PPM,(hull.getY() + tempY * -1)/Config.PPM);
 	}
 	
-	private void doSpeed() {
-		if (up && !down) { //If pressing W, go forward.
-			accelerate(true);
-		}else if (down && !up) { //If pressing S, go reverse
-			accelerate(false);
-		}else if (!checkStop() ){ //Slowly stop if not accelerating or ready to stop.
-			slowDown();
-		}
-		speed += acceleration;
-		if(speed > 0 && speed >= maxSpeed) {
-			speed = maxSpeed;
-		}else if (speed < 0 && speed <= (maxSpeed/2) * -1 ) {
-			speed = (maxSpeed/2) * -1;
-		}
-		
-	}
+//	private void doSpeed() {
+//
+//		speed += acceleration;
+//		if(speed > 0 && speed >= maxSpeed) {
+//			speed = maxSpeed;
+//		}else if (speed < 0 && speed <= (maxSpeed/2) * -1 ) {
+//			speed = (maxSpeed/2) * -1;
+//		}
+//		
+//	}
 	
-	void accelerate(boolean forward) {
-		this.forward = forward;
-		float modifier;
-		if(forward) {modifier = 1; }else {modifier = -0.5f;} //Handle forward/reverse and it's modifier. (-50% speed on reverse)
-		
-		if( ( (speed > 0 && !forward) || (speed < 0 && forward) ) && !checkStop() ) { //If changing directions.
-			slowDown();
-		}else if(speed > maxSpeed/5) {acceleration = accelRate * modifier;} //If it's up to speed, accelerate normally.
-		else {acceleration = (accelRate/2.5f) * modifier;} //If its still or slow, accelerate slower.
-	}
-	
-	void slowDown() {
-		acceleration = (speed/10) * -1;
-	}
-	
-	boolean checkStop() { //Check if the speed and acceleration mean the tank should stop.
-		if (speed <= maxSpeed/100 && speed >= (maxSpeed/100 * -1) ) {
-			
-			return true;
-		}else {return false;}
-	}
+//	void accelerate(boolean forward) {
+//		this.forward = forward;
+//		float modifier;
+//		modifier = (forward)?1:-0.5f;//Handle forward/reverse and it's modifier. (-50% speed on reverse)
+//		
+//		if( ( (speed > 0 && !forward) || (speed < 0 && forward) ) && !checkStop() ) { //If changing directions.
+//			slowDown();
+//		}else if(speed > maxSpeed/5) {acceleration = accelRate * modifier;} //If it's up to speed, accelerate normally.
+//		else {acceleration = (accelRate/2.5f) * modifier;} //If its still or slow, accelerate slower.
+//	}
+//	
+//	void slowDown() {
+//		acceleration = (speed/10) * -1;
+//	}
+//	
+//	boolean checkStop() { //Check if the speed and acceleration mean the tank should stop.
+//		if (speed <= maxSpeed/100 && speed >= (maxSpeed/100 * -1) ) {
+//			
+//			return true;
+//		}else {return false;}
+//	}
 	
 	/////////////Cannon-related functions.
 	

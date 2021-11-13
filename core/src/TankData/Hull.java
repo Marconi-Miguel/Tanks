@@ -17,14 +17,13 @@ public class Hull extends Sprite {
 	// box2D
 	protected FixtureDef fdef;
 	protected BodyDef bdef;
-	protected Body b2body;
+	public Body b2body;
 	World world;
 	private Sprite dmged1;
 	private Sprite dmged2;
 	Sprite dmged3;
 
-	public int originX;	
-	public int originY;
+	
 	public int startRotation;
 
 	// stats
@@ -42,22 +41,21 @@ public class Hull extends Sprite {
 		super(new Texture(texture));
 		this.hp = hp;
 		this.world = Render.world;
-//		System.out.println("w:" + getWidth());
-//		System.out.println("h:" + getHeight());
-//		System.out.println("W:" + getWidth()/Config.PPM);
-//		System.out.println("H:" + getHeight()/ Config.PPM );
-		setBounds(2, 2, getWidth()/Config.PPM, getHeight()/ Config.PPM );
 		
+		setSize(getWidth()/Config.PPM, getHeight()/ Config.PPM );
+		setOrigin(getWidth()/2, getHeight()/2);
+		System.out.println(this.getX());
 		createBody();
-
 		fixtureDef();
+		
+		
 	}
 
 	private void createBody() {
 		// new Body
 		bdef = new BodyDef();
 		// starter position of body
-		bdef.position.set(getWidth()/ Config.PPM, getHeight()/ Config.PPM);
+		bdef.position.set(0.5f,0.5f);
 		// kind of body and set the map
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		b2body = world.createBody(bdef);
@@ -68,7 +66,7 @@ public class Hull extends Sprite {
 		fdef = new FixtureDef();
 		// defines what kind the box is going to have
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(getWidth() / 2, getHeight() / 4);
+		shape.setAsBox(getWidth() / 2, getHeight() / 2);
 		fdef.filter.categoryBits = Config.TANK_BIT;
 		// definimos la mascara de bits, que objetos box2d tiene que darle atencion.
 		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT;
@@ -89,7 +87,7 @@ public class Hull extends Sprite {
 
 		// se crea la figura los sensores en este caso lineas
 		//it takes the origin in the center of the body
-		up.set(new Vector2(-getWidth()/2, getHeight()/2 ), new Vector2(getWidth()/2 , getHeight()/2 ));
+		up.set(new Vector2(-getWidth()/2, getHeight()/2 ), new Vector2(getWidth()/2 , getHeight()/2));
 		fdef.shape = up;
 		fdef.isSensor = true;
 		//then it joins to the b2body

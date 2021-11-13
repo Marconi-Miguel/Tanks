@@ -99,8 +99,8 @@ public class MapScreen implements Screen {
 		// set the world contact listener
 		world.setContactListener(worldListener);
 		// working with tank
-		tank = new Tank(new Hull(Resources.BASICHULL, 100), 1, 1, localPlayer);
-		tank.setPosition(0, 0);
+		tank = new Tank(new Hull(Resources.BASICHULL, 100),2,2, localPlayer);
+		System.out.println(tank.hull.getX());
 
 
 	}
@@ -126,10 +126,12 @@ public class MapScreen implements Screen {
 		// drawing
 		// testing
 		b.begin();
+//		tank.hull.draw(b);
 		tank.Render();
 
 		b.end();
 		// testing
+		
 
 	}
 

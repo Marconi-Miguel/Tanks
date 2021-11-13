@@ -9,6 +9,7 @@ public class Road extends InteractiveObject {
 	public Road( TiledMap map, Rectangle limites) {
 		super( map, limites);
 		//crea su caja 2d
+		fixture.setSensor(true);
 		fixture.setUserData(this);
 		
 	}
