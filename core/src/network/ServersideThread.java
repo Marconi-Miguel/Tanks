@@ -92,7 +92,7 @@ public class ServersideThread extends Thread {
 			sendMessage(NetworkCodes.FORBIDDEN+"Not connected to server.",packet.getAddress(),packet.getPort());
 			return;
 		}
-		System.out.println("[SERVER RECEIVED]"+msg);
+		//System.out.println("[SERVER RECEIVED]"+msg);
 		
 		switch(networkCode) { //switches the network code.
 		case NetworkCodes.CONNECT: //connect
