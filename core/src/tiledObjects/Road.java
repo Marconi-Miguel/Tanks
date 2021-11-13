@@ -1,8 +1,9 @@
 package tiledObjects;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
+
+import utilities.Config;
 
 public class Road extends InteractiveObject {
 	
@@ -10,16 +11,15 @@ public class Road extends InteractiveObject {
 		super( map, limites);
 		//crea su caja 2d
 		fixture.setSensor(true);
-		fixture.setUserData(this);
+		fixture.setUserData("Road");
+		setFilter(Config.ROAD_BIT);
 		
 	}
 
 
 	@Override
 	public void interaction() {
-		System.out.println("Escalable: colision");
-		
-		
+		System.out.println("road: colision");
 	}
 
 }
