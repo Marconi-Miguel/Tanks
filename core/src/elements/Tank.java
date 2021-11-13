@@ -91,8 +91,8 @@ public class Tank {
 			hull.b2body.setLinearVelocity(-tempX, tempY);
 		}else if (owner.inputs.get(InputKeys.DOWN)&& !owner.inputs.get(InputKeys.UP)) { //If pressing S, go reverse
 
-			tempX = (hull.isOnRoad() == true)?tempX :tempX /2;//here controls on road speed
-			tempY = (hull.isOnRoad() == true)?tempY :tempY /2;//
+			tempX = (hull.isOnRoad() == true)?tempX/1.5f :tempX /3;//here controls on road speed
+			tempY = (hull.isOnRoad() == true)?tempY/1.5f :tempY /3;//
 			hull.b2body.setLinearVelocity( tempX, -tempY);
 		}else {
 			hull.b2body.setLinearVelocity(0, 0);
