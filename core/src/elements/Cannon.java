@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
-import utilities.Functions;
 import utilities.Render;
 import utilities.Resources;
 
@@ -32,7 +31,7 @@ public class Cannon extends Attachable {
 		if (ready){
 			ready = false;
 			super.modifyTexture(fire);
-			fireSfx.play(1,Functions.randomFloat(0.8f,1.2f), 1);
+//			fireSfx.play(1,Functions.randomFloat(0.8f,1.2f), 1);
 			Timer.schedule(new Task() {
 				public void run() {
 					idleCannon();
