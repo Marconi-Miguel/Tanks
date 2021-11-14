@@ -11,17 +11,17 @@ public class Resources {
 	//MAPS
 	public static final String MAP1= "Maps/mapaDessert.tmx";
 	//HULLS /////////////////////////////////////////
-	public static final String BASICHULL = "Tanks/tank_bigRed.png";
+	public static final String BASICHULL = "Tanks/Red/tankBody_red.png";
 
 	//CANNONS /////////////////////////////////////////
-	public static final String BASICCANNON = "images/cannons/basic.png";
-	public static final String BASICCANNON_FIRE = "images/cannons/basic_fire.png";
+	public static final String BASICCANNON = "Tanks/Red/TankRed_barrel1.png";
+	public static final String BASICCANNON_FIRE = "Tanks/Red/TankRed_barrel2.png";
 	
 	//CANNON SFX//////////////////////////////////////
 	public static final String BASICCANNON_FIRE_SFX = "audio/sfx/cannon/basic_fire.mp3";
 	
 	//SHELLS ////////////////////////////////////////
-	public static final String BASICSHELL = "images/shells/basic.png";
+	public static final String BASICSHELL = "Tanks/Projectiles/shotOrange.png";
 
 	
 
