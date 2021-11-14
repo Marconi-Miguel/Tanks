@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -42,7 +41,7 @@ public class Hull extends Sprite {
 		this.hp = hp;
 		this.world = Render.world;
 
-		setSize(getWidth()/2 / Config.PPM, getHeight()/2 / Config.PPM);
+		setSize(getWidth() / 2 / Config.PPM, getHeight() / 2 / Config.PPM);
 		setOrigin(getWidth() / 2, getHeight() / 2);
 		System.out.println(this.getX());
 		createBody();
@@ -91,9 +90,10 @@ public class Hull extends Sprite {
 		fdef.isSensor = true;
 		// then it joins to the b2body
 		fdef.filter.categoryBits = Config.TNKSENSOR_BIT;
-		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT; // only triggers if a projectil or explosions hit
+		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT; // only triggers if a projectil or
+																			// explosions hit
 		b2body.createFixture(fdef).setUserData("up");
-		
+
 		down.set(new Vector2(-getWidth() / 2, -getHeight() / 2), new Vector2(getWidth() / 2, -getHeight() / 2));
 		fdef.shape = down;
 		fdef.isSensor = true;
@@ -105,14 +105,14 @@ public class Hull extends Sprite {
 		fdef.shape = side1;
 		fdef.isSensor = true;
 		fdef.filter.categoryBits = Config.TNKSENSOR_BIT;
-		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT; 
+		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT;
 		b2body.createFixture(fdef).setUserData("sideL");
 
 		side2.set(new Vector2(-getWidth() / 2, getHeight() / 2), new Vector2(-getWidth() / 2, -getHeight() / 2));
 		fdef.shape = side2;
 		fdef.isSensor = true;
 		fdef.filter.categoryBits = Config.TNKSENSOR_BIT;
-		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT; 
+		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT;
 		b2body.createFixture(fdef).setUserData("sideR");
 
 	}
@@ -127,13 +127,13 @@ public class Hull extends Sprite {
 	}
 
 	public void inRoad() {
-		
+
 		onRoad = true;
 	}
 
 	public void outRoad() {
-	
-		onRoad = false ;
+
+		onRoad = false;
 	}
 
 	public int getHp() {
@@ -155,5 +155,11 @@ public class Hull extends Sprite {
 	public void setWeaponSlots(int weaponSlots) {
 		this.weaponSlots = weaponSlots;
 	}
-
+	public void moveHull(float x , float y){
+		
+		b2body.setLinearVelocity(x, y);
+	}
+	public void stopHull(){
+		b2body.setLinearVelocity(0, 0);
+	}
 }
