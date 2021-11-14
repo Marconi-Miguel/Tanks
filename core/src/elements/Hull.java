@@ -14,16 +14,14 @@ import com.badlogic.gdx.physics.box2d.World;
 import utilities.Config;
 import utilities.Render;
 
-public class Hull extends Sprite {
-	// box2D
-	protected FixtureDef fdef;
-	protected BodyDef bdef;
-	public Body b2body;
+public class Hull extends Entidad2D{
+	
+	
 	World world;
 //	private Sprite dmged1;
 //	private Sprite dmged2;
 	Sprite dmged3;
-	Fixture fixture;
+	
 
 	public int startRotation;
 
@@ -43,13 +41,12 @@ public class Hull extends Sprite {
 
 		setSize(getWidth() / 2 / Config.PPM, getHeight() / 2 / Config.PPM);
 		setOrigin(getWidth() / 2, getHeight() / 2);
-		System.out.println(this.getX());
 		createBody();
 		fixtureDef();
 
 	}
 
-	private void createBody() {
+	protected void createBody() {
 		// new Body
 		bdef = new BodyDef();
 		// starter position of body
