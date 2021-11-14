@@ -2,7 +2,6 @@ package input;
 
 import network.Clientside;
 import network.ClientsideThread;
-import network.NetworkCodes;
 
 public class Player extends Client{ //The player is a "local client"
 	
@@ -16,6 +15,7 @@ public class Player extends Client{ //The player is a "local client"
 	public Player(String username) {
 		this.username = username;
 		PIM = new PlayerInputManager(this);
+		
 		PNM = new PlayerNetworkManager(this);
 		localClient = PNM.client;
 	}
