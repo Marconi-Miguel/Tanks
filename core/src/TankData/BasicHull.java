@@ -13,10 +13,11 @@ public class BasicHull extends Hull{
 		startRotation = 90;
 		
 		//Specs
-		weaponSlots = 1;
-		rotationSpeed = 0.5f;
 		
-		slots = weaponSlots; //total amount of slots
+		rotationSpeed = 0.5f;
+		slots = 1;
+		System.out.println(this.slots + " asdasd ");
+		
 	}
 
 }
