@@ -3,8 +3,6 @@ package TankData;
 import elements.Cannon;
 import utilities.Resources;
 
-import com.badlogic.gdx.Gdx;
-
 public class BasicCannon extends Cannon {
 
 	public BasicCannon() {
@@ -12,7 +10,7 @@ public class BasicCannon extends Cannon {
 		
 		reloadTime = 2;
 		
-		fireSfx = Gdx.audio.newSound(Gdx.files.internal(Resources.BASICCANNON_FIRE_SFX));
+//		fireSfx = Gdx.audio.newSound(Gdx.files.internal(Resources.BASICCANNON_FIRE_SFX));
 	}
 
 }
