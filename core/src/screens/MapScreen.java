@@ -64,12 +64,10 @@ public class MapScreen implements Screen {
 		
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(localPlayer.PIM);
+		
 		/////
 		// img test
 		// testing
-
-		
-
 
 		//
 		//
@@ -101,7 +99,7 @@ public class MapScreen implements Screen {
 		world.setContactListener(worldListener);
 		
 		// working with tank
-		tank = new Tank(new Hull(Resources.BASICHULL, 100),2,2, localPlayer);
+		tank = new Tank(new BasicHull(),2,2, localPlayer);
 		
 
 
