@@ -6,8 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
-import TankData.Hull;
-import elements.Tank;
+import elements.Hull;
 
 public class WorldListener implements ContactListener {
 	private Fixture fixA;

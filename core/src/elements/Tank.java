@@ -1,10 +1,8 @@
 package elements;
 
 import TankData.BasicCannon;
-import TankData.Hull;
 import input.InputKeys;
 import input.Player;
-import utilities.Config;
 import utilities.Render;
 
 public class Tank {
