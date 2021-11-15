@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import utilities.Config;
 import utilities.Render;
 
-public class Attachable extends Sprite{
+public class Attachable extends Sprite {
 	
 
 	Tank tank;
@@ -26,13 +26,11 @@ public class Attachable extends Sprite{
 		
 		setRotation(Rotation);
 		draw(Render.batch);
+		
 	}
 	
 	public void modifyTexture(Texture texture) {
 		//this.texture.dispose(); //Gets rid of the old texture.
 		setTexture(texture);
-
 	}
-
-
 }

@@ -9,36 +9,39 @@ import utilities.Config;
 import utilities.Render;
 
 public class Projectile extends Entidad2D {
-	public float speed;
+	public float speedMod;
 	public Tank parent;
-	public int rotation;
+	public float degrees;
 	public boolean fired = false;
-	public Projectile(float x, float y, Tank tank, String texture, float speed) {
+	
+	public Projectile(float x, float y, Tank tank, String texture, float speedMod) {
 		super(new Texture(texture));
 		parent = tank;
-		this.speed = speed;
-		
-		setX(x);
-		setY(y);
-		setSize(this.getWidth() / Config.PPM, this.getHeight() / Config.PPM);
-		setRotation(rotation);
 		this.world = Render.world;
+		this.speedMod = speedMod;
+		setDegrees(tank.rotation);
+		setSize(getWidth()/2/Config.PPM, getHeight()/2/Config.PPM);
+		setOrigin(getWidth() / 2, getHeight() / 2);
+		setPosition(x+getWidth()/2, y);
+		
 		createBody();
 		fixtureDef();
 
 	}
-
+	
 	public void fired() {
-		super.draw(Render.batch);
 		doMovement();
+		draw(Render.batch);
+		
 	}
 
 	void doMovement() {
-		float tempX = (float) Math.cos(Math.toRadians(rotation));
-		float tempY = (float) Math.sin(Math.toRadians(rotation));
-		b2body.setLinearVelocity(-tempX, tempY);
-		setPosition((b2body.getPosition().x -getWidth() / 2),
-				b2body.getPosition().y - getHeight() / 2);
+		float tempY= (float) Math.cos(Math.toRadians(degrees));
+		float tempX = (float) Math.sin(Math.toRadians(degrees));
+		b2body.setLinearVelocity(-tempX * speedMod, tempY * speedMod);
+		setPosition((b2body.getPosition().x - getWidth()/2),// CHANGE / -getWidth/2
+				b2body.getPosition().y - getHeight()/2);
+		
 		
 	}
 
@@ -70,5 +73,10 @@ public class Projectile extends Entidad2D {
 		Render.world.destroyBody(b2body);
 		b2body = null;
 	}
+	public void setDegrees(float degrees) {
+		this.degrees = degrees;
+		rotate(degrees);
+	}
+
 
 }
