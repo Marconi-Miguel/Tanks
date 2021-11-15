@@ -17,7 +17,6 @@ public abstract class Entidad2D extends Sprite{
 	protected Fixture fixture;
 	protected abstract void createBody();
 	protected abstract void fixtureDef();
-	protected abstract void sensorsDef();
 	protected abstract void disappear();
 	public Entidad2D(Texture texture) {
 		super(texture);
