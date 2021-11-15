@@ -1,7 +1,6 @@
 package elements;
 
 import TankData.BasicCannon;
-import TankData.Hull;
 import input.InputKeys;
 import input.Player;
 import utilities.Config;
@@ -17,6 +16,7 @@ public class Tank {
 	float speed;
 	float acceleration;
 	boolean forward; // direction. true if going forward, false if reverse.
+	float time;
 
 	
 
@@ -46,9 +46,6 @@ public class Tank {
 		// System.out.println("ACCEL: "+acceleration+" | SPEED: "+speed);
 	}
 
-	
-		
-	
 
 	public void setPosition(float x, float y) {
 		hull.setPosition(x, y);
@@ -89,7 +86,6 @@ public class Tank {
 		if (owner.inputs.get(InputKeys.LEFT)) {
 			rotate(rotationSpeed);
 		}
-
 	}
 
 	public void rotate(float degrees) {
@@ -111,6 +107,7 @@ public class Tank {
 				if (objects[i].objectType == "Cannon") {
 					Cannon cannon = (Cannon) objects[i] ; // omg 
 					cannon.trigger();
+					
 //					(Cannon) objects[i].trigger();
 				}
 			}
@@ -138,11 +135,10 @@ public class Tank {
 			if (objects[i] != null) {
 				objects[i].update(hull.getX() +  hull.getWidth() / 2 - objects[i].getWidth()/2 , hull.getY() +  hull.getHeight() / 2, hull.getRotation());
 									//TODO SETEAR BIEN ESTO, EL WITDH LE SUMO  LA MITAD DEL OBJETO PARA ESTAR EN EL CENTRO, PERO SI HAY MAS ATTACHABLES
-									// NO DEBERIA SER ASI
-				
-																																
+									// NO DEBERIA SER ASI																												
 			}
 		}
+		
 	}
 
 }

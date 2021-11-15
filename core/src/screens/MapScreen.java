@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import TankData.BasicHull;
-import TankData.Hull;
+import elements.Hull;
 import elements.Tank;
 import input.Player;
 import input.PlayerInputManager;
@@ -136,12 +136,13 @@ public class MapScreen implements Screen {
 	}
 
 	private void update(float delta) {
+		Config.delta = delta;
 		camera.update();
 		// 60 ticks in a second if im right
 		world.step(1 / 60f, 6, 2);
 		// sets whats the renderer gonna draw, that shows in camera
 		renderer.setView(camera);
-
+		
 	}
 
 	@Override

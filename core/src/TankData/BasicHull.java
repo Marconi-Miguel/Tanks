@@ -1,5 +1,6 @@
 package TankData;
 
+import elements.Hull;
 import utilities.Resources;
 
 public class BasicHull extends Hull{
