@@ -3,7 +3,6 @@ package elements;
 import TankData.BasicCannon;
 import input.InputKeys;
 import input.Player;
-import utilities.Config;
 import utilities.Render;
 
 public class Tank {

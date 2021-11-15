@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import TankData.BasicHull;
-import elements.Hull;
 import elements.Tank;
 import input.Player;
 import input.PlayerInputManager;
