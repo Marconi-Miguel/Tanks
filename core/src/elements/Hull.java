@@ -3,10 +3,8 @@ package elements;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -14,14 +12,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import utilities.Config;
 import utilities.Render;
 
-public class Hull extends Entidad2D{
-	
-	
+public class Hull extends Entidad2D {
+
 	World world;
 //	private Sprite dmged1;
 //	private Sprite dmged2;
 	Sprite dmged3;
-	
 
 	public int startRotation;
 
@@ -68,10 +64,9 @@ public class Hull extends Entidad2D{
 		fdef.shape = shape;
 		b2body.createFixture(fdef).setUserData(this);
 		sensorsDef();
-
 	}
 
-	protected void sensorsDef() {
+	private void sensorsDef() {
 		// se crea sensores para todos los sentidos
 		EdgeShape up = new EdgeShape();
 		EdgeShape down = new EdgeShape();
@@ -114,7 +109,7 @@ public class Hull extends Entidad2D{
 
 	}
 
-	public void disappear() {
+	protected void disappear() {
 		Render.world.destroyBody(b2body);
 		b2body = null;
 	}
@@ -152,11 +147,13 @@ public class Hull extends Entidad2D{
 	public void setWeaponSlots(int weaponSlots) {
 		this.weaponSlots = weaponSlots;
 	}
-	public void moveHull(float x , float y){
-		
+
+	public void moveHull(float x, float y) {
+
 		b2body.setLinearVelocity(x, y);
 	}
-	public void stopHull(){
+
+	public void stopHull() {
 		b2body.setLinearVelocity(0, 0);
 	}
 }
