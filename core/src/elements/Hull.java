@@ -39,13 +39,13 @@ public class Hull extends Entidad2D {
 		setOrigin(getWidth() / 2, getHeight() / 2);
 		switch(Render.tanks.size()) {
 		case 0:
-			setPosition(1*15/Config.PPM,1*15/Config.PPM);
+			setPosition(2*15/Config.PPM,2*15/Config.PPM);
 			break;
 		case 1:
-			setPosition(1*15/Config.PPM,62*15/Config.PPM);
+			setPosition(2*15/Config.PPM,62*15/Config.PPM);
 			break;
 		case 2:
-			setPosition(62*15/Config.PPM,1*15/Config.PPM);
+			setPosition(62*15/Config.PPM,2*15/Config.PPM);
 			break;
 		case 3:
 			setPosition(62*15/Config.PPM,62*15/Config.PPM);
@@ -67,6 +67,8 @@ public class Hull extends Entidad2D {
 		// kind of body and set the map
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		b2body = world.createBody(bdef);
+		
+		
 
 	}
 
@@ -77,53 +79,10 @@ public class Hull extends Entidad2D {
 		shape.setAsBox(getWidth() / 2, getHeight() / 2);
 		fdef.filter.categoryBits = Config.TANK_BIT;
 		// definimos la mascara de bits, que objetos box2d tiene que darle atencion.
-		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT | Config.TANK_BIT | Config.EXPLOSION_BIT;
+		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT | Config.TANK_BIT | Config.EXPLOSION_BIT | Config.PROJECTIL_BIT;
 		fdef.shape = shape;
 		b2body.createFixture(fdef).setUserData(this);
-		sensorsDef();
-	}
-
-	private void sensorsDef() {
-		// se crea sensores para todos los sentidos
-		EdgeShape up = new EdgeShape();
-		EdgeShape down = new EdgeShape();
-		// right
-		EdgeShape side1 = new EdgeShape();
-		// left
-		EdgeShape side2 = new EdgeShape();
-
-		// se crea la figura los sensores en este caso lineas
-		// it takes the origin in the center of the body
-		up.set(new Vector2(-getWidth() / 2, getHeight() / 2), new Vector2(getWidth() / 2, getHeight() / 2));
-		fdef.shape = up;
-		fdef.isSensor = true;
-		// then it joins to the b2body
-		fdef.filter.categoryBits = Config.TNKSENSOR_BIT;
-		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT; // only triggers if a projectil or
-																			// explosions hit
-		b2body.createFixture(fdef).setUserData("up");
-
-		down.set(new Vector2(-getWidth() / 2, -getHeight() / 2), new Vector2(getWidth() / 2, -getHeight() / 2));
-		fdef.shape = down;
-		fdef.isSensor = true;
-		fdef.filter.categoryBits = Config.TNKSENSOR_BIT;
-		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT;
-		b2body.createFixture(fdef).setUserData("down");
-
-		side1.set(new Vector2(getWidth() / 2, getHeight() / 2), new Vector2(getWidth() / 2, -getHeight() / 2));
-		fdef.shape = side1;
-		fdef.isSensor = true;
-		fdef.filter.categoryBits = Config.TNKSENSOR_BIT;
-		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT;
-		b2body.createFixture(fdef).setUserData("sideL");
-
-		side2.set(new Vector2(-getWidth() / 2, getHeight() / 2), new Vector2(-getWidth() / 2, -getHeight() / 2));
-		fdef.shape = side2;
-		fdef.isSensor = true;
-		fdef.filter.categoryBits = Config.TNKSENSOR_BIT;
-		fdef.filter.maskBits = Config.PROJECTIL_BIT | Config.EXPLOSION_BIT;
-		b2body.createFixture(fdef).setUserData("sideR");
-
+		
 	}
 
 	protected void disappear() {
