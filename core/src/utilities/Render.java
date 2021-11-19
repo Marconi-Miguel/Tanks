@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
 
+import elements.Tank;
 import input.Player;
 
 
@@ -17,6 +18,7 @@ public abstract class Render {
 	public static Tanks app;
 	public static World world;
 	public static Player player;
+	public static ArrayList<Tank> tanks = new ArrayList<Tank>();
 	public static ArrayList<Sprite> renderList = new ArrayList<Sprite>();
 	int renderID;
 
