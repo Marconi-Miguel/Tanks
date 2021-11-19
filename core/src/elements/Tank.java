@@ -140,5 +140,9 @@ public class Tank {
 		}
 
 	}
+	public void receiveDamage(float x , float y) {
+													//the tank will receive the damage and the coordinates to know where it hit.
+		
+	}
 
 }
