@@ -1,6 +1,7 @@
 package elements;
 
 import TankData.BasicCannon;
+import TankData.BasicHull;
 import input.InputKeys;
 import input.Player;
 import utilities.Render;
@@ -20,10 +21,10 @@ public class Tank {
 	// Array holding other elements of the tank, such as the cannon.
 	Attachable[] objects;
 
-	public Tank(Hull hull, int x, int y, Player player) {
+	public Tank(Player player) {
 		// TODO SETEAR LA POSICION DESDE ACA
 		owner = player;
-		this.hull = hull;
+		this.hull = new BasicHull();
 		rotationSpeed = 1;
 
 		objects = new Attachable[hull.slots];
@@ -123,8 +124,9 @@ public class Tank {
 	}
 
 	void updateObjects() { // Fix attached objects position & rotation
+		//
 		for (int i = 0; i < objects.length; i++) {
-			if (objects[i].objectType.equals("Cannon")) {
+			if (objects[i].objectType.equals("Cannon")) { // updates cannon a its respective projectiles
 				((Cannon) objects[i]).updateCannon();
 			}
 			if (objects[i] != null) {

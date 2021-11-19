@@ -34,9 +34,26 @@ public class Hull extends Entidad2D {
 		super(new Texture(texture));
 		this.hp = hp;
 		this.world = Render.world;
-
+		
 		setSize(getWidth() / 2 / Config.PPM, getHeight() / 2 / Config.PPM);
 		setOrigin(getWidth() / 2, getHeight() / 2);
+		switch(Render.tanks.size()) {
+		case 0:
+			setPosition(1*15/Config.PPM,1*15/Config.PPM);
+			break;
+		case 1:
+			setPosition(1*15/Config.PPM,62*15/Config.PPM);
+			break;
+		case 2:
+			setPosition(62*15/Config.PPM,1*15/Config.PPM);
+			break;
+		case 3:
+			setPosition(62*15/Config.PPM,62*15/Config.PPM);
+			break;
+			default:
+				setPosition(1,1);
+				break;
+		}
 		createBody();
 		fixtureDef();
 
@@ -46,7 +63,7 @@ public class Hull extends Entidad2D {
 		// new Body
 		bdef = new BodyDef();
 		// starter position of body
-		bdef.position.set(0.5f, 0.5f);
+		bdef.position.set(getX(), getY());
 		// kind of body and set the map
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		b2body = world.createBody(bdef);
@@ -60,7 +77,7 @@ public class Hull extends Entidad2D {
 		shape.setAsBox(getWidth() / 2, getHeight() / 2);
 		fdef.filter.categoryBits = Config.TANK_BIT;
 		// definimos la mascara de bits, que objetos box2d tiene que darle atencion.
-		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT;
+		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT | Config.TANK_BIT | Config.EXPLOSION_BIT;
 		fdef.shape = shape;
 		b2body.createFixture(fdef).setUserData(this);
 		sensorsDef();

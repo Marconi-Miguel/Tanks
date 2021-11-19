@@ -18,7 +18,7 @@ public class Projectile extends Entidad2D {
 		super(new Texture(texture));
 		parent = tank;
 		this.world = Render.world;
-		this.speedMod = speedMod;
+		this.speedMod = 2;
 		setDegrees(tank.rotation);
 		setSize(getWidth()/2/Config.PPM, getHeight()/2/Config.PPM);
 		setOrigin(getWidth() / 2, getHeight() / 2);

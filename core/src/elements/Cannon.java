@@ -18,7 +18,8 @@ public class Cannon extends Attachable {
 	Texture idle;
 	Texture fire;
 	public Sound fireSfx;
-	public int time;
+	public float time;
+	public float fireEffectTime =0.5f;
 
 	Timer timer = new Timer();
 
@@ -35,16 +36,25 @@ public class Cannon extends Attachable {
 			modifyTexture(fire);
 //			fireSfx.play(1,Functions.randomFloat(0.8f,1.2f), 1);
 			Projectile shell = new Projectile(getX() + getWidth()/2, getY()+ getHeight()/2, tank, Resources.BASICSHELL, 25);
-			
 			projectiles.add(shell);
 		}
 	}
 	public void updateCannon() { 
 		time+= Config.delta;
+		
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).fired();
 			
 		}
+		if(time>reloadTime) {
+			System.out.println("asd");
+				time = 0;
+			ready = true;
+		}
+		if(time>fireEffectTime) {
+			idleCannon();
+		}
+		
 	}
 	private void idleCannon() {
 		modifyTexture(idle);
