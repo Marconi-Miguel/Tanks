@@ -89,7 +89,7 @@ public class MapScreen implements Screen {
 		// render which draws box2d Textures
 		b2dr = new Box2DDebugRenderer();
 		// then camera zoom
-		gamePort = new FitViewport(((64 * 15) / 1.2f / Config.PPM), ((64 * 15) /2f / Config.PPM), camera);
+		gamePort = new FitViewport(((64 * 15) / 1.2f / Config.PPM), ((64 * 15) /1.1f / Config.PPM), camera);
 		// centers the camera to the new map
 		camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
