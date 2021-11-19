@@ -52,6 +52,7 @@ public class MapScreen implements Screen {
 	private Sprite imgTest;
 	// hull testing
 	private Tank tank;
+	private Tank tank2;
 
 	public MapScreen() {
 
@@ -59,7 +60,9 @@ public class MapScreen implements Screen {
 		Serverside server = new Serverside();
 		
 		Player localPlayer = new Player("testPlayer");
+//		Player localPlayer2 = new Player("testPlayer");
 		localPlayer.connect("localhost",9995);///// NETWORK TEST
+//		localPlayer2.connect("localhost",9996);///// NETWORK TEST
 		
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(localPlayer.PIM);
@@ -98,7 +101,9 @@ public class MapScreen implements Screen {
 		world.setContactListener(worldListener);
 		
 		// working with tank
-		tank = new Tank(new BasicHull(),2,2, localPlayer);
+		tank = new Tank(localPlayer);
+		Render.tanks.add(tank);
+		tank2 = new Tank(localPlayer);
 		
 
 
@@ -127,6 +132,7 @@ public class MapScreen implements Screen {
 		b.begin();
 //		tank.hull.draw(b);
 		tank.Render();
+		tank2.Render();
 
 		b.end();
 		// testing
@@ -135,6 +141,7 @@ public class MapScreen implements Screen {
 	}
 
 	private void update(float delta) {
+		
 		Config.delta = delta;
 		camera.update();
 		// 60 ticks in a second if im right
