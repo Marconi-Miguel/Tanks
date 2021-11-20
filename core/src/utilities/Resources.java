@@ -15,7 +15,8 @@ public class Resources {
 
 	//CANNONS /////////////////////////////////////////
 	public static final String BASICCANNON = "Tanks/Red/TankRed_barrel1.png";
-	public static final String BASICCANNON_FIRE = "Tanks/Red/TankRed_barrel2.png";
+	public static final String BASICCANNON_FIRE = "Tanks/Red/redcannon_fire.png";
+	public static final String CANNON_FIRE_FX = "Tanks/shotThin.png";
 	
 	//CANNON SFX//////////////////////////////////////
 	public static final String BASICCANNON_FIRE_SFX = "audio/sfx/cannon/basic_fire.mp3";

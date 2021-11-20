@@ -1,12 +1,12 @@
 package TankData;
 
+import elements.Hull;
 import elements.Projectile;
-import elements.Tank;
 
 public class BasicShell extends Projectile{
 
-	BasicShell(float x, float y, Tank tank, String texture, float speed) {
-		super(x, y, tank, texture, speed);
+	BasicShell(float x, float y, Hull hull, String texture, float speed) {
+		super(x, y, hull, texture, speed);
 	}
 
 	
