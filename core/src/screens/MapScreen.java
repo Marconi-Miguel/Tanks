@@ -14,11 +14,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import TankData.BasicHull;
 import elements.Tank;
 import input.Player;
 import input.PlayerInputManager;
-import network.Serverside;
 import tiledObjects.World2D;
 import tiledObjects.WorldListener;
 import utilities.Config;
@@ -57,22 +55,13 @@ public class MapScreen implements Screen {
 	public MapScreen() {
 
 		///// NETWORK TEST
-		Serverside server = new Serverside();
-		
+
 		Player localPlayer = new Player("testPlayer");
-//		Player localPlayer2 = new Player("testPlayer");
-		localPlayer.connect("localhost",9995);///// NETWORK TEST
-//		localPlayer2.connect("localhost",9996);///// NETWORK TEST
+		//localPlayer.connect("localhost",9995);///// NETWORK TEST
 		
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(localPlayer.PIM);
 		
-		/////
-		// img test
-		// testing
-
-		//
-		//
 		// setting map
 		camera = new OrthographicCamera();
 

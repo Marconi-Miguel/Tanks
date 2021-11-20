@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import network.Clientside;
 import network.ClientsideThread;
-import network.Serverside;
-import network.ServersideThread;
 import screens.MapScreen;
 import utilities.Render;
 
@@ -30,8 +28,6 @@ public class Tanks extends Game {
 	public void dispose () { //Called when game closes!
 		ClientsideThread cThread = Clientside.getThread();
 		if (cThread != null) {cThread.disconnect();}
-		ServersideThread sThread = Serverside.getHs();
-		if(sThread != null) {sThread.stopServer();}
 		super.dispose();
 		Render.batch.dispose();
 	}
