@@ -15,6 +15,8 @@ public abstract class NetworkCodes {
 	public static final String INPUT = "INPUT-";
 	public static final String FORBIDDEN = "FRBDN-";
 	public static final String ERROR = "ERROR-";
+	public static final String PING = "SPING-";
+	public static final String PONG = "CPONG-"; //ServerPing and ClientPong!
 	
 
 

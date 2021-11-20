@@ -57,6 +57,10 @@ public class ClientsideThread extends Thread {
 			handleDisconnection(args);
 		break;
 		///
+		case NetworkCodes.PING: //Ping, are you there?
+			sendMessage(NetworkCodes.PONG); //PONG! I'm still here!
+		break;
+		///
 		}
 	}
 
