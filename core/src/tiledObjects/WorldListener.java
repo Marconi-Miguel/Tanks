@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import elements.Hull;
+import elements.Projectile;
 
 public class WorldListener implements ContactListener {
 	private Fixture fixA;
@@ -18,7 +19,6 @@ public class WorldListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		
 		// el contacto genera entre 2 entidades, pero puede chocar mas de una entidad,
 		// se generarian 2 BEGINcontact
 		fixA = contact.getFixtureA();
@@ -31,9 +31,22 @@ public class WorldListener implements ContactListener {
 			
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
 				roadCounter +=1;
-				actual = objeto;
+			
 				// se activa la interaccion con el tipo de objeto que sea
 				((Hull) objeto.getUserData()).inRoad();
+				
+			}
+
+		}
+		if (fixA.getUserData().equals("projectil") || fixB.getUserData().equals("projectil")) {
+			
+			Fixture projectile = (fixA.getUserData().equals("projectil")) ? fixA : fixB;
+			Fixture hull = (projectile == fixA) ? fixB : fixA;
+			
+			if (hull.getUserData() != null && (hull.getUserData() instanceof Hull) && (((Hull) hull.getUserData()) == ((Projectile) projectile.getUserData()).parent)) {
+				// trigger sensors
+				((Hull) hull.getUserData()).receiveDamage(projectile.getBody().getPosition());
+				((Projectile) projectile.getUserData()).gotHitted(((Hull) hull.getUserData()));
 				
 			}
 
@@ -54,11 +67,8 @@ public class WorldListener implements ContactListener {
 			Fixture objeto = (Road == fixA) ? fixB : fixA;
 			
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-				roadCounter-=1;
-				
 				// se activa la interaccion con el tipo de objeto que sea
 				if(roadCounter==0) {
-					
 					((Hull) objeto.getUserData()).outRoad();
 				}
 			}
@@ -67,9 +77,6 @@ public class WorldListener implements ContactListener {
 
 	}
 
-	public Fixture getActual() {
-		return actual;
-	}
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {

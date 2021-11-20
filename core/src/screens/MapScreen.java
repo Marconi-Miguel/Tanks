@@ -43,7 +43,7 @@ public class MapScreen implements Screen {
 	private World2D world2d;
 	// object listener
 	private WorldListener worldListener;
-	
+
 	// setting inputListener
 	private PlayerInputManager PIM;
 	// test
@@ -58,10 +58,10 @@ public class MapScreen implements Screen {
 
 		Player localPlayer = new Player("testPlayer");
 		//localPlayer.connect("localhost",9995);///// NETWORK TEST
-		
+
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(localPlayer.PIM);
-		
+
 		// setting map
 		camera = new OrthographicCamera();
 
@@ -78,7 +78,7 @@ public class MapScreen implements Screen {
 		// render which draws box2d Textures
 		b2dr = new Box2DDebugRenderer();
 		// then camera zoom
-		gamePort = new FitViewport(64 * 15 / Config.PPM, 64 * 15 / Config.PPM, camera);
+		gamePort = new FitViewport(((64 * 15)  / Config.PPM), ((64 * 15) / Config.PPM), camera);
 		// centers the camera to the new map
 		camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
@@ -88,13 +88,11 @@ public class MapScreen implements Screen {
 		// set the world contact listener
 		worldListener = new WorldListener();
 		world.setContactListener(worldListener);
-		
+
 		// working with tank
 		tank = new Tank(localPlayer);
 		Render.tanks.add(tank);
 		tank2 = new Tank(localPlayer);
-		
-
 
 	}
 
@@ -125,19 +123,21 @@ public class MapScreen implements Screen {
 
 		b.end();
 		// testing
-		
 
 	}
 
 	private void update(float delta) {
-		
+
 		Config.delta = delta;
 		camera.update();
 		// 60 ticks in a second if im right
 		world.step(1 / 60f, 6, 2);
+		// set Camera on the players tank
+//		camera.position.x = tank.hull.getX();
+//		camera.position.y = tank.hull.getY();
 		// sets whats the renderer gonna draw, that shows in camera
 		renderer.setView(camera);
-		
+
 	}
 
 	@Override
@@ -162,6 +162,7 @@ public class MapScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		world.dispose();
 
 	}
 

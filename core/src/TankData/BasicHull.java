@@ -17,7 +17,6 @@ public class BasicHull extends Hull{
 		
 		rotationSpeed = 0.5f;
 		slots = 1;
-		System.out.println(this.slots + " asdasd ");
 		
 	}
 
