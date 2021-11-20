@@ -2,13 +2,13 @@ package elements;
 
 import TankData.BasicCannon;
 import TankData.BasicHull;
+import input.Client;
 import input.InputKeys;
-import input.Player;
 import utilities.Render;
 
 public class Tank {
 	public Hull hull;
-	Player owner;
+	Client owner;
 	float rotation;
 	float maxSpeed;
 	float rotationSpeed;
@@ -21,7 +21,7 @@ public class Tank {
 	// Array holding other elements of the tank, such as the cannon.
 	Attachable[] objects;
 
-	public Tank(Player player) {
+	public Tank(Client player) {
 		// TODO SETEAR LA POSICION DESDE ACA
 		owner = player;
 		this.hull = new BasicHull();
