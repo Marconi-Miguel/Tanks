@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Timer;
 
 import utilities.Config;
@@ -14,50 +15,60 @@ public class Cannon extends Attachable {
 
 	public boolean ready = true;
 	public int reloadTime = 2;
-	public ArrayList<Projectile> projectiles = new ArrayList<Projectile>(); 
-	Texture idle;
-	Texture fire;
+	public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+
+	Sprite fireFX;
 	public Sound fireSfx;
 	public float time;
-	public float fireEffectTime =0.5f;
+	public float fireEffectTime = 0.1f;
 
 	Timer timer = new Timer();
 
 	public Cannon(String idle, String fire) {
 		super(idle);
-		this.idle = new Texture(idle);
-		this.fire = new Texture(fire);
+		flip(false, true);
+		fireFX = new Sprite(new Texture(Resources.CANNON_FIRE_FX));
+		fireFX.flip(false, true);
+		fireFX.setSize(getWidth(),getHeight());
+		fireFX.setPosition(2*100,2*100);
+		ready = false;
 		objectType = "Cannon";
+		
 	}
 
 	public void trigger() {
-		if (ready) {
-			ready = false;
-			modifyTexture(fire);
+		if (time > reloadTime) {
+			time = 0;
+			ready = true;
 //			fireSfx.play(1,Functions.randomFloat(0.8f,1.2f), 1);
-			Projectile shell = new Projectile(getX() + getWidth()/2, getY()+ getHeight()/2, tank, Resources.BASICSHELL, 25);
+			Projectile shell = new Projectile(getX() + getWidth() / 2, getY() + getHeight() / 2, hull,
+					Resources.BASICSHELL, 25);
+			fireFX.setOrigin(fireFX.getWidth()/2, -hull.getHeight()/1.5f);
+			
+			
 			projectiles.add(shell);
 		}
 	}
-	public void updateCannon() { 
-		time+= Config.delta;
-		
+
+	public void updateCannon() {
+		time += Config.delta;
+
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).fired();
-			
-		}
-		if(time>reloadTime) {
-			System.out.println("asd");
-				time = 0;
-			ready = true;
-		}
-		if(time>fireEffectTime) {
-			idleCannon();
+
 		}
 		
+
 	}
-	private void idleCannon() {
-		modifyTexture(idle);
+
+	@Override
+	public void update(float x, float y, float rotation) {
+		super.update(x, y, rotation);
+		fireFX.setPosition(x, y+hull.getHeight()/1.5f);
+		fireFX.setRotation(rotation);
+		if (time < fireEffectTime) {
+			fireFX.draw(Render.batch);
+		}
 	}
 
 }
