@@ -4,12 +4,12 @@ import TankData.BasicCannon;
 import TankData.BasicHull;
 import input.InputKeys;
 import input.Player;
+import utilities.Config;
 import utilities.Render;
 
 public class Tank {
 	public Hull hull;
 	Player owner;
-	float rotation;
 	float maxSpeed;
 	float rotationSpeed;
 	float accelRate;
@@ -17,7 +17,6 @@ public class Tank {
 	float acceleration;
 	boolean forward; // direction. true if going forward, false if reverse.
 	float time;
-
 	// Array holding other elements of the tank, such as the cannon.
 	Attachable[] objects;
 
@@ -34,6 +33,7 @@ public class Tank {
 	}
 
 	public void Render() {
+		time += Config.delta;
 		doMovement();
 		doCannon();
 
@@ -51,8 +51,8 @@ public class Tank {
 	private void doMovement() {
 		doRotation();
 
-		float tempX = (float) Math.sin(Math.toRadians(rotation));
-		float tempY = (float) Math.cos(Math.toRadians(rotation));
+		float tempX = (float) Math.sin(Math.toRadians(hull.rotation));
+		float tempY = (float) Math.cos(Math.toRadians(hull.rotation));
 
 		if (owner.inputs.get(InputKeys.UP) && !owner.inputs.get(InputKeys.DOWN)) { // If pressing W, go forward.
 
@@ -87,23 +87,26 @@ public class Tank {
 	public void rotate(float degrees) {
 		hull.rotate(degrees);
 
-		rotation += degrees;
-		if (rotation >= 360) {
-			rotation = 0;
-		} else if (rotation < 0) {
-			rotation = 359;
+		hull.rotation += degrees;
+		if (hull.rotation >= 360) {
+			hull.rotation = 0;
+		} else if (hull.rotation < 0) {
+			hull.rotation = 359;
 		}
 	}
 
 	///////////// Cannon-related functions.
 
 	void doCannon() {
-		if (owner.inputs.get(InputKeys.FIRE)) {
-			for (int i = 0; i < objects.length; i++) {
-				if (objects[i].objectType == "Cannon") {
+		for (int i = 0; i < objects.length; i++) {
+			if (objects[i].objectType == "Cannon") {
+				if (owner.inputs.get(InputKeys.FIRE) && time >((Cannon) objects[i]).reloadTime ) { //failsafe from spamming space
+					time = 0;
 					((Cannon) objects[i]).trigger(); // omg
 				}
+
 			}
+
 		}
 	}
 
@@ -119,7 +122,7 @@ public class Tank {
 		if (availablePos != -1) {
 			objects[availablePos] = object;
 
-			object.tank = this;
+			object.hull = this.hull;
 		} // If a place was found, attach the object.
 	}
 
@@ -136,13 +139,11 @@ public class Tank {
 				// CENTRO, PERO SI HAY MAS ATTACHABLES
 				// NO DEBERIA SER ASI
 			}
-			
+
 		}
 
 	}
-	public void receiveDamage(float x , float y) {
-													//the tank will receive the damage and the coordinates to know where it hit.
-		
-	}
+
+
 
 }

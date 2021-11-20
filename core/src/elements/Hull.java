@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -25,7 +24,7 @@ public class Hull extends Entidad2D {
 	private int totalHp = 0;
 	private int hp = 0;
 	public boolean onRoad;
-	public float rotation;
+	public float rotation; //degrees
 	public int weaponSlots;
 	public float rotationSpeed;
 	public int slots;
@@ -34,25 +33,26 @@ public class Hull extends Entidad2D {
 		super(new Texture(texture));
 		this.hp = hp;
 		this.world = Render.world;
-		
+
 		setSize(getWidth() / 2 / Config.PPM, getHeight() / 2 / Config.PPM);
 		setOrigin(getWidth() / 2, getHeight() / 2);
-		switch(Render.tanks.size()) {
+		switch (Render.tanks.size()) {
 		case 0:
-			setPosition(2*15/Config.PPM,2*15/Config.PPM);
+			setPosition(2 * 15 / Config.PPM, 2 * 15 / Config.PPM);
 			break;
 		case 1:
-			setPosition(2*15/Config.PPM,62*15/Config.PPM);
+			setPosition(30 * 15 / Config.PPM, 30 * 15 / Config.PPM); // TODO testing, change from x, 30 -> 2 and y 30
+																		// ->62
 			break;
 		case 2:
-			setPosition(62*15/Config.PPM,2*15/Config.PPM);
+			setPosition(62 * 15 / Config.PPM, 2 * 15 / Config.PPM);
 			break;
 		case 3:
-			setPosition(62*15/Config.PPM,62*15/Config.PPM);
+			setPosition(62 * 15 / Config.PPM, 62 * 15 / Config.PPM);
 			break;
-			default:
-				setPosition(1,1);
-				break;
+		default:
+			setPosition(1, 1);
+			break;
 		}
 		createBody();
 		fixtureDef();
@@ -67,8 +67,6 @@ public class Hull extends Entidad2D {
 		// kind of body and set the map
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		b2body = world.createBody(bdef);
-		
-		
 
 	}
 
@@ -79,10 +77,11 @@ public class Hull extends Entidad2D {
 		shape.setAsBox(getWidth() / 2, getHeight() / 2);
 		fdef.filter.categoryBits = Config.TANK_BIT;
 		// definimos la mascara de bits, que objetos box2d tiene que darle atencion.
-		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT | Config.TANK_BIT | Config.EXPLOSION_BIT | Config.PROJECTIL_BIT;
+		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT | Config.TANK_BIT | Config.EXPLOSION_BIT
+				| Config.PROJECTIL_BIT;
 		fdef.shape = shape;
 		b2body.createFixture(fdef).setUserData(this);
-		
+
 	}
 
 	protected void disappear() {
@@ -131,5 +130,20 @@ public class Hull extends Entidad2D {
 
 	public void stopHull() {
 		b2body.setLinearVelocity(0, 0);
+	}
+
+	public void receiveDamage(Vector2 position) {
+		// the tank will receive the damage and the coordinates to know where it hit.
+		System.out.println("NOOOO ME DAÑARON");
+		System.out.println("pos x: " + position.x);
+		System.out.println("pos y: " + position.y);
+		// la camara enfoca exactamente en el centro del cubo de hitbox, lo cual facilita los calculos del angulo
+//        float valorTan = (float)(entradas.getMouseY()-Config.alto/2)/((float)entradas.getMouseX()-Config.ancho/2);
+//        System.out.println((entradas.getMouseY()) + " + " + (((float)entradas.getMouseX())));
+//        float angulo = (float) Math.toDegrees(Math.atan(valorTan));
+		float projecDegrees = (float) Math.toDegrees(Math.atan(((position.y - getY()+getHeight()/2)/(position.x - getX() + (getWidth()/2)))));
+		System.out.println("pego a grados : " + projecDegrees);
+		System.out.println(rotation);
+
 	}
 }
