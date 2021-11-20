@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import elements.Hull;
-import elements.Tank;
+import elements.Projectile;
 
 public class WorldListener implements ContactListener {
 	private Fixture fixA;
@@ -31,7 +31,7 @@ public class WorldListener implements ContactListener {
 			
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
 				roadCounter +=1;
-				System.out.println("caminos: " + roadCounter);
+			
 				// se activa la interaccion con el tipo de objeto que sea
 				((Hull) objeto.getUserData()).inRoad();
 				
@@ -40,15 +40,13 @@ public class WorldListener implements ContactListener {
 		}
 		if (fixA.getUserData().equals("projectil") || fixB.getUserData().equals("projectil")) {
 			
-			Fixture projectil = (fixA.getUserData().equals("projectil")) ? fixA : fixB;
-			Fixture hull = (projectil == fixA) ? fixB : fixA;
+			Fixture projectile = (fixA.getUserData().equals("projectil")) ? fixA : fixB;
+			Fixture hull = (projectile == fixA) ? fixB : fixA;
 			
-			
-			if (hull.getUserData() != null && (hull.getUserData() instanceof Hull)) {
-				System.out.println("you are in the hull´s sensor");
-				// trigger sensorS
-				//hull.receivedmg(p.x,p.y);
-				
+			if (hull.getUserData() != null && (hull.getUserData() instanceof Hull) && (((Hull) hull.getUserData()) == ((Projectile) projectile.getUserData()).parent)) {
+				// trigger sensors
+				((Hull) hull.getUserData()).receiveDamage(projectile.getBody().getPosition());
+				((Projectile) projectile.getUserData()).gotHitted(((Hull) hull.getUserData()));
 				
 			}
 
@@ -69,8 +67,6 @@ public class WorldListener implements ContactListener {
 			Fixture objeto = (Road == fixA) ? fixB : fixA;
 			
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-				roadCounter-=1;
-				System.out.println("caminos: " + roadCounter);
 				// se activa la interaccion con el tipo de objeto que sea
 				if(roadCounter==0) {
 					((Hull) objeto.getUserData()).outRoad();

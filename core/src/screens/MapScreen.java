@@ -89,7 +89,7 @@ public class MapScreen implements Screen {
 		// render which draws box2d Textures
 		b2dr = new Box2DDebugRenderer();
 		// then camera zoom
-		gamePort = new FitViewport(((64 * 15) / 1.2f / Config.PPM), ((64 * 15) /1.1f / Config.PPM), camera);
+		gamePort = new FitViewport(((64 * 15)  / Config.PPM), ((64 * 15) / Config.PPM), camera);
 		// centers the camera to the new map
 		camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
@@ -130,7 +130,7 @@ public class MapScreen implements Screen {
 		b.begin();
 //		tank.hull.draw(b);
 		tank.Render();
-//		tank2.Render();
+		tank2.Render();
 
 		b.end();
 		// testing
@@ -144,8 +144,8 @@ public class MapScreen implements Screen {
 		// 60 ticks in a second if im right
 		world.step(1 / 60f, 6, 2);
 		// set Camera on the players tank
-		camera.position.x = tank.hull.getX();
-		camera.position.y = tank.hull.getY();
+//		camera.position.x = tank.hull.getX();
+//		camera.position.y = tank.hull.getY();
 		// sets whats the renderer gonna draw, that shows in camera
 		renderer.setView(camera);
 
