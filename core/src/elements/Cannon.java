@@ -42,7 +42,7 @@ public class Cannon extends Attachable {
 			ready = true;
 //			fireSfx.play(1,Functions.randomFloat(0.8f,1.2f), 1);
 			Projectile shell = new Projectile(getX() + getWidth() / 2, getY() + getHeight() / 2, hull,
-					Resources.BASICSHELL, 25);
+					Resources.BASICSHELL, 3);
 			fireFX.setOrigin(fireFX.getWidth()/2, -hull.getHeight()/1.5f);
 			
 			
@@ -54,7 +54,14 @@ public class Cannon extends Attachable {
 		time += Config.delta;
 
 		for (int i = 0; i < projectiles.size(); i++) {
-			projectiles.get(i).fired();
+			if(projectiles.get(i).isExploded()) {
+				
+				projectiles.get(i).disappear();
+				projectiles.remove(i);
+			}else {
+				projectiles.get(i).fired();
+			}
+			
 
 		}
 		

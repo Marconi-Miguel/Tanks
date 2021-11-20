@@ -13,9 +13,11 @@ public class WorldListener implements ContactListener {
 	private Fixture fixA;
 	private Fixture fixB;
 	public Fixture actual;
-	private int roadCounter; // im TOOOOOOOOO LAZY 
-	//basically it will count how many roads the tanks has been touching, when he left the road discounts 1
-	// when the hull left a road it will look if the roadCounter is 0, else it wont trigger "hull.outRoad"
+	private int roadCounter; // im TOOOOOOOOO LAZY
+	// basically it will count how many roads the tanks has been touching, when he
+	// left the road discounts 1
+	// when the hull left a road it will look if the roadCounter is 0, else it wont
+	// trigger "hull.outRoad"
 
 	@Override
 	public void beginContact(Contact contact) {
@@ -23,34 +25,22 @@ public class WorldListener implements ContactListener {
 		// se generarian 2 BEGINcontact
 		fixA = contact.getFixtureA();
 		fixB = contact.getFixtureB();
-		
+
 		if (fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
 
 			Fixture Road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
 			Fixture objeto = (Road == fixA) ? fixB : fixA;
-			
+
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-				roadCounter +=1;
-			
+				roadCounter += 1;
+
 				// se activa la interaccion con el tipo de objeto que sea
 				((Hull) objeto.getUserData()).inRoad();
-				
+
 			}
 
 		}
-		if (fixA.getUserData().equals("projectil") || fixB.getUserData().equals("projectil")) {
-			
-			Fixture projectile = (fixA.getUserData().equals("projectil")) ? fixA : fixB;
-			Fixture hull = (projectile == fixA) ? fixB : fixA;
-			
-			if (hull.getUserData() != null && (hull.getUserData() instanceof Hull) && (((Hull) hull.getUserData()) == ((Projectile) projectile.getUserData()).parent)) {
-				// trigger sensors
-				((Hull) hull.getUserData()).receiveDamage(projectile.getBody().getPosition());
-				((Projectile) projectile.getUserData()).gotHitted(((Hull) hull.getUserData()));
-				
-			}
-
-		}
+		
 
 	}
 
@@ -58,25 +48,42 @@ public class WorldListener implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
-		
-		
 
 		if (fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
 
 			Fixture Road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
 			Fixture objeto = (Road == fixA) ? fixB : fixA;
-			
+
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
 				// se activa la interaccion con el tipo de objeto que sea
-				if(roadCounter==0) {
+				if (roadCounter == 0) {
 					((Hull) objeto.getUserData()).outRoad();
 				}
+			}
+			
+
+		}
+		
+		if (fixA.getUserData() instanceof Projectile || fixB.getUserData() instanceof Projectile) {
+			
+			Fixture projectile = (fixA.getUserData() instanceof Projectile) ? fixA : fixB;
+			Fixture hull = (projectile == fixA) ? fixB : fixA;
+
+			if (hull.getUserData() != null && (hull.getUserData() instanceof Hull)) {
+				// trigger sensors
+
+				if (((Hull) hull.getUserData()) != ((Projectile) projectile.getUserData()).parent && !((Projectile) projectile.getUserData()).isExploded()) {
+					
+					((Projectile) projectile.getUserData()).explode();
+					((Hull) hull.getUserData()).receiveDamage(((Projectile) projectile.getUserData()));
+					
+				}
+
 			}
 
 		}
 
 	}
-
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {

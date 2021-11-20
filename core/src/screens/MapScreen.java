@@ -57,7 +57,7 @@ public class MapScreen implements Screen {
 		///// NETWORK TEST
 
 		Player localPlayer = new Player("testPlayer");
-		//localPlayer.connect("localhost",9995);///// NETWORK TEST
+		localPlayer.connect("26.29.247.173",9995);///// NETWORK TEST
 
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(localPlayer.PIM);
@@ -75,6 +75,7 @@ public class MapScreen implements Screen {
 		// set map properties
 		Render.world = new World(new Vector2(0, 0), true);
 		world = Render.world;
+		System.out.println(world.isLocked());
 		// render which draws box2d Textures
 		b2dr = new Box2DDebugRenderer();
 		// then camera zoom

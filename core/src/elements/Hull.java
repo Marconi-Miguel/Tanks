@@ -12,11 +12,11 @@ import utilities.Config;
 import utilities.Render;
 
 public class Hull extends Entidad2D {
-
-	World world;
+	public int id;
+	private World world;
 //	private Sprite dmged1;
-//	private Sprite dmged2;
-	Sprite dmged3;
+//  private Sprite dmged2;
+	private Sprite dmged3;
 
 	public int startRotation;
 
@@ -32,7 +32,7 @@ public class Hull extends Entidad2D {
 	public Hull(String texture, int hp) {
 		super(new Texture(texture));
 		this.hp = hp;
-		this.world = Render.world;
+		this.world = Render.world; 
 
 		setSize(getWidth() / 2 / Config.PPM, getHeight() / 2 / Config.PPM);
 		setOrigin(getWidth() / 2, getHeight() / 2);
@@ -81,6 +81,15 @@ public class Hull extends Entidad2D {
 				| Config.PROJECTIL_BIT;
 		fdef.shape = shape;
 		b2body.createFixture(fdef).setUserData(this);
+		shape = new PolygonShape();
+		shape.setAsBox(getWidth(),getHeight());
+		fdef.filter.categoryBits = Config.TANK_BIT;
+		fdef.isSensor = true;
+		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT | Config.TANK_BIT | Config.EXPLOSION_BIT
+				| Config.PROJECTIL_BIT;
+		fdef.shape = shape;
+		b2body.createFixture(fdef).setUserData(this);
+		
 
 	}
 
@@ -132,18 +141,22 @@ public class Hull extends Entidad2D {
 		b2body.setLinearVelocity(0, 0);
 	}
 
-	public void receiveDamage(Vector2 position) {
+	public void receiveDamage(Projectile p) {
 		// the tank will receive the damage and the coordinates to know where it hit.
 		System.out.println("NOOOO ME DAÑARON");
-		System.out.println("pos x: " + position.x);
-		System.out.println("pos y: " + position.y);
+		System.out.println("pos x: " + p.b2body.getPosition().x);
+		System.out.println("pos y: " + p.b2body.getPosition().y);
 		// la camara enfoca exactamente en el centro del cubo de hitbox, lo cual facilita los calculos del angulo
 //        float valorTan = (float)(entradas.getMouseY()-Config.alto/2)/((float)entradas.getMouseX()-Config.ancho/2);
 //        System.out.println((entradas.getMouseY()) + " + " + (((float)entradas.getMouseX())));
 //        float angulo = (float) Math.toDegrees(Math.atan(valorTan));
-		float projecDegrees = (float) Math.toDegrees(Math.atan(((position.y - getY()+getHeight()/2)/(position.x - getX() + (getWidth()/2)))));
-		System.out.println("pego a grados : " + projecDegrees);
+//		float projecDegrees = (float) Math.toDegrees(Math.atan(((p.b2body.getPosition().y - getY()+getHeight()/2)/(p.b2body.getPosition().x - getX() + (getWidth()/2)))));
+//		System.out.println("pego a grados : " + projecDegrees);
 		System.out.println(rotation);
-
+		
+		
+	}
+	public Hull getHull() {
+		return this;
 	}
 }

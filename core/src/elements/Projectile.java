@@ -13,12 +13,15 @@ public class Projectile extends Entidad2D {
 	public Hull parent;
 	public float degrees;
 	public boolean fired = false;
+	public boolean explode = false;
+	public Texture invPix;
 	
 	public Projectile(float x, float y, Hull hull, String texture, float speedMod) {
 		super(new Texture(texture));
+		invPix = new Texture("Tanks/Especial/invisiblePixel.png");
 		parent = hull;
 		this.world = Render.world;
-		this.speedMod = 2;
+		this.speedMod = speedMod;
 		setDegrees(hull.rotation);
 		setSize(getWidth()/2/Config.PPM, getHeight()/2/Config.PPM);
 		setOrigin(getWidth() / 2, getHeight() / 2);
@@ -39,11 +42,8 @@ public class Projectile extends Entidad2D {
 		float tempX = (float) Math.sin(Math.toRadians(degrees));
 		b2body.setLinearVelocity(-tempX * speedMod, tempY * speedMod);
 		setPosition((b2body.getPosition().x - getWidth()/2),// CHANGE / -getWidth/2
-				b2body.getPosition().y - getHeight()/2);
-		
-		
+				b2body.getPosition().y - getHeight()/2);	
 	}
-
 //////////////////////
 	
 	
@@ -64,21 +64,35 @@ public class Projectile extends Entidad2D {
 		fdef.filter.maskBits = Config.TANK_BIT | Config.OBSTACLE_BIT | Config.EXPLOSION_BIT;
 		fdef.shape = shape;
 		fdef.isSensor = true;
-		b2body.createFixture(fdef).setUserData("projectil");
+		b2body.createFixture(fdef).setUserData(this);
 
 	}
 	public void gotHitted(Hull hitted) {
-		System.out.println("toco");
+		
 		if(hitted != parent) {
-			disappear();
+			explode = true;
 		}
 	
 	}
 	
 	@Override
 	public void disappear() {
+		System.out.println("im before body");
 		Render.world.destroyBody(b2body);
+		System.out.println("im after body :)");
 		b2body = null;
+		
+	
+		
+		
+	}
+	public boolean isExploded() {
+		return explode;
+	}
+	public void explode() {
+		setTexture(invPix);
+		speedMod = 0;
+		explode = true;
 	}
 	public void setDegrees(float degrees) {
 		this.degrees = degrees;

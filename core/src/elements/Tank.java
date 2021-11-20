@@ -99,7 +99,7 @@ public class Tank {
 
 	///////////// Cannon-related functions.
 
-	void doCannon() {
+	private void doCannon() {
 		for (int i = 0; i < objects.length; i++) {
 			if (objects[i].objectType == "Cannon") {
 				if (owner.inputs.get(InputKeys.FIRE) && time >((Cannon) objects[i]).reloadTime ) { //failsafe from spamming space
