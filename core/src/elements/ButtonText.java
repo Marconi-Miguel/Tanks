@@ -1,4 +1,4 @@
-package botones;
+package elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +16,7 @@ public class ButtonText {
 	GlyphLayout layout;
 	private Color defaultColor;
 	private boolean hovered;
+	private boolean pressed;
 
 	public ButtonText(String direction, int dimension, Color color, boolean shadow) {
 		defaultColor = color;
@@ -38,10 +39,12 @@ public class ButtonText {
 		fuente.draw(Render.batch, texto, x, y);
 	}
 	public void update(float x, float y) {
-	if(inCoords(x,y)) {
-				System.out.println("asd asd");
+		if(inCoords(x,y)) {
+			pressed = true;
 
 			
+		}else {
+			pressed = false;
 		}
 	}
 	public boolean inCoords(float x, float y) {
@@ -100,6 +103,10 @@ public class ButtonText {
 	}
 	public boolean isHovered() {
 		return hovered;
+		
+	}
+	public boolean isPressed() {
+		return pressed;
 		
 	}
 	
