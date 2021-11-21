@@ -33,7 +33,7 @@ public class WorldListener implements ContactListener {
 
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
 				roadCounter += 1;
-
+				System.out.println(roadCounter);
 				// se activa la interaccion con el tipo de objeto que sea
 				((Hull) objeto.getUserData()).inRoad();
 
@@ -66,20 +66,25 @@ public class WorldListener implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
+		if (fixA.getUserData() != null && fixB.getUserData() != null) {
+			if ( fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
 
-		if (fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
+				Fixture Road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
+				Fixture objeto = (Road == fixA) ? fixB : fixA;
 
-			Fixture Road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
-			Fixture objeto = (Road == fixA) ? fixB : fixA;
-
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-				// se activa la interaccion con el tipo de objeto que sea
-				if (roadCounter == 0) {
-					((Hull) objeto.getUserData()).outRoad();
+				if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
+					// se activa la interaccion con el tipo de objeto que sea
+					roadCounter --;
+					System.out.println(roadCounter);
+					if (roadCounter == 0) {
+						
+						((Hull) objeto.getUserData()).outRoad();
+					}
 				}
-			}
 
+			}
 		}
+		
 
 	}
 

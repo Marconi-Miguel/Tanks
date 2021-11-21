@@ -16,7 +16,7 @@ public class Hull extends Entidad2D {
 	private World world;
 //	private Sprite dmged1;
 //  private Sprite dmged2;
-	private Sprite dmged3;
+//	private Sprite dmged3;
 
 	public int startRotation;
 
@@ -24,15 +24,21 @@ public class Hull extends Entidad2D {
 	private int totalHp = 0;
 	private int hp = 0;
 	public boolean onRoad;
-	public float rotation; //degrees
+	public float rotation; // degrees
 	public int weaponSlots;
 	public float rotationSpeed;
 	public int slots;
 
+	public enum Estado {
+		ARRIBA, ABAJO
+	}
+
+	public Estado estadoActual = Estado.ARRIBA;
+
 	public Hull(String texture, int hp) {
 		super(new Texture(texture));
 		this.hp = hp;
-		this.world = Render.world; 
+		this.world = Render.world;
 
 		setSize(getWidth() / 2 / Config.PPM, getHeight() / 2 / Config.PPM);
 		setOrigin(getWidth() / 2, getHeight() / 2);
@@ -133,19 +139,58 @@ public class Hull extends Entidad2D {
 
 	public void receiveDamage(Projectile p) {
 		// the tank will receive the damage and the coordinates to know where it hit.
-		System.out.println("NOOOO ME DAÑARON");
-		System.out.println("pos x: " + p.b2body.getPosition().x);
-		System.out.println("pos y: " + p.b2body.getPosition().y);
-		// la camara enfoca exactamente en el centro del cubo de hitbox, lo cual facilita los calculos del angulo
-//        float valorTan = (float)(entradas.getMouseY()-Config.alto/2)/((float)entradas.getMouseX()-Config.ancho/2);
-//        System.out.println((entradas.getMouseY()) + " + " + (((float)entradas.getMouseX())));
-//        float angulo = (float) Math.toDegrees(Math.atan(valorTan));
-		float projecDegrees = (float) Math.toDegrees(Math.atan(((p.b2body.getPosition().y - getY()+getHeight()/2)/(p.b2body.getPosition().x - getX() + (getWidth()/2)))));
-		System.out.println("pego a grados : " + projecDegrees);
+		if(rotation < 90 || rotation > 270) {
+			estadoActual = Estado.ARRIBA;
+		}else {
+			estadoActual = Estado.ABAJO;
+		}
 		
+
+		//saca el valor del centro para saber la tangente 
+		//  y sacar los radianes que tiene con respecto al centro
+		float yPos = getY() + getHeight() / 2;
+		float xPos = getX() + getWidth() / 2; 
+		float difY = p.b2body.getPosition().y;
+		float difX = p.b2body.getPosition().x;
+		// to understand better the math
 		
+		yPos =(yPos > difY)?-(yPos-difY): difY - yPos  ;
+
+		xPos =(xPos > difX)?-(xPos-difX):  difX - xPos ;
+	
+		
+		float tanValue = yPos / xPos;
+		float angle = (float) Math.toDegrees(Math.atan(tanValue));				
+		
+		// SE INVIERTEN LOS ESTADOS, POR ALGUNA RAZON MAGICA (BORRAR)
+		if(angle < 0 && (yPos<0 && xPos>0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
+			angle += 270;
+		}else if(angle > 0 && (yPos<0 && xPos< 0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
+			angle += 90;
+		}else if(angle < 0 && yPos>0 && xPos<0 ) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
+			angle = 90+angle;
+			
+		}else if(angle > 0 && yPos>0 && xPos>0 ) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
+			angle += 270;
+		}
+
+//		angle =((angle + rotation)>360)?(angle-rotation):angle + rotation;
+		System.out.println("a" + angle);
+		System.out.println("r" + rotation);
+		angle = (rotation > angle)?rotation - angle: angle-rotation;
+		System.out.println(angle);
+		if(angle < 45 && angle > 315 ) {
+			System.out.println("golpeo arriba");
+		}else if(angle > 45 && angle < 135 ) {
+			System.out.println("golpeo izquierda");
+		}else if(angle > 135 && angle < 225 ) {
+			System.out.println("golpeo abajo");
+		}else if(angle > 225 && angle < 315 ) {
+			System.out.println("golpeo derecha");
+		}
 		
 	}
+
 	public Hull getHull() {
 		return this;
 	}

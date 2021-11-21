@@ -38,7 +38,7 @@ public class Tank {
 		time += Config.delta;
 		doMovement();
 		doCannon();
-
+//		System.out.println(hull.rotation);
 		hull.draw(Render.batch); // this is the original way to draw the tank.
 
 		updateObjects();// Update other sprites attached to this tank, such as cannon.
@@ -48,7 +48,7 @@ public class Tank {
 	public void setPosition(float x, float y) {
 		hull.setPosition(x, y);
 	}
-	
+
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
