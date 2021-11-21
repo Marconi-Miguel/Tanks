@@ -18,7 +18,6 @@ public class Projectile extends Entidad2D {
 	
 	public Projectile(float x, float y, Hull hull, String texture, float speedMod) {
 		super(new Texture(texture));
-		invPix = new Texture("Tanks/Especial/invisiblePixel.png");
 		parent = hull;
 		this.world = Render.world;
 		this.speedMod = speedMod;
@@ -90,8 +89,6 @@ public class Projectile extends Entidad2D {
 		return explode;
 	}
 	public void explode() {
-		setTexture(invPix);
-		speedMod = 0;
 		explode = true;
 	}
 	public void setDegrees(float degrees) {
