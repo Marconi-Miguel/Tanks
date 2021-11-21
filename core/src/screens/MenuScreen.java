@@ -22,7 +22,7 @@ public class MenuScreen implements Screen {
 	ButtonText[] texts = new ButtonText[2];
 	float time;
 	
-	Music menuTheme = Gdx.audio.newMusic(Gdx.files.internal(Resources.MENUTHEME));
+	
 
 	public MenuScreen() {
 		localPlayer = new Player("testPlayer");
@@ -31,8 +31,7 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void show() {
-		menuTheme.play();
-		menuTheme.setLooping(true);
+		
 
 		bg = new Sprite(new Texture(Resources.BG));
 		bg.setSize(Config.WIDTH, Config.HEIGHT);
@@ -79,6 +78,8 @@ public class MenuScreen implements Screen {
 		mouseInputs();
 		if(texts[0].isPressed()) {
 			Render.app.setScreen(new MapScreen());
+			Render.app.music.stop();
+		
 		}else if(texts[1].isPressed()) {
 			Gdx.app.exit();
 		}
