@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import botones.ButtonText;
+import elements.ButtonText;
 import input.Player;
 import utilities.Config;
 import utilities.Render;
@@ -46,8 +46,7 @@ public class MenuScreen implements Screen {
 		for (int i = 0; i < texts.length; i++) {
 			texts[i].setPosition(getHalfX(banner) - texts[i].getWidth() / 2, getTopY(banner) - 20 - i * separacion);
 		}
-//		texts[0].setPosition(getHalfX(banner)-texts[0].getWidth()/2, getHalfY(banner) + texts[0].getHeight());
-//		texts[1].setPosition(getHalfX(banner)-texts[1].getWidth()/2, getHalfY(banner));
+
 
 	}
 
@@ -73,6 +72,13 @@ public class MenuScreen implements Screen {
 	private void update(float delta) {
 		time += delta;
 		mouseInputs();
+		if(texts[0].isPressed()) {
+			Render.app.setScreen(new MapScreen());
+		}else if(texts[1].isPressed()) {
+			Gdx.app.exit();
+		}
+		
+		
 
 	}
 

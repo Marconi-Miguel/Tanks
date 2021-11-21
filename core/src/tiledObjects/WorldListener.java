@@ -40,7 +40,25 @@ public class WorldListener implements ContactListener {
 			}
 
 		}
-		
+		if (fixA.getUserData() instanceof Projectile || fixB.getUserData() instanceof Projectile) {
+
+			Fixture projectile = (fixA.getUserData() instanceof Projectile) ? fixA : fixB;
+			Fixture hull = (projectile == fixA) ? fixB : fixA;
+
+			if (hull.getUserData() != null && (hull.getUserData() instanceof Hull)) {
+				// trigger sensors
+
+				if (((Hull) hull.getUserData()) != ((Projectile) projectile.getUserData()).parent
+						&& !((Projectile) projectile.getUserData()).isExploded()) {
+
+					((Projectile) projectile.getUserData()).explode();
+					((Hull) hull.getUserData()).receiveDamage(((Projectile) projectile.getUserData()));
+
+				}
+
+			}
+
+		}
 
 	}
 
@@ -59,26 +77,6 @@ public class WorldListener implements ContactListener {
 				if (roadCounter == 0) {
 					((Hull) objeto.getUserData()).outRoad();
 				}
-			}
-			
-
-		}
-		
-		if (fixA.getUserData() instanceof Projectile || fixB.getUserData() instanceof Projectile) {
-			
-			Fixture projectile = (fixA.getUserData() instanceof Projectile) ? fixA : fixB;
-			Fixture hull = (projectile == fixA) ? fixB : fixA;
-
-			if (hull.getUserData() != null && (hull.getUserData() instanceof Hull)) {
-				// trigger sensors
-
-				if (((Hull) hull.getUserData()) != ((Projectile) projectile.getUserData()).parent && !((Projectile) projectile.getUserData()).isExploded()) {
-					
-					((Projectile) projectile.getUserData()).explode();
-					((Hull) hull.getUserData()).receiveDamage(((Projectile) projectile.getUserData()));
-					
-				}
-
 			}
 
 		}

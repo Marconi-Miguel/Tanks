@@ -51,14 +51,16 @@ public class MapScreen implements Screen {
 	// hull testing
 	private Tank tank;
 	private Tank tank2;
+	private Player localPlayer;
+	float time;
 
 	public MapScreen() {
 
 		///// NETWORK TEST
-
-		Player localPlayer = new Player("testPlayer");
-		localPlayer.connect("26.29.247.173",9995);///// NETWORK TEST
-
+		System.out.println("asd");
+		localPlayer = new Player("testPlayer");
+//		localPlayer.connect("26.29.247.173", 9995);///// NETWORK TEST
+		System.out.println("asd");
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(localPlayer.PIM);
 
@@ -72,6 +74,10 @@ public class MapScreen implements Screen {
 		// order the render which map is going to draw
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / Config.PPM);
 
+	}
+
+	@Override
+	public void show() {
 		// set map properties
 		Render.world = new World(new Vector2(0, 0), true);
 		world = Render.world;
@@ -79,7 +85,7 @@ public class MapScreen implements Screen {
 		// render which draws box2d Textures
 		b2dr = new Box2DDebugRenderer();
 		// then camera zoom
-		gamePort = new FitViewport(((64 * 15)  / Config.PPM), ((64 * 15) / Config.PPM), camera);
+		gamePort = new FitViewport(((64 * 15) / Config.PPM), ((64 * 15) / Config.PPM), camera);
 		// centers the camera to the new map
 		camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
@@ -89,16 +95,10 @@ public class MapScreen implements Screen {
 		// set the world contact listener
 		worldListener = new WorldListener();
 		world.setContactListener(worldListener);
-
 		// working with tank
 		tank = new Tank(localPlayer);
 		Render.tanks.add(tank);
 		tank2 = new Tank(localPlayer);
-
-	}
-
-	@Override
-	public void show() {
 
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -138,6 +138,17 @@ public class MapScreen implements Screen {
 //		camera.position.y = tank.hull.getY();
 		// sets whats the renderer gonna draw, that shows in camera
 		renderer.setView(camera);
+		time += delta;
+		if (localPlayer.PIM.isClick() && time > 0.2) {
+			time = 0;
+			Vector2 vector = gamePort
+					.unproject(new Vector2(localPlayer.PIM.getMouseX(), Config.HEIGHT - localPlayer.PIM.getMouseY()));
+			System.out.println();
+//			System.out.println("x Tank2 : " + tank2.hull.getX());
+//			System.out.println("y Tank2 : " + tank2.hull.getY());
+			System.out.println("x : " + vector.x);
+			System.out.println("y : " + vector.y);
+		}
 
 	}
 

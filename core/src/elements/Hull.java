@@ -81,16 +81,6 @@ public class Hull extends Entidad2D {
 				| Config.PROJECTIL_BIT;
 		fdef.shape = shape;
 		b2body.createFixture(fdef).setUserData(this);
-		shape = new PolygonShape();
-		shape.setAsBox(getWidth(),getHeight());
-		fdef.filter.categoryBits = Config.TANK_BIT;
-		fdef.isSensor = true;
-		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT | Config.TANK_BIT | Config.EXPLOSION_BIT
-				| Config.PROJECTIL_BIT;
-		fdef.shape = shape;
-		b2body.createFixture(fdef).setUserData(this);
-		
-
 	}
 
 	protected void disappear() {
@@ -150,9 +140,9 @@ public class Hull extends Entidad2D {
 //        float valorTan = (float)(entradas.getMouseY()-Config.alto/2)/((float)entradas.getMouseX()-Config.ancho/2);
 //        System.out.println((entradas.getMouseY()) + " + " + (((float)entradas.getMouseX())));
 //        float angulo = (float) Math.toDegrees(Math.atan(valorTan));
-//		float projecDegrees = (float) Math.toDegrees(Math.atan(((p.b2body.getPosition().y - getY()+getHeight()/2)/(p.b2body.getPosition().x - getX() + (getWidth()/2)))));
-//		System.out.println("pego a grados : " + projecDegrees);
-		System.out.println(rotation);
+		float projecDegrees = (float) Math.toDegrees(Math.atan(((p.b2body.getPosition().y - getY()+getHeight()/2)/(p.b2body.getPosition().x - getX() + (getWidth()/2)))));
+		System.out.println("pego a grados : " + projecDegrees);
+		
 		
 		
 	}
