@@ -24,6 +24,10 @@ public class Resources {
 	
 	//SHELLS ////////////////////////////////////////
 	public static final String BASICSHELL = "Tanks/Projectiles/shotOrange.png";
+	
+	
+	//MUSIC
+	public static final String MENUTHEME = "Music/menutheme.mp3";
 
 	
 

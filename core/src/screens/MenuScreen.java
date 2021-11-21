@@ -2,6 +2,7 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -20,6 +21,8 @@ public class MenuScreen implements Screen {
 	SpriteBatch b;
 	ButtonText[] texts = new ButtonText[2];
 	float time;
+	
+	Music menuTheme = Gdx.audio.newMusic(Gdx.files.internal(Resources.MENUTHEME));
 
 	public MenuScreen() {
 		localPlayer = new Player("testPlayer");
@@ -28,6 +31,8 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void show() {
+		menuTheme.play();
+		menuTheme.setLooping(true);
 
 		bg = new Sprite(new Texture(Resources.BG));
 		bg.setSize(Config.WIDTH, Config.HEIGHT);
