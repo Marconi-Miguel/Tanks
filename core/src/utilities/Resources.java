@@ -1,10 +1,11 @@
 package utilities;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 public class Resources {
-	private TextureAtlas atlas;
+	////////////////////////menu
+	public static final String BG = "Menu/OfficialBg.png";
+	public static final String FONT = "Menu/MerriWeather-Regular.ttf";
+	public static final String BANNER = "Menu/Banner.png";
+	////////////////////////ingame
 	//GAME ICON
 	public static final String GAMEICON = "images/misc/icon.png";
 	

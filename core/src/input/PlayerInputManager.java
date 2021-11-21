@@ -5,13 +5,14 @@ import com.badlogic.gdx.InputAdapter;
 
 import network.ClientsideThread;
 import network.NetworkCodes;
-import utilities.Render;
+import utilities.Config;
 
 public class PlayerInputManager extends InputAdapter {
 
 	Player localPlayer;
 	ClientsideThread thread;
-	
+	float mouseX,mouseY;
+	boolean click;
 	public PlayerInputManager(Player localPlayer) {//This is the proper way. Don't change it.
 		this.localPlayer = localPlayer;
 	}
@@ -84,6 +85,35 @@ public class PlayerInputManager extends InputAdapter {
 		default:
 			return false;
 		}
+		
+		
 	}
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		mouseX = screenX;
+		mouseY = Config.HEIGHT- screenY;
+		return false;
+	}
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		click = true;
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		click = false;
+		return false;
+	}
+	public float getMouseX() {
+		return mouseX;
+	}
+	public float getMouseY() {
+		return mouseY;
+	}
+	public boolean isClick() {
+		return click;
+	}
+
 
 }
