@@ -5,17 +5,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import network.Clientside;
 import network.ClientsideThread;
-import screens.MapScreen;
+import screens.MenuScreen;
 import utilities.Render;
 
 public class Tanks extends Game {
-	// hmmmm
 	
 	@Override
 	public void create () {
 		Render.app = this;
 		Render.batch = new SpriteBatch();
-		this.setScreen(new MapScreen());
+		this.setScreen(new MenuScreen());
 	
 	}
 
@@ -26,9 +25,10 @@ public class Tanks extends Game {
 	
 	@Override
 	public void dispose () { //Called when game closes!
+		super.dispose();
 		ClientsideThread cThread = Clientside.getThread();
 		if (cThread != null) {cThread.disconnect();}
-		super.dispose();
+		
 		Render.batch.dispose();
 	}
 }
