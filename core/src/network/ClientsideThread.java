@@ -110,23 +110,24 @@ public class ClientsideThread extends Thread {
 		Boolean found;
 		int cont = 0;
 		do {
-
+			
 			found = false;
-			if (tanks.get(cont).owner.username == args[0]) {
+			if (tanks.get(cont).owner.username.equals(args[0])) {
 				tank = tanks.get(cont);
 				found = true;
 			} // find the tank owned by this player
 			cont++;
-		} while (found);
+		} while (!found || cont < tanks.size());
 
 		if (tank == null) {
 			return;
 		}
 
 		tank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
-		tank.setRotation(Float.parseFloat(args[3]));
+		tank.hull.rotation=Float.parseFloat(args[3]);
 		System.out.println(tank.hull.getX());
 		System.out.println(tank.hull.getY());
+		System.out.println(tank.hull.rotation);
 	}
 
 //////////// connection //////////////////////////////
