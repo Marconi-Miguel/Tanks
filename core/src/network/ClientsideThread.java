@@ -6,8 +6,11 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
+import elements.Tank;
 import input.Player;
+import utilities.Render;
 
 public class ClientsideThread extends Thread {
 
@@ -45,9 +48,10 @@ public class ClientsideThread extends Thread {
 //////////Messaging///////////////////////////////////////
 	private void processMessage(DatagramPacket packet) {
 		String msg = new String(packet.getData()).trim();
-		//System.out.println("[CLIENT RECEIVED] "+msg);
-		String args = msg.substring(NetworkCodes.CODELENGTH,msg.length());
-		String networkCode = msg.substring(0,NetworkCodes.CODELENGTH);
+		String networkCode = msg.substring(0, NetworkCodes.CODELENGTH); // The first part of the message is the network
+																		// code.
+		String args = msg.substring(NetworkCodes.CODELENGTH, msg.length()); // Everything after the network code are the
+																			// arguments (args) of the network message.
 		switch(networkCode) {
 		case NetworkCodes.CONNECT:
 			handleConnection();
@@ -59,6 +63,10 @@ public class ClientsideThread extends Thread {
 		///
 		case NetworkCodes.PING: //Ping, are you there?
 			sendMessage(NetworkCodes.PONG); //PONG! I'm still here!
+		break;
+		///
+		case NetworkCodes.TANKSYNC:
+			syncPlayerTank(args);
 		break;
 		///
 		}
@@ -92,6 +100,19 @@ public class ClientsideThread extends Thread {
 		System.out.println("[CLIENT] Disconnected: "+args);
 		connected = false;
 		this.end = true;
+	}
+	
+	private void syncPlayerTank(String argumentString) {
+		String[] args = argumentString.split("/");  //Split the data packed in the string.
+		ArrayList<Tank> tanks = Render.tanks;
+		Tank tank = null;
+		for (int i = 0; i < tanks.size(); i++) {
+			if (tanks.get(i).owner.username == args[0]) {tank = tanks.get(i); break;} //find the tank owned by this player
+		}
+		if (tank == null) {return;}
+		tank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]) );
+		tank.setRotation(Float.parseFloat(args[3]));
+		
 	}
 
 //////////// connection //////////////////////////////

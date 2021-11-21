@@ -10,8 +10,8 @@ import utilities.Render;
 
 public class Tank {
 	public Hull hull;
-	Client owner;
-	float rotation;
+	public Client owner;
+	public float rotation;
 	float maxSpeed;
 	float rotationSpeed;
 	float accelRate;
@@ -47,6 +47,10 @@ public class Tank {
 
 	public void setPosition(float x, float y) {
 		hull.setPosition(x, y);
+	}
+	
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
 	}
 
 	//// movement functions
