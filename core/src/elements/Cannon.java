@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Timer;
 
+import TankData.BasicShell;
 import utilities.Config;
 import utilities.Render;
 import utilities.Resources;
@@ -41,8 +42,8 @@ public class Cannon extends Attachable {
 			time = 0;
 			ready = true;
 //			fireSfx.play(1,Functions.randomFloat(0.8f,1.2f), 1);
-			Projectile shell = new Projectile(getX() + getWidth() / 2, getY() + getHeight() / 2, hull,
-					Resources.BASICSHELL, 4);
+			Projectile shell = new BasicShell(getX() + getWidth() / 2, getY() + getHeight() / 2, hull,
+					Resources.BASICSHELL, 1);
 			fireFX.setOrigin(fireFX.getWidth() / 2, -hull.getHeight() / 1.5f);
 
 			projectiles.add(shell);

@@ -10,7 +10,7 @@ public class BasicHull extends Hull{
 		super(Resources.BASICHULL,100);
 		
 		//esto nose si quitarlo, lo comento preguntar despues
-		
+		hp = 300;
 		startRotation = 90;
 		
 		//Specs

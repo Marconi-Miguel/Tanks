@@ -17,6 +17,7 @@ public class Projectile extends Entidad2D {
 	public Texture invPix;
 	float tempX;
 	float tempY;
+	public float dmg;
 
 	public Projectile(float x, float y, Hull hull, String texture, float speedMod) {
 		super(new Texture(texture));
@@ -74,7 +75,7 @@ public class Projectile extends Entidad2D {
 	}
 
 	public void gotHitted(Hull hitted) {
-
+		
 		if (hitted != parent) {
 			explode = true;
 		}

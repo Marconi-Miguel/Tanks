@@ -22,7 +22,8 @@ public class Hull extends Entidad2D {
 
 	// stats
 	private int totalHp = 0;
-	private int hp = 0;
+	protected float hp = 0;
+	protected float hpTotal = 0;
 	public boolean onRoad;
 	public float rotation; // degrees
 	public int weaponSlots;
@@ -38,6 +39,7 @@ public class Hull extends Entidad2D {
 	public Hull(String texture, int hp) {
 		super(new Texture(texture));
 		this.hp = hp;
+		this.hpTotal = hp;
 		this.world = Render.world;
 
 		setSize(getWidth() / 2 / Config.PPM, getHeight() / 2 / Config.PPM);
@@ -108,7 +110,7 @@ public class Hull extends Entidad2D {
 		onRoad = false;
 	}
 
-	public int getHp() {
+	public float getHp() {
 		return hp;
 	}
 
@@ -138,57 +140,52 @@ public class Hull extends Entidad2D {
 	}
 
 	public void receiveDamage(Projectile p) {
-		// the tank will receive the damage and the coordinates to know where it hit.
-		if(rotation < 90 || rotation > 270) {
-			estadoActual = Estado.ARRIBA;
-		}else {
-			estadoActual = Estado.ABAJO;
+		float angle = 0;
+		System.out.println(p.dmg);
+		angle = calculateAngle(p);
+		if (angle < 45 || angle > 315) {
+			System.out.println("arriba: "+ p.dmg*0.75);
+			hp -= p.dmg*0.75;
+		} else if (angle > 135 && angle < 225) {
+			System.out.println("arriba");
+			hp -= p.dmg;
+		} else {
+			System.out.println("costado");
+			hp -= p.dmg*3;
 		}
-		
+		hp =(hp<0)?0:hp;
+		System.out.println(hp);
 
-		//saca el valor del centro para saber la tangente 
-		//  y sacar los radianes que tiene con respecto al centro
+	}
+
+	private float calculateAngle(Projectile p) {
+		float angle = 0;
+		// saca el valor del centro para saber la tangente
+		// y sacar los radianes que tiene con respecto al centro
 		float yPos = getY() + getHeight() / 2;
-		float xPos = getX() + getWidth() / 2; 
+		float xPos = getX() + getWidth() / 2;
 		float difY = p.b2body.getPosition().y;
 		float difX = p.b2body.getPosition().x;
 		// to understand better the math
-		
-		yPos =(yPos > difY)?-(yPos-difY): difY - yPos  ;
-
-		xPos =(xPos > difX)?-(xPos-difX):  difX - xPos ;
-	
-		
+		yPos = (yPos > difY) ? -(yPos - difY) : difY - yPos;
+		xPos = (xPos > difX) ? -(xPos - difX) : difX - xPos;
 		float tanValue = yPos / xPos;
-		float angle = (float) Math.toDegrees(Math.atan(tanValue));				
-		
+		angle = (float) Math.toDegrees(Math.atan(tanValue));
+
 		// SE INVIERTEN LOS ESTADOS, POR ALGUNA RAZON MAGICA (BORRAR)
-		if(angle < 0 && (yPos<0 && xPos>0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
+		if (angle < 0 && (yPos < 0 && xPos > 0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
 			angle += 270;
-		}else if(angle > 0 && (yPos<0 && xPos< 0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
+		} else if (angle > 0 && (yPos < 0 && xPos < 0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
 			angle += 90;
-		}else if(angle < 0 && yPos>0 && xPos<0 ) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
-			angle = 90+angle;
-			
-		}else if(angle > 0 && yPos>0 && xPos>0 ) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
+		} else if (angle < 0 && yPos > 0 && xPos < 0) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
+			angle = 90 + angle;
+
+		} else if (angle > 0 && yPos > 0 && xPos > 0) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
 			angle += 270;
 		}
 
-//		angle =((angle + rotation)>360)?(angle-rotation):angle + rotation;
-		System.out.println("a" + angle);
-		System.out.println("r" + rotation);
-		angle = (rotation > angle)?rotation - angle: angle-rotation;
-		System.out.println(angle);
-		if(angle < 45 && angle > 315 ) {
-			System.out.println("golpeo arriba");
-		}else if(angle > 45 && angle < 135 ) {
-			System.out.println("golpeo izquierda");
-		}else if(angle > 135 && angle < 225 ) {
-			System.out.println("golpeo abajo");
-		}else if(angle > 225 && angle < 315 ) {
-			System.out.println("golpeo derecha");
-		}
-		
+		angle = (rotation > angle) ? rotation - angle : angle - rotation;
+		return angle;
 	}
 
 	public Hull getHull() {

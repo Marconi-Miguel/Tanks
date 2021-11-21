@@ -145,6 +145,11 @@ public class Tank {
 
 	}
 
+	public void destroy() {
+		hull.disappear();
+		
+	}
+
 
 
 }

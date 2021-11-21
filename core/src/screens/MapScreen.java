@@ -52,6 +52,7 @@ public class MapScreen implements Screen {
 	private Tank tank;
 	private Tank tank2;
 	private Player localPlayer;
+	private Player localPlayer2;
 	float time;
 
 	public MapScreen() {
@@ -59,6 +60,8 @@ public class MapScreen implements Screen {
 		///// NETWORK TEST
 		System.out.println("asd");
 		localPlayer = new Player("testPlayer");
+		localPlayer2 = new Player("testPlayer2");
+		
 //		localPlayer.connect("26.29.247.173", 9995);///// NETWORK TEST
 		System.out.println("asd");
 		///// setting the PIM AS InputProcessor
@@ -97,7 +100,7 @@ public class MapScreen implements Screen {
 		// working with tank
 		tank = new Tank(localPlayer);
 		Render.tanks.add(tank);
-		tank2 = new Tank(localPlayer);
+		tank2 = new Tank(localPlayer2);
 
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -117,8 +120,13 @@ public class MapScreen implements Screen {
 		// drawing
 		// testing
 		b.begin();
-
-		tank.Render();
+		if(tank.hull.getHp()>0) {
+			tank.Render();
+		}else {
+			System.out.println("asd");
+			tank.destroy();
+		}
+		
 		tank2.Render();
 
 		b.end();
