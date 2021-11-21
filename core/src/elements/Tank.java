@@ -10,7 +10,8 @@ import utilities.Render;
 
 public class Tank {
 	public Hull hull;
-	Client owner;
+	public Client owner;
+	public float rotation;
 	float maxSpeed;
 	float rotationSpeed;
 	float accelRate;
@@ -37,7 +38,7 @@ public class Tank {
 		time += Config.delta;
 		doMovement();
 		doCannon();
-//		System.out.println(hull.rotation); 
+//		System.out.println(hull.rotation);
 		hull.draw(Render.batch); // this is the original way to draw the tank.
 
 		updateObjects();// Update other sprites attached to this tank, such as cannon.
@@ -46,6 +47,10 @@ public class Tank {
 
 	public void setPosition(float x, float y) {
 		hull.setPosition(x, y);
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
 	}
 
 	//// movement functions
