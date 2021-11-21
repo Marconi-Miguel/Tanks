@@ -15,11 +15,10 @@ import utilities.Render;
 public class ClientsideThread extends Thread {
 
 	private DatagramSocket socket;
-	private boolean end,connected = false;
+	private boolean end, connected = false;
 	private String serverIP;
 	private int serverPort;
 	private Player localPlayer;
-
 
 	public ClientsideThread(Player localPlayer) {
 		this.localPlayer = localPlayer;
@@ -33,16 +32,16 @@ public class ClientsideThread extends Thread {
 	@Override
 	public void run() {
 		do {
-			
+
 			byte[] data = new byte[1024];
-			DatagramPacket packet = new DatagramPacket(data,data.length);
+			DatagramPacket packet = new DatagramPacket(data, data.length);
 			try {
 				socket.receive(packet);
 				processMessage(packet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}while(!end);
+		} while (!end);
 	}
 
 //////////Messaging///////////////////////////////////////
@@ -52,22 +51,24 @@ public class ClientsideThread extends Thread {
 																		// code.
 		String args = msg.substring(NetworkCodes.CODELENGTH, msg.length()); // Everything after the network code are the
 																			// arguments (args) of the network message.
-		switch(networkCode) {
+		System.out.println(msg);
+
+		switch (networkCode) {
 		case NetworkCodes.CONNECT:
 			handleConnection();
-		break;
+			break;
 		///
 		case NetworkCodes.DISCONNECT:
 			handleDisconnection(args);
-		break;
+			break;
 		///
-		case NetworkCodes.PING: //Ping, are you there?
-			sendMessage(NetworkCodes.PONG); //PONG! I'm still here!
-		break;
+		case NetworkCodes.PING: // Ping, are you there?
+			sendMessage(NetworkCodes.PONG); // PONG! I'm still here!
+			break;
 		///
 		case NetworkCodes.TANKSYNC:
 			syncPlayerTank(args);
-		break;
+			break;
 		///
 		}
 	}
@@ -80,7 +81,7 @@ public class ClientsideThread extends Thread {
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
 		}
-		DatagramPacket packet = new DatagramPacket(data,data.length,ipServer,serverPort);
+		DatagramPacket packet = new DatagramPacket(data, data.length, ipServer, serverPort);
 
 		try {
 			socket.send(packet);
@@ -90,57 +91,74 @@ public class ClientsideThread extends Thread {
 	}
 
 ////////////processMessage functions//////////////////////////////////////////
-	
+
 	private void handleConnection() {
-		System.out.println("[CLIENT] Connected to "+serverIP+":" +serverPort+" as "+localPlayer.username);
+		System.out.println("[CLIENT] Connected to " + serverIP + ":" + serverPort + " as " + localPlayer.username);
 		connected = true;
 	}
 
 	private void handleDisconnection(String args) {
-		System.out.println("[CLIENT] Disconnected: "+args);
+		System.out.println("[CLIENT] Disconnected: " + args);
 		connected = false;
 		this.end = true;
 	}
-	
+
 	private void syncPlayerTank(String argumentString) {
-		String[] args = argumentString.split("/");  //Split the data packed in the string.
+		String[] args = argumentString.split("/"); // Split the data packed in the string.
 		ArrayList<Tank> tanks = Render.tanks;
 		Tank tank = null;
-		for (int i = 0; i < tanks.size(); i++) {
-			if (tanks.get(i).owner.username == args[0]) {tank = tanks.get(i); break;} //find the tank owned by this player
+		Boolean found;
+		int cont = 0;
+		do {
+
+			found = false;
+			if (tanks.get(cont).owner.username == args[0]) {
+				tank = tanks.get(cont);
+				found = true;
+			} // find the tank owned by this player
+			cont++;
+		} while (found);
+
+		if (tank == null) {
+			return;
 		}
-		if (tank == null) {return;}
-		tank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]) );
+
+		tank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
 		tank.setRotation(Float.parseFloat(args[3]));
-		
+		System.out.println(tank.hull.getX());
+		System.out.println(tank.hull.getY());
 	}
 
 //////////// connection //////////////////////////////
-	
+
 	public boolean connect(String ip, int port) {
-		if (connected) {return false;} //Unable to connect, because we're connected already.
+		if (connected) {
+			return false;
+		} // Unable to connect, because we're connected already.
 		this.serverIP = ip;
 		this.serverPort = port;
 		int connectionAttempts = 0;
-		
+
 		do {
-			sendMessage(NetworkCodes.CONNECT+localPlayer.username);//Attempt connection
+			sendMessage(NetworkCodes.CONNECT + localPlayer.username);// Attempt connection
 			connectionAttempts++;
 			try {
-				Thread.sleep(500); //wait a second.
+				Thread.sleep(500); // wait a second.
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}while(!connected && connectionAttempts < 5);
-		
-		if(connected) {return true;} else {
-			System.out.println("[CLIENT] Failed to connect to "+ip+":"+port);
-			return false; 
+		} while (!connected && connectionAttempts < 5);
+
+		if (connected) {
+			return true;
+		} else {
+			System.out.println("[CLIENT] Failed to connect to " + ip + ":" + port);
+			return false;
 		}
 	}
-	
+
 	public void disconnect() {
-		if(connected) {
+		if (connected) {
 			sendMessage(NetworkCodes.DISCONNECT);
 		}
 	}
