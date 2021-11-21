@@ -66,7 +66,6 @@ public class MapScreen implements Screen {
 
 		// setting map
 		camera = new OrthographicCamera();
-
 		// load tiledMap
 		mapLoader = new TmxMapLoader();
 		map = mapLoader.load(Resources.MAP1);
@@ -118,7 +117,7 @@ public class MapScreen implements Screen {
 		// drawing
 		// testing
 		b.begin();
-//		tank.hull.draw(b);
+
 		tank.Render();
 		tank2.Render();
 
@@ -139,16 +138,7 @@ public class MapScreen implements Screen {
 		// sets whats the renderer gonna draw, that shows in camera
 		renderer.setView(camera);
 		time += delta;
-		if (localPlayer.PIM.isClick() && time > 0.2) {
-			time = 0;
-			Vector2 vector = gamePort
-					.unproject(new Vector2(localPlayer.PIM.getMouseX(), Config.HEIGHT - localPlayer.PIM.getMouseY()));
-			System.out.println();
-//			System.out.println("x Tank2 : " + tank2.hull.getX());
-//			System.out.println("y Tank2 : " + tank2.hull.getY());
-			System.out.println("x : " + vector.x);
-			System.out.println("y : " + vector.y);
-		}
+
 
 	}
 

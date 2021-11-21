@@ -29,11 +29,11 @@ public class Cannon extends Attachable {
 		flip(false, true);
 		fireFX = new Sprite(new Texture(Resources.CANNON_FIRE_FX));
 		fireFX.flip(false, true);
-		fireFX.setSize(getWidth(),getHeight());
-		fireFX.setPosition(2*100,2*100);
+		fireFX.setSize(getWidth(), getHeight());
+		fireFX.setPosition(2 * 100, 2 * 100);
 		ready = false;
 		objectType = "Cannon";
-		
+
 	}
 
 	public void trigger() {
@@ -42,10 +42,9 @@ public class Cannon extends Attachable {
 			ready = true;
 //			fireSfx.play(1,Functions.randomFloat(0.8f,1.2f), 1);
 			Projectile shell = new Projectile(getX() + getWidth() / 2, getY() + getHeight() / 2, hull,
-					Resources.BASICSHELL, 3);
-			fireFX.setOrigin(fireFX.getWidth()/2, -hull.getHeight()/1.5f);
-			
-			
+					Resources.BASICSHELL, 4);
+			fireFX.setOrigin(fireFX.getWidth() / 2, -hull.getHeight() / 1.5f);
+
 			projectiles.add(shell);
 		}
 	}
@@ -54,24 +53,22 @@ public class Cannon extends Attachable {
 		time += Config.delta;
 
 		for (int i = 0; i < projectiles.size(); i++) {
-			if(projectiles.get(i).isExploded()) {
-				
+			if (projectiles.get(i).isExploded()) {
+
 				projectiles.get(i).disappear();
 				projectiles.remove(i);
-			}else {
+			} else {
 				projectiles.get(i).fired();
 			}
-			
 
 		}
-		
 
 	}
 
 	@Override
 	public void update(float x, float y, float rotation) {
 		super.update(x, y, rotation);
-		fireFX.setPosition(x, y+hull.getHeight()/1.5f);
+		fireFX.setPosition(x, y + hull.getHeight() / 1.5f);
 		fireFX.setRotation(rotation);
 		if (time < fireEffectTime) {
 			fireFX.draw(Render.batch);
