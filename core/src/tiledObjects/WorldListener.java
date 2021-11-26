@@ -33,7 +33,7 @@ public class WorldListener implements ContactListener {
 
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
 				roadCounter += 1;
-				System.out.println(roadCounter);
+				
 				// se activa la interaccion con el tipo de objeto que sea
 				((Hull) objeto.getUserData()).inRoad();
 
@@ -75,7 +75,6 @@ public class WorldListener implements ContactListener {
 				if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
 					// se activa la interaccion con el tipo de objeto que sea
 					roadCounter --;
-					System.out.println(roadCounter);
 					if (roadCounter == 0) {
 						
 						((Hull) objeto.getUserData()).outRoad();

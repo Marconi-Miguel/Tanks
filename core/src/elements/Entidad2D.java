@@ -12,7 +12,7 @@ public abstract class Entidad2D extends Sprite{
 	// box2D
 	protected FixtureDef fdef;
 	protected BodyDef bdef;
-	protected Body b2body;
+	public Body b2body;
 	protected World world;
 	protected Fixture fixture;
 	protected abstract void createBody();

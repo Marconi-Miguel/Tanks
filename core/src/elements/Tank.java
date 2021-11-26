@@ -12,13 +12,14 @@ public class Tank {
 	public Hull hull;
 	public Client owner;
 	public float rotation;
-	float maxSpeed;
+	float maxSpeed = 2;
 	float rotationSpeed;
-	float accelRate;
 	float speed;
 	float acceleration;
 	boolean forward; // direction. true if going forward, false if reverse.
 	float time;
+	public float tempX =0;
+	public float tempY = 0;
 	// Array holding other elements of the tank, such as the cannon.
 	Attachable[] objects;
 
@@ -56,19 +57,24 @@ public class Tank {
 	//// movement functions
 	private void doMovement() {
 		doRotation();
-
-		float tempX = (float) Math.sin(Math.toRadians(hull.rotation));
-		float tempY = (float) Math.cos(Math.toRadians(hull.rotation));
-
+		
+		tempX = (float) Math.sin(Math.toRadians(hull.rotation));
+		tempY = (float) Math.cos(Math.toRadians(hull.rotation));
+		tempX = (hull.isOnRoad() == true) ? tempX : tempX / 2;// here controls on road speed
+		tempY = (hull.isOnRoad() == true) ? tempY : tempY / 2;//
+		
+		
+		
+		tempX = (hull.isOnRoad() == true) ? tempX / 1.5f : tempX / 3;// here controls on road speed
+		tempY = (hull.isOnRoad() == true) ? tempY / 1.5f : tempY / 3;//
+		
+//		hull.
 		if (owner.inputs.get(InputKeys.UP) && !owner.inputs.get(InputKeys.DOWN)) { // If pressing W, go forward.
-
-			tempX = (hull.isOnRoad() == true) ? tempX : tempX / 2;// here controls on road speed
-			tempY = (hull.isOnRoad() == true) ? tempY : tempY / 2;//
+			
 			hull.moveHull(-tempX, tempY);
 		} else if (owner.inputs.get(InputKeys.DOWN) && !owner.inputs.get(InputKeys.UP)) { // If pressing S, go reverse
 
-			tempX = (hull.isOnRoad() == true) ? tempX / 1.5f : tempX / 3;// here controls on road speed
-			tempY = (hull.isOnRoad() == true) ? tempY / 1.5f : tempY / 3;//
+			
 			hull.moveHull(tempX, -tempY);
 		} else {
 			hull.stopHull();

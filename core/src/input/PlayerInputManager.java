@@ -28,6 +28,7 @@ public class PlayerInputManager extends InputAdapter {
 		return true;
 		
 		case Input.Keys.A:
+			
 			localPlayer.inputs.replace(InputKeys.LEFT, false,true);
 			thread.sendMessage(NetworkCodes.INPUT+"LEFT/"+"TRUE");
 		return true;

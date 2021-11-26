@@ -16,10 +16,11 @@ public class Road extends InteractiveObject {
 		
 	}
 
-
 	@Override
 	public void interaction() {
-		System.out.println("road: colision");
+		// TODO Auto-generated method stub
+		
 	}
+
 
 }
