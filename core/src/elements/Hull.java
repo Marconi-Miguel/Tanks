@@ -14,6 +14,7 @@ import utilities.Render;
 public class Hull extends Entidad2D {
 	public int id;
 	private World world;
+	public int roadCounter = 0;
 //	private Sprite dmged1;
 //  private Sprite dmged2;
 //	private Sprite dmged3;
@@ -101,13 +102,17 @@ public class Hull extends Entidad2D {
 	}
 
 	public void inRoad() {
-
-		onRoad = true;
+		roadCounter++;
+		System.out.println(roadCounter);
 	}
 
 	public void outRoad() {
-
-		onRoad = false;
+		System.out.println(roadCounter);
+		roadCounter--;
+		
+	}
+	public boolean isOnRoad() {
+		return onRoad;
 	}
 
 	public float getHp() {
@@ -118,9 +123,7 @@ public class Hull extends Entidad2D {
 		this.hp = hp;
 	}
 
-	public boolean isOnRoad() {
-		return onRoad;
-	}
+	
 
 	public int getWeaponSlots() {
 		return weaponSlots;
@@ -160,7 +163,8 @@ public class Hull extends Entidad2D {
 
 	private float calculateAngle(Projectile p) {
 		float angle = 0;
-		// saca el valor del centro para saber la tangente
+		// get the hull center value to know the tan
+		// to get the angle acord to the center
 		// y sacar los radianes que tiene con respecto al centro
 		float yPos = getY() + getHeight() / 2;
 		float xPos = getX() + getWidth() / 2;
@@ -171,8 +175,7 @@ public class Hull extends Entidad2D {
 		xPos = (xPos > difX) ? -(xPos - difX) : difX - xPos;
 		float tanValue = yPos / xPos;
 		angle = (float) Math.toDegrees(Math.atan(tanValue));
-
-		// SE INVIERTEN LOS ESTADOS, POR ALGUNA RAZON MAGICA (BORRAR)
+	//the maths respect the sprite and hot the math.to degrees and atan works, only makes between 0-90, so we had to be a bit more clever to solve that
 		if (angle < 0 && (yPos < 0 && xPos > 0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
 			angle += 270;
 		} else if (angle > 0 && (yPos < 0 && xPos < 0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.

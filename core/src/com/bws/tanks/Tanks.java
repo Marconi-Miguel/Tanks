@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import network.Clientside;
 import network.ClientsideThread;
+import screens.MapScreen;
 import screens.MenuScreen;
 import utilities.Render;
 import utilities.Resources;
@@ -26,7 +27,7 @@ public class Tanks extends Game {
 		music.setLooping(true);
 		music.play();		
 		music.setVolume(50);
-		this.setScreen(new MenuScreen());
+		this.setScreen(new MapScreen());
 	
 	}
 

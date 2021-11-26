@@ -18,7 +18,7 @@ public class Tank {
 	float acceleration;
 	boolean forward; // direction. true if going forward, false if reverse.
 	float time;
-	public float tempX =0;
+	public float tempX = 0;
 	public float tempY = 0;
 	// Array holding other elements of the tank, such as the cannon.
 	Attachable[] objects;
@@ -30,7 +30,7 @@ public class Tank {
 		rotationSpeed = 1;
 
 		objects = new Attachable[hull.slots];
-		System.out.println(hull.slots);
+		// for now, the tanks only will use 1 cannon
 		attach(new BasicCannon());
 
 	}
@@ -39,7 +39,6 @@ public class Tank {
 		time += Config.delta;
 		doMovement();
 		doCannon();
-//		System.out.println(hull.rotation);
 		hull.draw(Render.batch); // this is the original way to draw the tank.
 
 		updateObjects();// Update other sprites attached to this tank, such as cannon.
@@ -57,25 +56,21 @@ public class Tank {
 	//// movement functions
 	private void doMovement() {
 		doRotation();
-		
+
 		tempX = (float) Math.sin(Math.toRadians(hull.rotation));
 		tempY = (float) Math.cos(Math.toRadians(hull.rotation));
-		tempX = (hull.isOnRoad() == true) ? tempX : tempX / 2;// here controls on road speed
-		tempY = (hull.isOnRoad() == true) ? tempY : tempY / 2;//
-		
-		
-		
-		tempX = (hull.isOnRoad() == true) ? tempX / 1.5f : tempX / 3;// here controls on road speed
-		tempY = (hull.isOnRoad() == true) ? tempY / 1.5f : tempY / 3;//
-		
+		if(hull.roadCounter==0) {
+			tempX = tempX/2;
+			tempY = tempY/2;
+		}
+
 //		hull.
 		if (owner.inputs.get(InputKeys.UP) && !owner.inputs.get(InputKeys.DOWN)) { // If pressing W, go forward.
-			
+
 			hull.moveHull(-tempX, tempY);
 		} else if (owner.inputs.get(InputKeys.DOWN) && !owner.inputs.get(InputKeys.UP)) { // If pressing S, go reverse
 
-			
-			hull.moveHull(tempX, -tempY);
+			hull.moveHull(tempX/1.5f, -tempY/1.5f);
 		} else {
 			hull.stopHull();
 		}
@@ -112,7 +107,9 @@ public class Tank {
 	private void doCannon() {
 		for (int i = 0; i < objects.length; i++) {
 			if (objects[i].objectType == "Cannon") {
-				if (owner.inputs.get(InputKeys.FIRE) && time >((Cannon) objects[i]).reloadTime ) { //failsafe from spamming space
+
+				if (owner.inputs.get(InputKeys.FIRE) && time > ((Cannon) objects[i]).reloadTime) { // failsafe from
+																									// spamming space
 					time = 0;
 					((Cannon) objects[i]).trigger(); // omg
 				}
@@ -158,9 +155,7 @@ public class Tank {
 
 	public void destroy() {
 		hull.disappear();
-		
+
 	}
-
-
 
 }
