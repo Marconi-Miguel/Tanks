@@ -17,8 +17,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import elements.Tank;
 import input.Player;
 import input.PlayerInputManager;
-import tiledObjects.World2D;
-import tiledObjects.WorldListener;
+import scenes.SceneHud;
+import tiledMapObjects.World2D;
+import tiledMapObjects.WorldListener;
 import utilities.Config;
 import utilities.Render;
 import utilities.Resources;
@@ -48,6 +49,8 @@ public class MapScreen implements Screen {
 	private PlayerInputManager PIM;
 	// test
 	private Sprite imgTest;
+	// hud
+	private SceneHud hud;
 	// hull testing
 	private Tank tank;
 	private Tank tank2;
@@ -60,10 +63,8 @@ public class MapScreen implements Screen {
 		///// NETWORK TEST
 		System.out.println("asd");
 		localPlayer = new Player("testPlayer");
-		
-		
-		localPlayer.connect("26.29.247.173", 9995);///// NETWORK TEST
-		System.out.println("asd");
+
+//		localPlayer.connect("26.29.247.173", 9995);///// NETWORK TES
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(localPlayer.PIM);
 
@@ -104,13 +105,15 @@ public class MapScreen implements Screen {
 
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+		hud = new SceneHud();
 
 	}
 
 	@Override
 	public void render(float delta) {
-		gamePort.apply();
+		
 		update(delta);
+		gamePort.apply();
 		Render.cleanScreen();
 		b.setProjectionMatrix(camera.combined);
 		// loads map
@@ -120,13 +123,12 @@ public class MapScreen implements Screen {
 		// drawing
 		// testing
 		b.begin();
-		if(tank.hull.getHp()>0) {
+		if (tank.hull.getHp() > 0) {
 			tank.Render();
-		}else {
-			System.out.println("asd");
+		} else {
 			tank.destroy();
 		}
-		
+		hud.draw();
 //		tank2.Render();
 
 		b.end();
@@ -135,9 +137,9 @@ public class MapScreen implements Screen {
 	}
 
 	private void update(float delta) {
-
 		Config.delta = delta;
 		camera.update();
+		hud.viewport.apply();
 		// 60 ticks in a second if im right
 		world.step(1 / 60f, 6, 2);
 		// set Camera on the players tank
@@ -147,12 +149,12 @@ public class MapScreen implements Screen {
 		renderer.setView(camera);
 		time += delta;
 
-
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
+		hud.stage.getViewport().update(width, height, true);
 	}
 
 	@Override

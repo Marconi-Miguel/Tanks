@@ -26,6 +26,8 @@ public class Resources {
 	public static final String BASICSHELL = "Tanks/Projectiles/shotOrange.png";
 	
 	
+	
+	public static final String SCENESKIN = "Scenes/Escenes2DTanks!.json";
 	//MUSIC
 	public static final String MENUTHEME = "Music/menutheme.mp3";
 
