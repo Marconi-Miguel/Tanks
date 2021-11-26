@@ -109,9 +109,11 @@ public class ClientsideThread extends Thread {
 		Tank tank = null;
 		Boolean found;
 		int cont = 0;
+		if(Render.tanks.size()==0) {return;} //TODO hotfix
 		do {
 			
 			found = false;
+			
 			if (tanks.get(cont).owner.username.equals(args[0])) {
 				tank = tanks.get(cont);
 				found = true;
@@ -122,9 +124,18 @@ public class ClientsideThread extends Thread {
 		if (tank == null) {
 			return;
 		}
-
-		tank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
+		
+		tank.tempX =Float.parseFloat(args[1]);
+		tank.tempY =Float.parseFloat(args[2]);//		tank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
+		
 		tank.hull.rotation=Float.parseFloat(args[3]);
+		if (Boolean.parseBoolean(args[4])) {
+			tank.hull.inRoad();
+		}else {
+			tank.hull.outRoad();
+		}
+		
+		
 		System.out.println(tank.hull.getX());
 		System.out.println(tank.hull.getY());
 		System.out.println(tank.hull.rotation);
