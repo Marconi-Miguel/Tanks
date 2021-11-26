@@ -1,4 +1,4 @@
-package tiledObjects;
+package tiledMapObjects;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;

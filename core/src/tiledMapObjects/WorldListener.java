@@ -1,4 +1,4 @@
-package tiledObjects;
+package tiledMapObjects;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -12,12 +12,9 @@ import elements.Projectile;
 public class WorldListener implements ContactListener {
 	private Fixture fixA;
 	private Fixture fixB;
-	public Fixture actual;
-	private int roadCounter; // im TOOOOOOOOO LAZY
-	// basically it will count how many roads the tanks has been touching, when he
-	// left the road discounts 1
-	// when the hull left a road it will look if the roadCounter is 0, else it wont
-	// trigger "hull.outRoad"
+	public Fixture actualLeft;
+	public Fixture actualIn;
+	
 
 	@Override
 	public void beginContact(Contact contact) {
@@ -25,17 +22,22 @@ public class WorldListener implements ContactListener {
 		// se generarian 2 BEGINcontact
 		fixA = contact.getFixtureA();
 		fixB = contact.getFixtureB();
-
+		
 		if (fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
-
-			Fixture Road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
-			Fixture objeto = (Road == fixA) ? fixB : fixA;
-
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-				roadCounter += 1;
+		
+			Fixture road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
+			Fixture objeto = (road == fixA) ? fixB : fixA;
+			
 				
+			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
+			
 				// se activa la interaccion con el tipo de objeto que sea
-				((Hull) objeto.getUserData()).inRoad();
+					if((actualIn == null || actualIn != road) || ((Hull) objeto.getUserData()).roadCounter == 0) {
+						((Hull) objeto.getUserData()).inRoad();
+					}
+					
+				
+					actualIn = road;
 
 			}
 
@@ -69,16 +71,19 @@ public class WorldListener implements ContactListener {
 		if (fixA.getUserData() != null && fixB.getUserData() != null) {
 			if ( fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
 
-				Fixture Road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
-				Fixture objeto = (Road == fixA) ? fixB : fixA;
+				Fixture road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
+				Fixture objeto = (road == fixA) ? fixB : fixA;
 
 				if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
 					// se activa la interaccion con el tipo de objeto que sea
-					roadCounter --;
-					if (roadCounter == 0) {
+						//idk what happened really, but i thinks that the projectil counted as a hull(I DONT KNOW WHY, SO I DID THIS TO NO REPEAT THE SAME ROAD unless
+						// the tank reEnters that single road)
+						if((actualLeft == null || actualLeft != road) || ((Hull) objeto.getUserData()).roadCounter > 0) {
+							((Hull) objeto.getUserData()).outRoad();
 						
-						((Hull) objeto.getUserData()).outRoad();
-					}
+						}
+						actualLeft = road;
+					
 				}
 
 			}
