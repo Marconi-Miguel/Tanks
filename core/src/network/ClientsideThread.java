@@ -66,6 +66,10 @@ public class ClientsideThread extends Thread {
 			sendMessage(NetworkCodes.PONG); // PONG! I'm still here!
 			break;
 		///
+		case NetworkCodes.NEWTANK:
+			createPlayerTank(args);
+		break;
+		///
 		case NetworkCodes.TANKSYNC:
 			syncPlayerTank(args);
 			break;
@@ -139,6 +143,10 @@ public class ClientsideThread extends Thread {
 		System.out.println(tank.hull.getX());
 		System.out.println(tank.hull.getY());
 		System.out.println(tank.hull.rotation);
+	}
+	
+	private void createPlayerTank(String args) {
+		
 	}
 
 //////////// connection //////////////////////////////
