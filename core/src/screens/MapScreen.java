@@ -14,10 +14,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import elements.SpeedBuff;
 import elements.Tank;
 import input.Player;
 import input.PlayerInputManager;
-import scenes.SceneHud;
+import scenes.HudScene;
 import tiledMapObjects.World2D;
 import tiledMapObjects.WorldListener;
 import utilities.Config;
@@ -50,21 +51,25 @@ public class MapScreen implements Screen {
 	// test
 	private Sprite imgTest;
 	// hud
-	private SceneHud hud;
+	private HudScene hud;
 	// hull testing
 	private Tank tank;
 	private Tank tank2;
 	private Player localPlayer;
-
+	private SpeedBuff buff;
 	float time;
 
-	public MapScreen() {
+	public MapScreen(String ip, int port) {
 
 		///// NETWORK TEST
 		System.out.println("asd");
 		localPlayer = new Player("testPlayer");
-
-//		localPlayer.connect("26.29.247.173", 9995);///// NETWORK TES
+		
+		
+		System.out.println("ip:" + ip);
+		System.out.println("port:" + port);
+//		localPlayer.connect(ip, port);///// NETWORK TES
+		
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(localPlayer.PIM);
 
@@ -105,8 +110,8 @@ public class MapScreen implements Screen {
 
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-		hud = new SceneHud();
-
+		hud = new HudScene();
+		buff = new SpeedBuff();
 	}
 
 	@Override
@@ -123,17 +128,17 @@ public class MapScreen implements Screen {
 		// drawing
 		// testing
 		b.begin();
+		
+		
 		if (tank.hull.getHp() > 0) {
 			tank.Render();
 		} else {
 			tank.destroy();
-		}
-		hud.draw();
+		}	
 //		tank2.Render();
-
+		buff.draw(Render.batch);
 		b.end();
-		// testing
-
+		hud.draw();
 	}
 
 	private void update(float delta) {
