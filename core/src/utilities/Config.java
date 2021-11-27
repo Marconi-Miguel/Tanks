@@ -15,5 +15,6 @@ public abstract class Config {
 
     public static final short PROJECTIL_BIT = 16;
     public static final short EXPLOSION_BIT = 32;
+    public static final short BUFF_BIT = 8;
     // 0000 1100
 }

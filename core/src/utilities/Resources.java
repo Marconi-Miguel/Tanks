@@ -5,6 +5,7 @@ public class Resources {
 	public static final String BG = "Menu/OfficialBg.png";
 	public static final String FONT = "Menu/MerriWeather-Regular.ttf";
 	public static final String BANNER = "Menu/Banner.png";
+	public static final String PARCHMENT = "Menu/parchment.png";
 	////////////////////////ingame
 	//GAME ICON
 	public static final String GAMEICON = "images/misc/icon.png";
@@ -24,6 +25,10 @@ public class Resources {
 	
 	//SHELLS ////////////////////////////////////////
 	public static final String BASICSHELL = "Tanks/Projectiles/shotOrange.png";
+	//BUFFS/////////////////////////////////////
+	public static final String CDBUFF = "Buffs/coolDownBuff.png";
+	public static final String ROCKETBUFF = "Buffs/rocketBuff.png";
+	public static final String SPEEDBUFF = "Buffs/speedBuff.png";
 	
 	
 	
