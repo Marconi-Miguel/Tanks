@@ -16,11 +16,5 @@ public class Road extends InteractiveObject {
 		
 	}
 
-	@Override
-	public void interaction() {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

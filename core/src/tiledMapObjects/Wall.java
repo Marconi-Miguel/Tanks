@@ -10,10 +10,4 @@ public class Wall extends InteractiveObject{
 		
 	}
 
-	@Override
-	public void interaction() {
-		System.out.println("uwu im a wall");
-		
-	}
-
 }

@@ -52,10 +52,6 @@ public abstract class InteractiveObject {
 		fixture.setUserData("default");
 		setFilter(Config.DEFAULT_BIT);
 	}
-	
-
-
-	public abstract void interaction();
 
 	public void setFilter(short filterBit) {
 		// se crea un filtro nuevo con el bit que le indique

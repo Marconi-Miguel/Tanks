@@ -31,12 +31,6 @@ public class Hull extends Entidad2D {
 	public float rotationSpeed;
 	public int slots;
 
-	public enum Estado {
-		ARRIBA, ABAJO
-	}
-
-	public Estado estadoActual = Estado.ARRIBA;
-
 	public Hull(String texture, int hp) {
 		super(new Texture(texture));
 		this.hp = hp;
@@ -87,7 +81,7 @@ public class Hull extends Entidad2D {
 		fdef.filter.categoryBits = Config.TANK_BIT;
 		// definimos la mascara de bits, que objetos box2d tiene que darle atencion.
 		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT | Config.TANK_BIT | Config.EXPLOSION_BIT
-				| Config.PROJECTIL_BIT;
+				| Config.PROJECTIL_BIT | Config.BUFF_BIT;
 		fdef.shape = shape;
 		b2body.createFixture(fdef).setUserData(this);
 	}
@@ -103,13 +97,10 @@ public class Hull extends Entidad2D {
 
 	public void inRoad() {
 		roadCounter++;
-		System.out.println(roadCounter);
 	}
 
 	public void outRoad() {
-		System.out.println(roadCounter);
 		roadCounter--;
-		
 	}
 	public boolean isOnRoad() {
 		return onRoad;

@@ -18,13 +18,15 @@ public class WorldListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
+		System.out.println("asd");
 		// el contacto genera entre 2 entidades, pero puede chocar mas de una entidad,
 		// se generarian 2 BEGINcontact
 		fixA = contact.getFixtureA();
 		fixB = contact.getFixtureB();
-		
-		if (fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
-		
+		detectRoad();
+		detectProjectil();
+if (fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
+			
 			Fixture road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
 			Fixture objeto = (road == fixA) ? fixB : fixA;
 			
@@ -42,6 +44,11 @@ public class WorldListener implements ContactListener {
 			}
 
 		}
+		
+
+	}
+	
+	private void detectProjectil() {
 		if (fixA.getUserData() instanceof Projectile || fixB.getUserData() instanceof Projectile) {
 
 			Fixture projectile = (fixA.getUserData() instanceof Projectile) ? fixA : fixB;
@@ -61,11 +68,33 @@ public class WorldListener implements ContactListener {
 			}
 
 		}
+	}
+	private void detectRoad() {
+		if (fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
+			
+			Fixture road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
+			Fixture objeto = (road == fixA) ? fixB : fixA;
+			
+				
+			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
+			
+				// se activa la interaccion con el tipo de objeto que sea
+					if((actualIn == null || actualIn != road) || ((Hull) objeto.getUserData()).roadCounter == 0) {
+						((Hull) objeto.getUserData()).inRoad();
+					}
+					
+				
+					actualIn = road;
 
+			}
+
+		}
+		
 	}
 
 	// -------------------------END CONTACT------------------------------------
 
+	
 	@Override
 	public void endContact(Contact contact) {
 		if (fixA.getUserData() != null && fixB.getUserData() != null) {
