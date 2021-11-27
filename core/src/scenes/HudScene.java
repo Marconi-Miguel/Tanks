@@ -12,9 +12,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import utilities.Config;
+import utilities.Render;
 import utilities.Resources;
 
-public class SceneHud {
+public class HudScene {
 	public Stage stage;
 	private OrthographicCamera camara;
 	public Viewport viewport;
@@ -24,7 +25,7 @@ public class SceneHud {
 	private ProgressBar hpBar;
 	private ProgressBar bulletBar;
 
-	public SceneHud() {
+	public HudScene() {
 		camara = new OrthographicCamera();
 		viewport = new FitViewport(Config.WIDTH,Config.HEIGHT,camara);
 	
@@ -48,13 +49,15 @@ public class SceneHud {
 		table.row();
 		bulletBar = new ProgressBar(0.0f, 100.0f, 1.0f, false, skin, "hpBar");
 		bulletBar.setValue(100.0f);
-		//padLeft reason: some pixels that were tilting me off
-		table.add(bulletBar).padLeft(-1.0f).expandX().align(Align.bottom);
+		
+		table.add(bulletBar).expandX().align(Align.bottom);
 		stage.addActor(table);
 	}
 
 	public void draw() {
+		Render.batch.begin();
 		stage.act();
 		stage.draw();
+		Render.batch.end();
 	}
 }
