@@ -113,6 +113,16 @@ public class Hull extends Entidad2D {
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
+	public void BuffSpeed() {
+		this.hp = hp;
+	}
+	public void BuffCooldown() {
+		this.hp = hp;
+	}
+	public void BuffExplosive() {
+		this.hp = hp;
+	}
+	
 
 	
 
@@ -135,20 +145,20 @@ public class Hull extends Entidad2D {
 
 	public void receiveDamage(Projectile p) {
 		float angle = 0;
-		System.out.println(p.dmg);
 		angle = calculateAngle(p);
 		if (angle < 45 || angle > 315) {
-			System.out.println("arriba: "+ p.dmg*0.75);
+			System.out.println("arriba");
 			hp -= p.dmg*0.75;
 		} else if (angle > 135 && angle < 225) {
-			System.out.println("arriba");
-			hp -= p.dmg;
+			System.out.println("abajo");
+			hp -= p.dmg*3;
 		} else {
 			System.out.println("costado");
-			hp -= p.dmg*3;
+			hp -= p.dmg;
 		}
+		
 		hp =(hp<0)?0:hp;
-		System.out.println(hp);
+		
 
 	}
 
