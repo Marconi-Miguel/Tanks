@@ -37,11 +37,6 @@ public class Projectile extends Entidad2D {
 
 	}
 
-	public void fired() {
-		doMovement();
-		draw(Render.batch);
-	}
-
 	void doMovement() {
 		
 		b2body.setLinearVelocity(-tempX * speedMod, tempY * speedMod);
@@ -82,12 +77,6 @@ public class Projectile extends Entidad2D {
 
 	}
 
-	@Override
-	public void disappear() {
-		Render.world.destroyBody(b2body);
-		b2body = null;
-
-	}
 
 	public boolean isExploded() {
 		return explode;

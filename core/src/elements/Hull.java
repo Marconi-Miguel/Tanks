@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import input.InputKeys;
 import utilities.Config;
 import utilities.Render;
 
@@ -15,14 +16,10 @@ public class Hull extends Entidad2D {
 	public int id;
 	private World world;
 	public int roadCounter = 0;
-//	private Sprite dmged1;
-//  private Sprite dmged2;
-//	private Sprite dmged3;
-
+	private boolean[] buffs = { false, false, false }; // speed, fire cooldown, explosiveShell
 	public int startRotation;
-
+	public Tank parent;
 	// stats
-	private int totalHp = 0;
 	protected float hp = 0;
 	protected float hpTotal = 0;
 	public boolean onRoad;
@@ -31,12 +28,12 @@ public class Hull extends Entidad2D {
 	public float rotationSpeed;
 	public int slots;
 
-	public Hull(String texture, int hp) {
+	public Hull(Tank parent, String texture, int hp) {
 		super(new Texture(texture));
 		this.hp = hp;
 		this.hpTotal = hp;
 		this.world = Render.world;
-
+		this.parent = parent;
 		setSize(getWidth() / 2 / Config.PPM, getHeight() / 2 / Config.PPM);
 		setOrigin(getWidth() / 2, getHeight() / 2);
 		switch (Render.tanks.size()) {
@@ -86,10 +83,6 @@ public class Hull extends Entidad2D {
 		b2body.createFixture(fdef).setUserData(this);
 	}
 
-	protected void disappear() {
-		Render.world.destroyBody(b2body);
-		b2body = null;
-	}
 
 	public void setVelocidad(float x, float y) {
 		b2body.setLinearVelocity(x, y);
@@ -102,6 +95,7 @@ public class Hull extends Entidad2D {
 	public void outRoad() {
 		roadCounter--;
 	}
+
 	public boolean isOnRoad() {
 		return onRoad;
 	}
@@ -113,18 +107,36 @@ public class Hull extends Entidad2D {
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
-	public void BuffSpeed() {
-		this.hp = hp;
-	}
-	public void BuffCooldown() {
-		this.hp = hp;
-	}
-	public void BuffExplosive() {
-		this.hp = hp;
-	}
-	
 
-	
+	public void BuffSpeed() {
+		rotationSpeed = rotationSpeed * 1.5f;
+		buffs[0] = true;
+	}
+
+	public void BuffCooldown() {
+		for (int i = 0; i < parent.objects.length; i++) {
+			if (parent.objects[i].objectType == "Cannon") {
+				((Cannon) parent.objects[i]).buffFireRate();
+			}
+		}
+		buffs[1] = true;
+	}
+
+	public void BuffExplosive() {
+		buffs[2] = true;
+	}
+
+	public boolean isBuffSpeed() {
+		return buffs[0];
+	}
+
+	public boolean isBuffCooldown() {
+		return buffs[1];
+	}
+
+	public boolean isBuffExplosive() {
+		return buffs[2];
+	}
 
 	public int getWeaponSlots() {
 		return weaponSlots;
@@ -148,17 +160,16 @@ public class Hull extends Entidad2D {
 		angle = calculateAngle(p);
 		if (angle < 45 || angle > 315) {
 			System.out.println("arriba");
-			hp -= p.dmg*0.75;
+			hp -= p.dmg * 0.75;
 		} else if (angle > 135 && angle < 225) {
 			System.out.println("abajo");
-			hp -= p.dmg*3;
+			hp -= p.dmg * 3;
 		} else {
 			System.out.println("costado");
 			hp -= p.dmg;
 		}
-		
-		hp =(hp<0)?0:hp;
-		
+
+		hp = (hp < 0) ? 0 : hp;
 
 	}
 
@@ -176,7 +187,8 @@ public class Hull extends Entidad2D {
 		xPos = (xPos > difX) ? -(xPos - difX) : difX - xPos;
 		float tanValue = yPos / xPos;
 		angle = (float) Math.toDegrees(Math.atan(tanValue));
-	//the maths respect the sprite and hot the math.to degrees and atan works, only makes between 0-90, so we had to be a bit more clever to solve that
+		// the maths respect the sprite and hot the math.to degrees and atan works, only
+		// makes between 0-90, so we had to be a bit more clever to solve that
 		if (angle < 0 && (yPos < 0 && xPos > 0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
 			angle += 270;
 		} else if (angle > 0 && (yPos < 0 && xPos < 0)) { // ANGULO ENTRO 180 Y 270 EMPEZANDO 0 ARRIBA.
