@@ -15,4 +15,5 @@ public class CooldownBuff extends Buff{
 		b2body.setUserData("cooldown");
 	}
 
+	
 }

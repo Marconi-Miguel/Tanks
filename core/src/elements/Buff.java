@@ -11,7 +11,7 @@ import utilities.Functions;
 import utilities.Render;
 
 public abstract class Buff extends Entidad2D {
-
+	private boolean picked;
 	public Buff(Texture texture) {
 		super(texture);
 		//random position between the center map
@@ -54,6 +54,9 @@ public abstract class Buff extends Entidad2D {
 	protected void disappear() {
 		Render.world.destroyBody(b2body);
 		b2body = null;
+	}
+	public  void pick(){
+		picked = true;
 	}
 
 }
