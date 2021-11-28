@@ -51,12 +51,18 @@ public abstract class Buff extends Entidad2D {
 	}
 
 	@Override
-	protected void disappear() {
+	public void disappear() {
 		Render.world.destroyBody(b2body);
 		b2body = null;
 	}
 	public  void pick(){
+		System.out.println("se agarro el buff uwu");
 		picked = true;
+	}
+
+	public boolean isPicked() {
+		
+		return picked;
 	}
 
 }
