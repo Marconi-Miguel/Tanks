@@ -129,15 +129,20 @@ public class ClientsideThread extends Thread {
 			return;
 		}
 		
-		tank.tempX =Float.parseFloat(args[1]);
-		tank.tempY =Float.parseFloat(args[2]);//		tank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
 		
-		tank.hull.rotation=Float.parseFloat(args[3]);
-		if (Boolean.parseBoolean(args[4])) {
-			tank.hull.inRoad();
-		}else {
-			tank.hull.outRoad();
+		
+		if(tank.hull.getX() != Float.parseFloat(args[1]) || tank.hull.getY() != Float.parseFloat(args[2])) {
+			tank.correction = true;
+			tank.correction(cont, cont);
 		}
+
+		tank.hull.rotation=Float.parseFloat(args[3]);
+		
+//		if (Boolean.parseBoolean(args[4])) {
+//			tank.hull.inRoad();
+//		}else {
+//			tank.hull.outRoad();
+//		}
 		
 		
 		System.out.println(tank.hull.getX());

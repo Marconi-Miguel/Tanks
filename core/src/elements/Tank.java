@@ -15,6 +15,9 @@ public class Tank {
 	float time;
 	public float tempX = 0;
 	public float tempY = 0;
+	public float correctionX,correctionY;
+	
+	public boolean correction;
 	// Array holding other elements of the tank, such as the cannon.
 	Attachable[] objects;
 
@@ -30,12 +33,39 @@ public class Tank {
 
 	public void Render() {
 		time += Config.delta;
-		doMovement();
+		if (!correction) {
+			doMovement();
+		}else {
+			doCorrectionMovement();
+		}
+
 		doCannon();
 		hull.draw(Render.batch); // this is the original way to draw the tank.
 
 		updateObjects();// Update other sprites attached to this tank, such as cannon.
 		// System.out.println("ACCEL: "+acceleration+" | SPEED: "+speed);
+	}
+
+	private void doCorrectionMovement() {
+		float difX = hull.getX() - correctionX;
+		float difY = hull.getY() - correctionY;
+		
+		if(difX!=0) {
+			if(difX<0) {
+				hull.moveHull(-1,0);
+			}else {
+				hull.moveHull(1, 0);
+			}
+		}else if(difY != 0) {
+			if(difY<0) {
+				hull.moveHull(0,-1);
+			}else {
+				hull.moveHull(0, 1);
+			}
+		}else if(difX==0 && difY==0){
+			correction = false;
+		}
+		
 	}
 
 	public void setPosition(float x, float y) {
@@ -73,8 +103,8 @@ public class Tank {
 		}
 
 		setPosition((hull.b2body.getPosition().x - hull.getWidth() / 2), // before this, doMovement only sets the
-																			// body2d(the rectangle)
-				hull.b2body.getPosition().y - hull.getHeight() / 2); // and here updates the sprite
+				hull.b2body.getPosition().y - hull.getHeight() / 2); // body2d(the rectangle) and here updates the
+																		// sprite
 
 	}
 
@@ -138,8 +168,9 @@ public class Tank {
 			if (objects[i] != null) {
 				objects[i].update(hull.getX() + hull.getWidth() / 2 - objects[i].getWidth() / 2,
 						hull.getY() + hull.getHeight() / 2, hull.getRotation());
-				// TODO look a this, when added more attachables, cause its only tought to have 1 attachable
-				
+				// TODO look a this, when added more attachables, cause its only tought to have
+				// 1 attachable
+
 			}
 
 		}
@@ -149,6 +180,11 @@ public class Tank {
 	public void destroy() {
 		hull.disappear();
 
+	}
+
+	public void correction(float x, float y) {
+		correctionX = x;
+		correctionY = y;
 	}
 
 }
