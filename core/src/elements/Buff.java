@@ -16,8 +16,8 @@ public abstract class Buff extends Entidad2D {
 		super(texture);
 		//random position between the center map
 		setSize(40/Config.PPM,40/Config.PPM);
-//		setPosition(Functions.randomFloat(10,50)*15/Config.PPM,Functions.randomFloat(10,50)*15/Config.PPM);
-		setPosition(3,3);
+		setPosition(Functions.randomFloat(10,50)*15/Config.PPM,Functions.randomFloat(10,50)*15/Config.PPM);
+//		setPosition(3,3);
 		this.world = Render.world;
 		createBody();
 		fixtureDef();
@@ -48,12 +48,6 @@ public abstract class Buff extends Entidad2D {
 		fdef.shape = shape;
 		fdef.isSensor = true;
 		b2body.createFixture(fdef).setUserData(this);
-	}
-
-	@Override
-	public void disappear() {
-		Render.world.destroyBody(b2body);
-		b2body = null;
 	}
 	public  void pick(){
 		System.out.println("se agarro el buff uwu");

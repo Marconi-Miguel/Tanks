@@ -20,7 +20,6 @@ public class WorldListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		System.out.println("asd");
 		// el contacto genera entre 2 entidades, pero puede chocar mas de una entidad,
 		// se generarian 2 BEGINcontact
 		fixA = contact.getFixtureA();
@@ -31,44 +30,7 @@ public class WorldListener implements ContactListener {
 
 	}
 
-	private void detectBuff() {
-		if (fixA.getUserData() instanceof ExplosiveBuff || fixB.getUserData() instanceof ExplosiveBuff ) {
-
-			Fixture explosive = (fixA.getUserData() instanceof ExplosiveBuff) ? fixA : fixB;
-			Fixture objeto = (explosive == fixA) ? fixB : fixA;
-
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-				// se activa la interaccion con el tipo de objeto que sea
-					((ExplosiveBuff) explosive.getUserData()).pick();
-			}
-
-		} else if (fixA.getUserData() instanceof SpeedBuff || fixB.getUserData() instanceof SpeedBuff ) {
-
-			Fixture speed = (fixA.getUserData() instanceof SpeedBuff ) ? fixA : fixB;
-			Fixture objeto = (speed == fixA) ? fixB : fixA;
-
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-
-				// se activa la interaccion con el tipo de objeto que sea
-//				((Hull) objeto.getUserData()).inRoad();
-
-			}
-
-		} else if (fixA.getUserData() instanceof CooldownBuff  || fixB.getUserData() instanceof CooldownBuff ) {
-
-			Fixture cooldown = (fixA.getUserData() instanceof CooldownBuff ) ? fixA : fixB;
-			Fixture objeto = (cooldown == fixA) ? fixB : fixA;
-
-			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-
-				// se activa la interaccion con el tipo de objeto que sea 
-//				((Hull) objeto.getUserData()).inRoad();
-
-			}
-
-		}
-
-	}
+	
 
 	private void detectProjectil() {
 		if (fixA.getUserData() instanceof Projectile || fixB.getUserData() instanceof Projectile) {
@@ -93,22 +55,69 @@ public class WorldListener implements ContactListener {
 	}
 
 	private void detectRoad() {
+		
 		if (fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
-
 			Fixture road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
 			Fixture objeto = (road == fixA) ? fixB : fixA;
-
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-
+				System.out.println("enters the road");
 				// se activa la interaccion con el tipo de objeto que sea
 				if ((actualIn == null || actualIn != road) || ((Hull) objeto.getUserData()).roadCounter == 0) {
 					((Hull) objeto.getUserData()).inRoad();
+					System.out.println(((Hull) objeto.getUserData()).roadCounter);
 				}
 
 				actualIn = road;
 
 			}
 
+		}
+
+	}
+	
+	private void detectBuff() {
+		if (fixA.getUserData() instanceof ExplosiveBuff || fixB.getUserData() instanceof ExplosiveBuff) {
+
+			Fixture explosive = (fixA.getUserData() instanceof ExplosiveBuff) ? fixA : fixB;
+			Fixture object = (explosive == fixA) ? fixB : fixA;
+
+			if (object.getUserData() != null && (object.getUserData() instanceof Hull)) {
+				// se activa la interaccion con el tipo de objeto que sea
+				if (!((Hull) object.getUserData()).isBuffExplosive()) {
+					((ExplosiveBuff) explosive.getUserData()).pick();
+					((Hull) object.getUserData()).BuffExplosive();
+				}
+			}
+
+		} else if (fixA.getUserData() instanceof SpeedBuff || fixB.getUserData() instanceof SpeedBuff) {
+
+			Fixture speed = (fixA.getUserData() instanceof SpeedBuff) ? fixA : fixB;
+			Fixture object = (speed == fixA) ? fixB : fixA;
+
+			if (object.getUserData() != null && (object.getUserData() instanceof Hull)) {
+
+				// se activa la interaccion con el tipo de objeto que sea
+
+				if (!((Hull) object.getUserData()).isBuffSpeed()) {
+					((SpeedBuff) speed.getUserData()).pick();
+					((Hull) object.getUserData()).BuffSpeed();
+				}
+
+			}
+
+		} else if (fixA.getUserData() instanceof CooldownBuff || fixB.getUserData() instanceof CooldownBuff) {
+
+			Fixture cooldown = (fixA.getUserData() instanceof CooldownBuff) ? fixA : fixB;
+			Fixture object = (cooldown == fixA) ? fixB : fixA;
+
+			if (object.getUserData() != null && (object.getUserData() instanceof Hull)) {
+
+				// se activa la interaccion con el tipo de objeto que sea
+				if(!((Hull) object.getUserData()).isBuffCooldown()) {
+					((CooldownBuff) cooldown.getUserData()).pick();
+					((Hull) object.getUserData()).BuffCooldown();
+				}
+			}
 		}
 
 	}
@@ -124,13 +133,15 @@ public class WorldListener implements ContactListener {
 				Fixture objeto = (road == fixA) ? fixB : fixA;
 
 				if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-					// se activa la interaccion con el tipo de objeto que sea
+					
 					// idk what happened really, but i thinks that the projectil counted as a hull(I
 					// DONT KNOW WHY, SO I DID THIS TO NO REPEAT THE SAME ROAD unless
 					// the tank reEnters that single road)
-					if ((actualLeft == null || actualLeft != road) || ((Hull) objeto.getUserData()).roadCounter > 0) {
+					System.out.println("exit the road");
+					if (((actualLeft == null || actualLeft != road)) || ((Hull) objeto.getUserData()).roadCounter > 0) {
 						((Hull) objeto.getUserData()).outRoad();
-
+						System.out.println(((Hull) objeto.getUserData()).roadCounter);
+						
 					}
 					actualLeft = road;
 
@@ -140,6 +151,7 @@ public class WorldListener implements ContactListener {
 		}
 
 	}
+	
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {

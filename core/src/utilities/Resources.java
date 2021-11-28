@@ -24,12 +24,15 @@ public class Resources {
 	public static final String BASICCANNON_FIRE_SFX = "audio/sfx/cannon/basic_fire.mp3";
 	
 	//SHELLS ////////////////////////////////////////
-	public static final String BASICSHELL = "Tanks/Projectiles/shotOrange.png";
+	public static final String BASICSHELL = "Tanks/Projectiles/shotThin.png";
+	public static final String EXPLOSIVESHELL = "Tanks/Projectiles/shotRed.png";
 	//BUFFS/////////////////////////////////////
 	public static final String CDBUFF = "Buffs/coolDownBuff.png";
 	public static final String ROCKETBUFF = "Buffs/rocketBuff.png";
 	public static final String SPEEDBUFF = "Buffs/speedBuff.png";
+	//EXPLOSIONS //////////////////////////////
 	
+	public static final String EXPLOSION = "Tanks/Explosions/explosion";
 	
 	
 	public static final String SCENESKIN = "Scenes/Escenes2DTanks!.json";
