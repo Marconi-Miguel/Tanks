@@ -23,6 +23,9 @@ public abstract class Entidad2D extends Sprite{
 	public Entidad2D(Texture texture) {
 		super(texture);
 	}
+	public Entidad2D() {
+		super();
+	}
 	public void disappear() {
 		Render.world.destroyBody(b2body);
 		b2body = null;

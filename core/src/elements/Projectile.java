@@ -70,11 +70,7 @@ public class Projectile extends Entidad2D {
 	}
 
 	public void gotHitted(Hull hitted) {
-		
-		if (hitted != parent) {
 			explode = true;
-		}
-
 	}
 
 

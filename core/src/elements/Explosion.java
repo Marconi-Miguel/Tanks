@@ -21,8 +21,7 @@ public class Explosion extends Entidad2D{
 	private int counter;
 	//in this case the frameSize will always be 5,(cause we only have 5 sprites xd)
 	private int framesSize;
-	public Explosion(Texture texture,float x,float y) {
-		super(texture);
+	public Explosion(float x,float y) { 
 		world = Render.world;
 		rad = 10/Config.PPM;
 		setPosition(x,y);
@@ -34,15 +33,22 @@ public class Explosion extends Entidad2D{
 		for (int i = 0; i < framesSize; i++) {
 			frames.add(new Sprite(new Texture(Resources.EXPLOSION+ (i+1)+".png")));
 		}
-		animation = new Animation(0.1f,frames);
+		animation = new Animation<Sprite>(0.1f,frames);
 	}
 
 	public void update() {
 		counter += Config.delta;
-		setRegion(getFrame());
-		//we define the explosion here cause the sensor would expand
-		createBody();
-		fixtureDef();
+		if(counter < (framesSize/10)) {
+			radAux += Config.delta;
+			setRegion(getFrame());
+			//we define the explosion here cause the sensor would expand
+			createBody();
+			fixtureDef();
+			setSize(10/Config.PPM,10/Config.PPM);
+			setPosition(getX()-10/2/Config.PPM,getY());
+		}
+		
+		
 	}
 	
 
