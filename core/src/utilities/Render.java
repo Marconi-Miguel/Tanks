@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
 
+import elements.Projectile;
 import elements.Tank;
 import input.Player;
 
@@ -26,7 +27,14 @@ public abstract class Render {
 		for(int i=0; i<renderList.size(); i++){
 			if(renderList.get(i) != null) {
 				renderList.get(i).draw(batch);
-			}else {
+			}else  {
+				try {
+					if(((Projectile) renderList.get(i)).isExploded()) {
+						((Projectile) renderList.get(i)).disappear();
+					}
+				}catch(Exception e){
+					System.out.println("beep beep error");
+				}
 				renderList.remove(i);
 			}
 			

@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import elements.SpeedBuff;
+import elements.ExplosiveBuff;
 import elements.Tank;
 import input.Player;
 import input.PlayerInputManager;
@@ -56,7 +56,8 @@ public class MapScreen implements Screen {
 	private Tank tank;
 	private Tank tank2;
 	private Player localPlayer;
-	private SpeedBuff buff;
+	private Player localPlayer2;
+	private ExplosiveBuff buff;
 	float time;
 
 	public MapScreen(String ip, int port) {
@@ -64,6 +65,7 @@ public class MapScreen implements Screen {
 		///// NETWORK TEST
 		System.out.println("asd");
 		localPlayer = new Player("testPlayer");
+		localPlayer2 = new Player("testPlayer2");
 		
 		
 		System.out.println("ip:" + ip);
@@ -106,12 +108,13 @@ public class MapScreen implements Screen {
 		// working with tank
 		tank = new Tank(localPlayer);
 		Render.tanks.add(tank);
-//		tank2 = new Tank(localPlayer2);
+		tank2 = new Tank(localPlayer2);
 
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		hud = new HudScene();
-		buff = new SpeedBuff();
+		
+		buff = new ExplosiveBuff();
 	}
 
 	@Override
@@ -126,18 +129,21 @@ public class MapScreen implements Screen {
 		// loads box2dDebugLines hitboxes
 		b2dr.render(world, camera.combined);
 		// drawing
-		// testing
 		b.begin();
 		
 		
-		if (tank.hull.getHp() > 0) {
+		if (tank.hull.getHp() > 0 ) {
 			tank.Render();
-		} else {
+		} else if(tank.hull.b2body != null){
+			System.out.println("asd");
 			tank.destroy();
 		}	
-//		tank2.Render();
+		tank2.Render();
 		buff.draw(Render.batch);
 		b.end();
+		
+		// something happened when the hud was being drawd after the render.tank
+		// so i make it in another batch.begin();
 		hud.draw();
 	}
 
