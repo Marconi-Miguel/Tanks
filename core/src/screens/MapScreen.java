@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import elements.BarrelEx;
 import elements.CooldownBuff;
 import elements.ExplosiveBuff;
 import elements.SpeedBuff;
@@ -62,6 +63,9 @@ public class MapScreen implements Screen {
 	private SpeedBuff buff;
 	private CooldownBuff buff2;
 	private ExplosiveBuff buff3;
+	private BarrelEx explosive1;
+	private BarrelEx explosive2;
+	private BarrelEx explosive3;
 	float time;
 
 	public MapScreen(String ip, int port) {
@@ -124,6 +128,12 @@ public class MapScreen implements Screen {
 		Render.addSprite(buff);
 		Render.addSprite(buff2);
 		Render.addSprite(buff3);
+		explosive1 = new BarrelEx();
+		explosive2 = new BarrelEx();
+		explosive3 = new BarrelEx();
+		Render.addSprite(explosive1);
+		Render.addSprite(explosive2);
+		Render.addSprite(explosive3);
 	}
 
 	@Override
@@ -150,6 +160,7 @@ public class MapScreen implements Screen {
 		tank2.Render();
 		
 		Render.render();
+		Render.updateList();
 		b.end();
 		
 		// something happened when the hud was being drawd after the render.tank

@@ -12,6 +12,7 @@ public class ExplosiveShell extends Projectile{
 		super(x, y, hull, Resources.EXPLOSIVESHELL, 2);
 		dmg = 50;
 		ExplosiveDmg = 120;
+		
 	
 	}
 	public float getExplosiveDmg() {
@@ -19,8 +20,8 @@ public class ExplosiveShell extends Projectile{
 	}
 	
 	@Override
-	public void gotHitted(Hull hull) {
-		super.gotHitted(hull);
+	public void explode() {
+		super.explode();
 		Explosion explosion = new Explosion(getX(),getY());
 		Render.addSprite(explosion);
 	}

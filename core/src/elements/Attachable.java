@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import utilities.Config;
 import utilities.Render;
 
-public class Attachable extends Sprite {
+public abstract class Attachable extends Sprite implements Updateable {
 	
 
 	Hull hull;
@@ -16,6 +16,7 @@ public class Attachable extends Sprite {
 	public Attachable(String texture) {
 		super(new Texture(texture));
 		centrarImagen();
+		Render.addUpdateable(this);
 		
 		
 	}

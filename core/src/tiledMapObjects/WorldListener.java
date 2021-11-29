@@ -60,11 +60,11 @@ public class WorldListener implements ContactListener {
 			Fixture road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
 			Fixture objeto = (road == fixA) ? fixB : fixA;
 			if (objeto.getUserData() != null && (objeto.getUserData() instanceof Hull)) {
-				System.out.println("enters the road");
+		
 				// se activa la interaccion con el tipo de objeto que sea
 				if ((actualIn == null || actualIn != road) || ((Hull) objeto.getUserData()).roadCounter == 0) {
 					((Hull) objeto.getUserData()).inRoad();
-					System.out.println(((Hull) objeto.getUserData()).roadCounter);
+					
 				}
 
 				actualIn = road;
@@ -137,10 +137,10 @@ public class WorldListener implements ContactListener {
 					// idk what happened really, but i thinks that the projectil counted as a hull(I
 					// DONT KNOW WHY, SO I DID THIS TO NO REPEAT THE SAME ROAD unless
 					// the tank reEnters that single road)
-					System.out.println("exit the road");
+				
 					if (((actualLeft == null || actualLeft != road)) || ((Hull) objeto.getUserData()).roadCounter > 0) {
 						((Hull) objeto.getUserData()).outRoad();
-						System.out.println(((Hull) objeto.getUserData()).roadCounter);
+						
 						
 					}
 					actualLeft = road;

@@ -12,55 +12,54 @@ import utilities.Config;
 import utilities.Render;
 import utilities.Resources;
 
-public class Explosion extends Entidad2D{
+public class Explosion extends Entidad2D implements Updateable{
 	//this is gonna be an animation, so we had to start with that.
 	private float rad;
 	private float radAux;
 	private Animation<Sprite> animation;
 	private Array<Sprite> frames;
-	private int counter;
+	private float counter;
+	public boolean end;
+	private float x,y;
 	//in this case the frameSize will always be 5,(cause we only have 5 sprites xd)
-	private int framesSize;
+	private float framesSize = 5;
 	public Explosion(float x,float y) { 
 		world = Render.world;
 		rad = 10/Config.PPM;
 		setPosition(x,y);
 		setAnimation();
+		setRegion(new Texture(Resources.EXPLOSION+1+".png"));
+		this.x = x;
+		this.y = y;
+		Render.addUpdateable(this);
+		Render.addSprite(this);
+		counter = 0;
 	}
 	
-	private void setAnimation() {
-		frames = new Array<Sprite>();
-		for (int i = 0; i < framesSize; i++) {
-			frames.add(new Sprite(new Texture(Resources.EXPLOSION+ (i+1)+".png")));
-		}
-		animation = new Animation<Sprite>(0.1f,frames);
-	}
-
 	public void update() {
 		counter += Config.delta;
 		if(counter < (framesSize/10)) {
 			radAux += Config.delta;
+			if(b2body != null) {
+				disappear();
+			}
 			setRegion(getFrame());
-			//we define the explosion here cause the sensor would expand
+			//we define the explosion here cause the sensor would expand			
 			createBody();
 			fixtureDef();
-			setSize(10/Config.PPM,10/Config.PPM);
-			setPosition(getX()-10/2/Config.PPM,getY());
+			setSize(getRegionWidth()/Config.PPM,getRegionHeight()/Config.PPM);
+			setPosition(x-getWidth()/2,y-getHeight()/2);
+		}else {
+			disappear();
+			end = true;
 		}
-		
-		
 	}
-	
 
-
-	private Sprite getFrame() {
-		return animation.getKeyFrame(counter);
-	}
 
 	@Override
 	protected void createBody() {
 		bdef = new BodyDef();
-		bdef.position.set(getX(),getY());
+		bdef.position.set(x,y);
 		bdef.type = BodyDef.BodyType.KinematicBody;
 		b2body = world.createBody(bdef);
 		
@@ -74,9 +73,19 @@ public class Explosion extends Entidad2D{
 		shape.setRadius(radAux);
 		fdef.filter.categoryBits = Config.EXPLOSION_BIT;
 		fdef.shape = shape;
+		fdef.isSensor = true;
 		b2body.createFixture(fdef).setUserData(this);
 
-		
+	}
+	private Sprite getFrame() {
+		return animation.getKeyFrame(counter);
+	}
+	private void setAnimation() {
+		frames = new Array<Sprite>();
+		for (int i = 0; i < framesSize; i++) {
+			frames.add(new Sprite(new Texture(Resources.EXPLOSION+ (i+1)+".png")));
+		}
+		animation = new Animation<Sprite>(0.1f,frames);
 	}
 
 

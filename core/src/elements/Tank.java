@@ -162,9 +162,9 @@ public class Tank {
 	void updateObjects() { // Fix attached objects position & rotation
 		//
 		for (int i = 0; i < objects.length; i++) {
-			if (objects[i].objectType.equals("Cannon")) { // updates cannon a its respective projectiles
-				((Cannon) objects[i]).updateCannon();
-			}
+//			if (objects[i].objectType.equals("Cannon")) { // updates cannon a its respective projectiles
+//				((Cannon) objects[i]).update();
+//			}
 			if (objects[i] != null) {
 				objects[i].update(hull.getX() + hull.getWidth() / 2 - objects[i].getWidth() / 2,
 						hull.getY() + hull.getHeight() / 2, hull.getRotation());

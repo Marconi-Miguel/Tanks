@@ -31,12 +31,12 @@ public class Cannon extends Attachable {
 		fireFX.setSize(getWidth(), getHeight());
 		fireFX.setPosition(2 * 100, 2 * 100);
 		objectType = "Cannon";
-
+		
 	}
 
 
 
-	public void updateCannon() {
+	public void update() {
 		time += Config.delta;
 
 		for (int i = 0; i < projectiles.size(); i++) {
