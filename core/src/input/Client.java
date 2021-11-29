@@ -8,7 +8,7 @@ import elements.Tank;
 public class Client {
 
 	public String username;
-	Tank tank;
+	public Tank tank;
 	public Map<InputKeys, Boolean> inputs = new HashMap<InputKeys, Boolean>();
 
 	public Client() {
@@ -20,5 +20,9 @@ public class Client {
 		for (int i = 0; i < array.length; i++) {
 			inputs.put(array[i], false); // Use the array of enums to put each enum in the inputs list.
 		}
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

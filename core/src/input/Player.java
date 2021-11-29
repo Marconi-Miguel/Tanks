@@ -20,10 +20,6 @@ public class Player extends Client { // The player is a "local client"
 		localClient = PNM.client;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	/// Network functions
 
 	public boolean connect(String IP, int port) {

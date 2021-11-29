@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import elements.Tank;
+import input.Client;
 import input.Player;
 import utilities.Render;
 
@@ -19,6 +20,7 @@ public class ClientsideThread extends Thread {
 	private String serverIP;
 	private int serverPort;
 	private Player localPlayer;
+	public ArrayList<Client> clientList;
 
 	public ClientsideThread(Player localPlayer) {
 		this.localPlayer = localPlayer;
@@ -49,13 +51,14 @@ public class ClientsideThread extends Thread {
 		String msg = new String(packet.getData()).trim();
 		String networkCode = msg.substring(0, NetworkCodes.CODELENGTH); // The first part of the message is the network
 																		// code.
-		String args = msg.substring(NetworkCodes.CODELENGTH, msg.length()); // Everything after the network code are the
-																			// arguments (args) of the network message.
-		System.out.println(msg);
+		String argumentString = msg.substring(NetworkCodes.CODELENGTH, msg.length()); // Everything after the network
+																						// code are the arguments (args)
+																						// of the network message.
+		String[] args = argumentString.split("/");
 
 		switch (networkCode) {
 		case NetworkCodes.CONNECT:
-			handleConnection();
+			handleConnection(args);
 			break;
 		///
 		case NetworkCodes.DISCONNECT:
@@ -67,8 +70,8 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.NEWTANK:
-			createPlayerTank(args);
-		break;
+			createTank(args);
+			break;
 		///
 		case NetworkCodes.TANKSYNC:
 			syncPlayerTank(args);
@@ -96,28 +99,29 @@ public class ClientsideThread extends Thread {
 
 ////////////processMessage functions//////////////////////////////////////////
 
-	private void handleConnection() {
-		System.out.println("[CLIENT] Connected to " + serverIP + ":" + serverPort + " as " + localPlayer.username);
+	private void handleConnection(String[] args) {
+		System.out.println("[CLIENT] " + args[0]);
 		connected = true;
 	}
 
-	private void handleDisconnection(String args) {
-		System.out.println("[CLIENT] Disconnected: " + args);
+	private void handleDisconnection(String[] args) {
+		System.out.println("[CLIENT] Disconnected: " + args[0]);
 		connected = false;
 		this.end = true;
 	}
 
-	private void syncPlayerTank(String argumentString) {
-		String[] args = argumentString.split("/"); // Split the data packed in the string.
+	private void syncPlayerTank(String[] args) {
 		ArrayList<Tank> tanks = Render.tanks;
 		Tank tank = null;
 		Boolean found;
 		int cont = 0;
-		if(Render.tanks.size()==0) {return;} //TODO hotfix
+		if (Render.tanks.size() == 0) {
+			return;
+		} // TODO hotfix
 		do {
-			
+
 			found = false;
-			
+
 			if (tanks.get(cont) != null && tanks.get(cont).owner.username.equals(args[0])) {
 				tank = tanks.get(cont);
 				found = true;
@@ -128,30 +132,65 @@ public class ClientsideThread extends Thread {
 		if (tank == null) {
 			return;
 		}
-		
-		
-		
-		if(tank.hull.getX() != Float.parseFloat(args[1]) || tank.hull.getY() != Float.parseFloat(args[2])) {
+
+		if (tank.hull.getX() != Float.parseFloat(args[1]) || tank.hull.getY() != Float.parseFloat(args[2])) {
 			tank.correction = true;
 			tank.correction(cont, cont);
 		}
 
-		tank.hull.rotation=Float.parseFloat(args[3]);
-		
+		tank.hull.rotation = Float.parseFloat(args[3]);
+
 //		if (Boolean.parseBoolean(args[4])) {
 //			tank.hull.inRoad();
 //		}else {
 //			tank.hull.outRoad();
 //		}
-		
-		
-		System.out.println(tank.hull.getX());
-		System.out.println(tank.hull.getY());
-		System.out.println(tank.hull.rotation);
 	}
-	
-	private void createPlayerTank(String args) {
-		
+
+	private void createTank(String[] args) {
+		if (args[0].equals(localPlayer.username)) { // this is the player's tank.
+			// asd
+		} else {
+			/// Generate the client
+			Client newClient = new Client();
+			newClient.setUsername(args[0]);
+
+			// Generate the tank
+			Tank newTank = new Tank(newClient);
+			newTank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
+			newTank.setRotation(Float.parseFloat(args[3]));
+			newClient.tank = newTank;
+
+			// Add the client
+			clientList.add(newClient);
+
+		}
+	}
+
+	private void removeTank(String[] args) {
+		if (args[0].equals(localPlayer.username)) { // this is the player's tank.
+
+		} else {
+			// Find client
+			Client client = null;
+			int index = -1;
+			for (int i = 0; i < clientList.size(); i++) {
+				if (clientList.get(i).username == args[0]) {
+					client = clientList.get(i);
+					index = i;
+					break;
+				}
+			}
+			// Remove tank
+			if (client != null) {
+				client.tank.destroy(); // TODO: Check if .destroy() is fine.
+			}else {
+				return;
+			}
+
+			// Remove the client
+			clientList.remove(index);
+		}
 	}
 
 //////////// connection //////////////////////////////
