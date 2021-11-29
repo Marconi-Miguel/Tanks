@@ -62,7 +62,7 @@ public class Projectile extends Entidad2D {
 		CircleShape shape = new CircleShape();
 		shape.setRadius(getWidth() / 3);
 		fdef.filter.categoryBits = Config.PROJECTIL_BIT;
-		fdef.filter.maskBits = Config.TANK_BIT | Config.BARREL_BIT | Config.DEFAULT_BIT;
+		fdef.filter.maskBits = Config.TANK_BIT | Config.BARREL_BIT | Config.DEFAULT_BIT ;
 		fdef.shape = shape;
 		fdef.isSensor = true;
 		b2body.createFixture(fdef).setUserData(this);

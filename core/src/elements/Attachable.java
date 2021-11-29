@@ -17,7 +17,7 @@ public abstract class Attachable extends Sprite implements Updateable {
 		super(new Texture(texture));
 		centrarImagen();
 		Render.addUpdateable(this);
-		
+		Render.addSprite(this);
 		
 	}
 	
@@ -31,7 +31,6 @@ public abstract class Attachable extends Sprite implements Updateable {
 		setY(y);
 		
 		setRotation(rotation);
-		draw(Render.batch);
 		
 	}
 	

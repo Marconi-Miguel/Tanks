@@ -6,7 +6,9 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
+import elements.BarrelEx;
 import elements.CooldownBuff;
+import elements.Explosion;
 import elements.ExplosiveBuff;
 import elements.Hull;
 import elements.Projectile;
@@ -17,6 +19,7 @@ public class WorldListener implements ContactListener {
 	private Fixture fixB;
 	public Fixture actualLeft;
 	public Fixture actualIn;
+	public Fixture actualExplosion;
 
 	@Override
 	public void beginContact(Contact contact) {
@@ -27,35 +30,75 @@ public class WorldListener implements ContactListener {
 		detectRoad();
 		detectProjectil();
 		detectBuff();
+		detectBarrel();
+		detectExplosion();
 
 	}
 
 	
 
+	private void detectExplosion() {
+		if (fixA.getUserData() instanceof Explosion || fixB.getUserData() instanceof Explosion) {
+			Fixture explosion = (fixA.getUserData() instanceof Explosion) ? fixA : fixB;
+			Fixture object = (explosion == fixA) ? fixB : fixA;
+
+			if (object.getUserData() != null && (object.getUserData() instanceof Hull)){
+				if(explosion != actualExplosion) {
+					((Hull) object.getUserData()).receiveExplosiveDamage(((Explosion) explosion.getUserData()).getDmg());
+					actualExplosion = explosion;
+				}
+				
+			}
+		}
+	}
+
+
+
+	private void detectBarrel() {
+		if (fixA.getUserData() instanceof BarrelEx || fixB.getUserData() instanceof BarrelEx) {
+			Fixture barrel = (fixA.getUserData() instanceof BarrelEx) ? fixA : fixB;
+			Fixture object = (barrel == fixA) ? fixB : fixA;
+
+			if (object.getUserData() != null && (object.getUserData() instanceof Hull || object.getUserData() instanceof Projectile || object.getUserData() instanceof Explosion )) {
+				((BarrelEx) barrel.getUserData()).Hitted();
+			}
+			if (object.getUserData() != null && (object.getUserData() instanceof Projectile)) {
+				// the bullet just disappear
+				System.out.println("toco el barrel");
+					((Projectile) object.getUserData()).explode();
+
+			}
+		}
+	}
+
+
+
 	private void detectProjectil() {
 		if (fixA.getUserData() instanceof Projectile || fixB.getUserData() instanceof Projectile) {
 
 			Fixture projectile = (fixA.getUserData() instanceof Projectile) ? fixA : fixB;
-			Fixture hull = (projectile == fixA) ? fixB : fixA;
+			Fixture object = (projectile == fixA) ? fixB : fixA;
 
-			if (hull.getUserData() != null && (hull.getUserData() instanceof Hull)) {
+			if (object.getUserData() != null && (object.getUserData() instanceof Hull)) {
 				// trigger sensors
 
-				if (((Hull) hull.getUserData()) != ((Projectile) projectile.getUserData()).parent
+				if (((Hull) object.getUserData()) != ((Projectile) projectile.getUserData()).parent
 						&& !((Projectile) projectile.getUserData()).isExploded()) {
 
 					((Projectile) projectile.getUserData()).explode();
-					((Hull) hull.getUserData()).receiveDamage(((Projectile) projectile.getUserData()));
+					((Hull) object.getUserData()).receiveDamage(((Projectile) projectile.getUserData()));
 
 				}
 
 			}
+			
+			
+			
 
 		}
 	}
 
 	private void detectRoad() {
-		
 		if (fixA.getUserData().equals("Road") || fixB.getUserData().equals("Road")) {
 			Fixture road = (fixA.getUserData().equals("Road")) ? fixA : fixB;
 			Fixture objeto = (road == fixA) ? fixB : fixA;
@@ -63,16 +106,11 @@ public class WorldListener implements ContactListener {
 		
 				// se activa la interaccion con el tipo de objeto que sea
 				if ((actualIn == null || actualIn != road) || ((Hull) objeto.getUserData()).roadCounter == 0) {
-					((Hull) objeto.getUserData()).inRoad();
-					
+					((Hull) objeto.getUserData()).inRoad();	
 				}
-
 				actualIn = road;
-
 			}
-
 		}
-
 	}
 	
 	private void detectBuff() {

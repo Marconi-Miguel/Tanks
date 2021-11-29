@@ -11,7 +11,6 @@ public class ExplosiveShell extends Projectile{
 	public ExplosiveShell(float x, float y, Hull hull) {
 		super(x, y, hull, Resources.EXPLOSIVESHELL, 2);
 		dmg = 50;
-		ExplosiveDmg = 120;
 		
 	
 	}

@@ -21,8 +21,6 @@ public class Cannon extends Attachable {
 	public float time;
 	public float fireEffectTime = 0.1f;
 
-	Timer timer = new Timer();
-
 	public Cannon(String route) {
 		super(route);
 		flip(false, true);
@@ -31,14 +29,13 @@ public class Cannon extends Attachable {
 		fireFX.setSize(getWidth(), getHeight());
 		fireFX.setPosition(2 * 100, 2 * 100);
 		objectType = "Cannon";
-		
 	}
 
 
 
 	public void update() {
 		time += Config.delta;
-
+		
 		for (int i = 0; i < projectiles.size(); i++) {
 			if (!projectiles.get(i).isExploded()) {
 				projectiles.get(i).doMovement();
@@ -59,6 +56,7 @@ public class Cannon extends Attachable {
 			Render.addSprite(shell);
 			fireFX.setOrigin(fireFX.getWidth() / 2, -hull.getHeight() / 1.5f);
 			projectiles.add(shell);
+			time = 0;
 
 	}
 
@@ -67,8 +65,11 @@ public class Cannon extends Attachable {
 		super.update(x, y, rotation);
 		fireFX.setPosition(x, y + hull.getHeight() / 1.5f);
 		fireFX.setRotation(rotation);
+		
 		if (time < fireEffectTime) {
+			Render.batch.begin();
 			fireFX.draw(Render.batch);
+			Render.batch.end();
 		}
 	}
 	public void buffFireRate(){

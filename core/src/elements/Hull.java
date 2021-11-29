@@ -78,11 +78,10 @@ public class Hull extends Entidad2D {
 		fdef.filter.categoryBits = Config.TANK_BIT;
 		// definimos la mascara de bits, que objetos box2d tiene que darle atencion.
 		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.ROAD_BIT | Config.TANK_BIT | Config.EXPLOSION_BIT
-				| Config.PROJECTIL_BIT | Config.BUFF_BIT;
+				| Config.PROJECTIL_BIT | Config.BUFF_BIT | Config.BARREL_BIT;
 		fdef.shape = shape;
 		b2body.createFixture(fdef).setUserData(this);
 	}
-
 
 	public void setVelocidad(float x, float y) {
 		b2body.setLinearVelocity(x, y);
@@ -153,6 +152,12 @@ public class Hull extends Entidad2D {
 
 	public void stopHull() {
 		b2body.setLinearVelocity(0, 0);
+	}
+
+	public void receiveExplosiveDamage(float dmg) {
+		hp -= dmg;
+		hp = (hp < 0) ? 0 : hp;
+		System.out.println("hp despueps de expl: " + hp);
 	}
 
 	public void receiveDamage(Projectile p) {

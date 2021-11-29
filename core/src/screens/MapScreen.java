@@ -103,7 +103,7 @@ public class MapScreen implements Screen {
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		hud = new HudScene();
-
+		
 		buff = new SpeedBuff();
 		buff2 = new CooldownBuff();
 		buff3 = new ExplosiveBuff();
@@ -116,6 +116,7 @@ public class MapScreen implements Screen {
 		Render.addSprite(explosive1);
 		Render.addSprite(explosive2);
 		Render.addSprite(explosive3);
+		tank = new Tank(localPlayer);
 	}
 
 	@Override
@@ -139,6 +140,7 @@ public class MapScreen implements Screen {
 		//}
 
 		Render.render();
+		
 		Render.updateList();
 
 		// something happened when the hud was being drawd after the render.tank

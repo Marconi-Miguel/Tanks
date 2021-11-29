@@ -14,18 +14,18 @@ import utilities.Resources;
 
 public class Explosion extends Entidad2D implements Updateable{
 	//this is gonna be an animation, so we had to start with that.
-	private float rad;
 	private float radAux;
 	private Animation<Sprite> animation;
 	private Array<Sprite> frames;
 	private float counter;
 	public boolean end;
 	private float x,y;
+	private float dmg = 150;//see if we can change the value accord the barrel or bullet
 	//in this case the frameSize will always be 5,(cause we only have 5 sprites xd)
 	private float framesSize = 5;
 	public Explosion(float x,float y) { 
 		world = Render.world;
-		rad = 10/Config.PPM;
+		
 		setPosition(x,y);
 		setAnimation();
 		setRegion(new Texture(Resources.EXPLOSION+1+".png"));
@@ -72,6 +72,7 @@ public class Explosion extends Entidad2D implements Updateable{
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radAux);
 		fdef.filter.categoryBits = Config.EXPLOSION_BIT;
+		fdef.filter.maskBits = Config.TANK_BIT | Config.PROJECTIL_BIT ;
 		fdef.shape = shape;
 		fdef.isSensor = true;
 		b2body.createFixture(fdef).setUserData(this);
@@ -86,6 +87,9 @@ public class Explosion extends Entidad2D implements Updateable{
 			frames.add(new Sprite(new Texture(Resources.EXPLOSION+ (i+1)+".png")));
 		}
 		animation = new Animation<Sprite>(0.1f,frames);
+	}
+	public float getDmg() {
+		return dmg;
 	}
 
 
