@@ -115,7 +115,7 @@ public class MenuScreen implements Screen {
 		} else if (connect.isPressed()) {
 			// TODO: localPlayer.setUsername(scene.getUsername());
 			try {
-				System.out.println(localPlayer.connect(scene.getIp(), Integer.parseInt(scene.getPort())));
+				
 				if (localPlayer.connect(scene.getIp(), Integer.parseInt(scene.getPort()))) {
 					Render.app.music.stop();
 					Render.app.setScreen(new MapScreen(localPlayer));
