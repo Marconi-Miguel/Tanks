@@ -83,7 +83,7 @@ public class ClientsideThread extends Thread {
 		try {
 			ipServer = InetAddress.getByName(serverIP);
 		} catch (UnknownHostException e1) {
-			e1.printStackTrace();
+			System.out.println("error sending message.");
 		}
 		DatagramPacket packet = new DatagramPacket(data, data.length, ipServer, serverPort);
 
@@ -118,7 +118,7 @@ public class ClientsideThread extends Thread {
 			
 			found = false;
 			
-			if (tanks.get(cont).owner.username.equals(args[0])) {
+			if (tanks.get(cont) != null && tanks.get(cont).owner.username.equals(args[0])) {
 				tank = tanks.get(cont);
 				found = true;
 			} // find the tank owned by this player

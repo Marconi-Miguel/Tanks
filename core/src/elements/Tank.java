@@ -8,7 +8,7 @@ import input.Player;
 import utilities.Config;
 import utilities.Render;
 
-public class Tank {
+public class Tank implements Updateable{
 	public Hull hull;
 	public Client owner;
 	boolean forward; // direction. true if going forward, false if reverse.
@@ -26,46 +26,18 @@ public class Tank {
 		owner = player;
 		this.hull = new BasicHull(this);
 		objects = new Attachable[hull.slots];
-		// for now, the tanks only will use 1 cannon
 		attach(new BasicCannon());
-
+		Render.updateList.add(this);
+		Render.tanks.add(this);
+		Render.addSprite(hull);
 	}
 
-	public void Render() {
+	public void update() {
 		time += Config.delta;
-		if (!correction) {
-			doMovement();
-		}else {
-			doCorrectionMovement();
-		}
-
+		doMovement();
 		doCannon();
-		hull.draw(Render.batch); // this is the original way to draw the tank.
-
 		updateObjects();// Update other sprites attached to this tank, such as cannon.
 		// System.out.println("ACCEL: "+acceleration+" | SPEED: "+speed);
-	}
-
-	private void doCorrectionMovement() {
-		float difX = hull.getX() - correctionX;
-		float difY = hull.getY() - correctionY;
-		
-		if(difX!=0) {
-			if(difX<0) {
-				hull.moveHull(-1,0);
-			}else {
-				hull.moveHull(1, 0);
-			}
-		}else if(difY != 0) {
-			if(difY<0) {
-				hull.moveHull(0,-1);
-			}else {
-				hull.moveHull(0, 1);
-			}
-		}else if(difX==0 && difY==0){
-			correction = false;
-		}
-		
 	}
 
 	public void setPosition(float x, float y) {

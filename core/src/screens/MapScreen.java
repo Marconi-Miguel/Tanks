@@ -42,24 +42,16 @@ public class MapScreen implements Screen {
 	// world
 	private World world;
 	private Box2DDebugRenderer b2dr;
-	// keyBoard
-	private PlayerInputManager inputManager;
 	// we have to make the world2d and objects here
 	private World2D world2d;
 	// object listener
 	private WorldListener worldListener;
 
-	// setting inputListener
-	private PlayerInputManager PIM;
-	// test
-	private Sprite imgTest;
 	// hud
 	private HudScene hud;
 	// hull testing
 	private Tank tank;
-	private Tank tank2;
 	private Player localPlayer;
-	private Player localPlayer2;
 	private SpeedBuff buff;
 	private CooldownBuff buff2;
 	private ExplosiveBuff buff3;
@@ -68,18 +60,12 @@ public class MapScreen implements Screen {
 	private BarrelEx explosive3;
 	float time;
 
-	public MapScreen(String ip, int port) {
+	public MapScreen(Player player) {
 
 		///// NETWORK TEST
-		System.out.println("asd");
-		localPlayer = new Player("testPlayer");
-		localPlayer2 = new Player("testPlayer2");
-		
-		
-		System.out.println("ip:" + ip);
-		System.out.println("port:" + port);
+		localPlayer = player;
 //		localPlayer.connect(ip, port);///// NETWORK TES
-		
+
 		///// setting the PIM AS InputProcessor
 		Gdx.input.setInputProcessor(localPlayer.PIM);
 
@@ -91,7 +77,7 @@ public class MapScreen implements Screen {
 
 		// order the render which map is going to draw
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / Config.PPM);
-		
+
 	}
 
 	@Override
@@ -99,7 +85,7 @@ public class MapScreen implements Screen {
 		// set map properties
 		Render.world = new World(new Vector2(0, 0), true);
 		world = Render.world;
-		
+
 		// render which draws box2d Textures
 		b2dr = new Box2DDebugRenderer();
 		// then camera zoom
@@ -114,14 +100,10 @@ public class MapScreen implements Screen {
 		worldListener = new WorldListener();
 		world.setContactListener(worldListener);
 		// working with tank
-		tank = new Tank(localPlayer);
-		Render.tanks.add(tank);
-		tank2 = new Tank(localPlayer2);
-		Render.tanks.add(tank2);
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		hud = new HudScene();
-		
+
 		buff = new SpeedBuff();
 		buff2 = new CooldownBuff();
 		buff3 = new ExplosiveBuff();
@@ -138,7 +120,7 @@ public class MapScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		
+
 		update(delta);
 		gamePort.apply();
 		Render.cleanScreen();
@@ -148,21 +130,17 @@ public class MapScreen implements Screen {
 		// loads box2dDebugLines hitboxes
 		b2dr.render(world, camera.combined);
 		// drawing
-		b.begin();
-		
-		
-		if (tank.hull.getHp() > 0 ) {
-			tank.Render();
-		} else if(tank.hull.b2body != null){
-			
-			tank.destroy();
-		}	
-		tank2.Render();
-		
+
+		//if (tank.hull.getHp() > 0) {
+			//tank.Render(); TODO: Deletear hull en updatelist
+		//} else if (tank.hull.b2body != null) {
+
+		//	tank.destroy();
+		//}
+
 		Render.render();
 		Render.updateList();
-		b.end();
-		
+
 		// something happened when the hud was being drawd after the render.tank
 		// so i make it in another batch.begin();
 		hud.draw();
