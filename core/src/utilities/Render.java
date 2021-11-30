@@ -10,7 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
 
-import elements.ClientsideSprite;
+import elements.ClientAnimation;
+import elements.ClientSprite;
 import input.Player;
 
 public abstract class Render {
@@ -18,19 +19,30 @@ public abstract class Render {
 	public static Tanks app;
 	public static World world;
 	public static Player player;
-	public static ArrayList<ClientsideSprite> renderList = new ArrayList<ClientsideSprite>();
+	public static ArrayList<ClientSprite> renderList = new ArrayList<ClientSprite>();
+	public static ArrayList<ClientAnimation> renderAnimationList = new ArrayList<ClientAnimation>();
 
 	int renderID;
 
 	public static void render() { // Render everything in the renderList
-		Render.batch.begin();
+		batch.begin();
 		for (int i = 0; i < renderList.size(); i++) {
 			if (renderList.get(i) != null) {
 				renderList.get(i).draw(batch);
+				try {
+					((ClientAnimation) renderList.get(i)).update();
+					if(((ClientAnimation) renderList.get(i)).end) {
+
+						renderList.remove(i);
+					}
+				}catch(Exception e) {
+
+				}
 			}
 		}
-		Render.batch.end();
+		batch.end();
 	}
+
 
 	public static void disposeList() {
 		for (int i = 0; i < renderList.size(); i++) {
@@ -58,6 +70,7 @@ public abstract class Render {
 		sprite.setSize(Float.parseFloat(args[5]),Float.parseFloat(args[6]));
 		renderList.add(sprite);
 	}
+
 
 	public static void updateSprite(String[] args) {
 		ClientsideSprite sprite = null;
