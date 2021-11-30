@@ -12,12 +12,15 @@ import utilities.Resources;
 
 public class Obstacle extends Entity2D {
 	private boolean vertical;
+
+	public int corrections;
 	public Obstacle() {
 		super(new Texture(Resources.BARRICADE));
 		this.world = Render.world;
 		setSize(getTexture().getWidth()/2/Config.PPM,getTexture().getHeight()/2/Config.PPM);
-		setPosition(Functions.randomFloat(10,50)*15/Config.PPM,Functions.randomFloat(10,50)*15/Config.PPM);
+//		setPosition(Functions.randomFloat(10,50)*15/Config.PPM,Functions.randomFloat(10,50)*15/Config.PPM);
 		vertical = (Functions.randomInt(1,2)==1)?false:true;
+		vertical = true;
 		setPosition(3,3);
 		setOrigin(0,0);	
 		if(vertical) {
@@ -33,7 +36,6 @@ public class Obstacle extends Entity2D {
 	protected void createBody() {
 		bdef = new BodyDef();
 		if(vertical) {
-			
 			bdef.position.set(getX()-getHeight()/2,getY()+getWidth()/2);
 		}else {
 			bdef.position.set(getX()+getWidth()/2,getY()+getHeight()/2);
@@ -59,8 +61,40 @@ public class Obstacle extends Entity2D {
 		fdef.filter.maskBits = Config.DEFAULT_BIT | Config.TANK_BIT 
 				| Config.PROJECTIL_BIT | Config.BUFF_BIT | Config.BARREL_BIT;
 		fdef.shape = shape;
-		b2body.createFixture(fdef).setUserData("obstacle");
-
+		b2body.createFixture(fdef).setUserData(this);
 	}
+	public void correct() {
+		System.out.println(corrections);
+		
+			if(vertical) {
+				b2body.setLinearVelocity(1,0);
+				setPosition((b2body.getPosition().x + getHeight()/2), // 
+						b2body.getPosition().y - getWidth()/2);
+			}else {
+				b2body.setLinearVelocity(0,1);
+				setPosition((b2body.getPosition().x - getWidth() / 2), // 
+						b2body.getPosition().y - getHeight() / 2);
+			}
+			
+		
+		
+	}
+			
+		
 	
+	
+	public void stop() {
+		b2body.setLinearVelocity(0, 0);
+	}
+
+	public void needCorrect() {
+		corrections++;
+		
+	}
+	public void fixed() {
+		corrections--;
+		if(corrections==0) {
+			stop();
+		}
+	}
 }

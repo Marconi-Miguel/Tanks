@@ -4,6 +4,7 @@ public abstract class Config {
 	public static int HEIGHT= 720;
     public static int WIDTH = 1080;
     public static float delta;
+    public static float counter= 0; //testing
     // PIXELPERMETER la escala, un pixel a la imagen, para que las velocidades y otras propiedades tengan sentido
     public static final float PPM = 100;
     

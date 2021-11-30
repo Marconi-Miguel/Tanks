@@ -57,6 +57,7 @@ public class MapScreen implements Screen {
 	private BarrelEx explosive1;
 	private BarrelEx explosive2;
 	private BarrelEx explosive3;
+	private Obstacle obstacle1;
 	float time;
 
 	public MapScreen(Player player) {
@@ -103,9 +104,9 @@ public class MapScreen implements Screen {
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		hud = new HudScene();
 		
-//		buff = new SpeedBuff();
-//		buff2 = new CooldownBuff();
-//		buff3 = new ExplosiveBuff();
+		buff = new SpeedBuff();
+		buff2 = new CooldownBuff();
+		buff3 = new ExplosiveBuff();
 		Render.addSprite(buff);
 		Render.addSprite(buff2);
 		Render.addSprite(buff3);
@@ -115,7 +116,7 @@ public class MapScreen implements Screen {
 //		Render.addSprite(explosive1);
 //		Render.addSprite(explosive2);
 //		Render.addSprite(explosive3);
-		Obstacle obstacle1 = new Obstacle();
+		 obstacle1 = new Obstacle();
 		Render.addSprite(obstacle1);
 //		Obstacle obstacle2 = new Obstacle();
 //		Render.addSprite(obstacle2);
@@ -164,7 +165,22 @@ public class MapScreen implements Screen {
 		// sets whats the renderer gonna draw, that shows in camera
 		renderer.setView(camera);
 		time += delta;
+		correctObstacle();
 
+	}
+
+	private void correctObstacle() {
+		
+		if(obstacle1.corrections>0 && time < 0.2f) {
+			obstacle1.correct();
+		}else {
+			obstacle1.fixed();
+		
+			if(obstacle1.corrections>0) {
+				time = 0;
+			}
+		}
+		
 	}
 
 	@Override
