@@ -24,28 +24,28 @@ public class PlayerInputManager extends InputAdapter {
 		
 		case Input.Keys.D:
 				localPlayer.inputs.replace(InputKeys.RIGHT, false,true);
-				thread.sendMessage(NetworkCodes.INPUT+"RIGHT/"+"TRUE");
+				thread.sendMessage(NetworkCodes.INPUT+"RIGHT-"+"TRUE");
 		return true;
 		
 		case Input.Keys.A:
 			
 			localPlayer.inputs.replace(InputKeys.LEFT, false,true);
-			thread.sendMessage(NetworkCodes.INPUT+"LEFT/"+"TRUE");
+			thread.sendMessage(NetworkCodes.INPUT+"LEFT-"+"TRUE");
 		return true;
 	
 		case Input.Keys.W:
 			localPlayer.inputs.replace(InputKeys.UP, false,true);
-			thread.sendMessage(NetworkCodes.INPUT+"UP/"+"TRUE");
+			thread.sendMessage(NetworkCodes.INPUT+"UP-"+"TRUE");
 		return true;
 			
 		case Input.Keys.S:
 			localPlayer.inputs.replace(InputKeys.DOWN, false,true);
-			thread.sendMessage(NetworkCodes.INPUT+"DOWN/"+"TRUE");
+			thread.sendMessage(NetworkCodes.INPUT+"DOWN-"+"TRUE");
 		return true;
 		
 		case Input.Keys.SPACE:
 			localPlayer.inputs.replace(InputKeys.FIRE, false,true);
-			thread.sendMessage(NetworkCodes.INPUT+"FIRE/"+"TRUE");
+			thread.sendMessage(NetworkCodes.INPUT+"FIRE-"+"TRUE");
 		return true;
 		
 		default:
@@ -60,27 +60,27 @@ public class PlayerInputManager extends InputAdapter {
 		
 		case Input.Keys.D:
 			localPlayer.inputs.replace(InputKeys.RIGHT, true,false);
-			thread.sendMessage(NetworkCodes.INPUT+"RIGHT/"+"FALSE");
+			thread.sendMessage(NetworkCodes.INPUT+"RIGHT-"+"FALSE");
 		return true;
 	
 		case Input.Keys.A:
 			localPlayer.inputs.replace(InputKeys.LEFT, true,false);
-			thread.sendMessage(NetworkCodes.INPUT+"LEFT/"+"FALSE");
+			thread.sendMessage(NetworkCodes.INPUT+"LEFT-"+"FALSE");
 		return true;
 
 		case Input.Keys.W:
 			localPlayer.inputs.replace(InputKeys.UP, true,false);
-			thread.sendMessage(NetworkCodes.INPUT+"UP/"+"FALSE");
+			thread.sendMessage(NetworkCodes.INPUT+"UP-"+"FALSE");
 		return true;
 		
 		case Input.Keys.S:
 			localPlayer.inputs.replace(InputKeys.DOWN, true,false);
-			thread.sendMessage(NetworkCodes.INPUT+"DOWN/"+"FALSE");
+			thread.sendMessage(NetworkCodes.INPUT+"DOWN-"+"FALSE");
 		return true;
 		
 		case Input.Keys.SPACE:
 			localPlayer.inputs.replace(InputKeys.FIRE, true,false);
-			thread.sendMessage(NetworkCodes.INPUT+"FIRE/"+"FALSE");
+			thread.sendMessage(NetworkCodes.INPUT+"FIRE-"+"FALSE");
 		return true;
 		
 		default:
