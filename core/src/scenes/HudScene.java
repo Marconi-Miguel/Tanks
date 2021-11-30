@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import utilities.Config;
-import utilities.Render;
+import utilities.ClientRender;
 import utilities.Resources;
 
 public class HudScene {
@@ -55,9 +55,9 @@ public class HudScene {
 	}
 
 	public void draw() {
-		Render.batch.begin();
+		ClientRender.batch.begin();
 		stage.act();
 		stage.draw();
-		Render.batch.end();
+		ClientRender.batch.end();
 	}
 }

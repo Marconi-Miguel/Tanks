@@ -13,7 +13,7 @@ import elements.ClientAnimation;
 import elements.ClientsideSprite;
 import input.Player;
 
-public abstract class Render {
+public abstract class ClientRender {
 	public static SpriteBatch batch;
 	public static Tanks app;
 	public static World world;

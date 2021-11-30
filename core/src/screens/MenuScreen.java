@@ -12,7 +12,7 @@ import elements.ButtonText;
 import input.Player;
 import scenes.MenuScene;
 import utilities.Config;
-import utilities.Render;
+import utilities.ClientRender;
 import utilities.Resources;
 
 public class MenuScreen implements Screen {
@@ -45,7 +45,7 @@ public class MenuScreen implements Screen {
 		bg = new Sprite(new Texture(Resources.BG));
 		bg.setSize(Config.WIDTH, Config.HEIGHT);
 
-		b = Render.batch;
+		b = ClientRender.batch;
 		for (int i = 0; i < menuTexts.length; i++) {
 			menuTexts[i] = new ButtonText(Resources.FONT, 12, Color.WHITE, true);
 		}
@@ -113,8 +113,8 @@ public class MenuScreen implements Screen {
 		} else if (menuTexts[1].isPressed()) {
 			Gdx.app.exit();
 		} else if (connect.isPressed()) {
-			Render.app.music.stop();
-			Render.app.setScreen(new MapScreen(localPlayer));
+			ClientRender.app.music.stop();
+			ClientRender.app.setScreen(new MapScreen(localPlayer));
 			// TODO: localPlayer.setUsername(scene.getUsername());
 			try {
 				int port;
@@ -124,8 +124,8 @@ public class MenuScreen implements Screen {
 					port = Integer.parseInt(scene.getPort());
 				}
 				if (localPlayer.connect(scene.getIp(), port) ) {
-					Render.app.music.stop();
-					Render.app.setScreen(new MapScreen(localPlayer));
+					ClientRender.app.music.stop();
+					ClientRender.app.setScreen(new MapScreen(localPlayer));
 				} else {
 					System.out.println("else");
 					connect.reset();

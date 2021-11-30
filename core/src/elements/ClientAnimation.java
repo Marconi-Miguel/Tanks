@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 
 import utilities.Config;
-import utilities.Render;
+import utilities.ClientRender;
 import utilities.Resources;
 
 public class ClientAnimation extends ClientsideSprite {

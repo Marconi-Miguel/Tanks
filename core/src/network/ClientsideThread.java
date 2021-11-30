@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import input.Client;
 import input.Player;
-import utilities.Render;
+import utilities.ClientRender;
 
 public class ClientsideThread extends Thread {
 
@@ -72,19 +72,19 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.NEWSPRITE:
-			Render.addSprite(args);
+			ClientRender.addSprite(args);
 			break;
 		///
 		case NetworkCodes.UPDATESPRITE:
-			Render.updateSprite(args);
+			ClientRender.updateSprite(args);
 			break;
 		///
 		case NetworkCodes.REMOVESPRITE:
-			Render.removeSprite(Integer.parseInt(args[0]));
+			ClientRender.removeSprite(Integer.parseInt(args[0]));
 			break;
 		///
 		case NetworkCodes.EXPLOSION:
-			Render.addAnimation(args);
+			ClientRender.addAnimation(args);
 			break;
 		}
 	}

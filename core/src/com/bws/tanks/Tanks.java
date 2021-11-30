@@ -9,7 +9,7 @@ import input.Player;
 import network.Clientside;
 import network.ClientsideThread;
 import screens.MapScreen;
-import utilities.Render;
+import utilities.ClientRender;
 import utilities.Resources;
 
 public class Tanks extends Game {
@@ -17,8 +17,8 @@ public class Tanks extends Game {
 	public Music music;
 	@Override
 	public void create () {
-		Render.app = this;
-		Render.batch = new SpriteBatch();
+		ClientRender.app = this;
+		ClientRender.batch = new SpriteBatch();
 		manager = new AssetManager();
 		manager.load(Resources.MENUTHEME,Music.class);
 		manager.finishLoading();
@@ -41,6 +41,6 @@ public class Tanks extends Game {
 		ClientsideThread cThread = Clientside.getThread();
 		if (cThread != null) {cThread.disconnect();}
 		
-		Render.batch.dispose();
+		ClientRender.batch.dispose();
 	}
 }

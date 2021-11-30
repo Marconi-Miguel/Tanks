@@ -18,7 +18,7 @@ import input.Player;
 import scenes.HudScene;
 import tiledMapObjects.World2D;
 import utilities.Config;
-import utilities.Render;
+import utilities.ClientRender;
 import utilities.Resources;
 
 public class MapScreen implements Screen {
@@ -69,8 +69,8 @@ public class MapScreen implements Screen {
 	@Override
 	public void show() {
 		// set map properties
-		Render.world = new World(new Vector2(0, 0), true);
-		world = Render.world;
+		ClientRender.world = new World(new Vector2(0, 0), true);
+		world = ClientRender.world;
 
 		// render which draws box2d Textures
 		b2dr = new Box2DDebugRenderer();
@@ -82,7 +82,7 @@ public class MapScreen implements Screen {
 		// creates 2dmap per layers
 		world2d = new World2D(map);
 		// working with tank
-		b = Render.batch;
+		b = ClientRender.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		hud = new HudScene();
 	}
@@ -92,7 +92,7 @@ public class MapScreen implements Screen {
 
 		update(delta);
 		gamePort.apply();
-		Render.cleanScreen();
+		ClientRender.cleanScreen();
 		b.setProjectionMatrix(camera.combined);
 		// loads map
 		renderer.render();
@@ -105,7 +105,7 @@ public class MapScreen implements Screen {
 		//} else if (tank.hull.b2body != null) {
 		//	tank.destroy();
 		//}
-		Render.render();
+		ClientRender.render();
 		// something happened when the hud was being drawd after the render.tank
 		hud.draw();
 	}
@@ -151,7 +151,7 @@ public class MapScreen implements Screen {
 	@Override
 	public void dispose() {
 		world.dispose();
-		Render.disposeList();
+		ClientRender.disposeList();
 		hud.stage.dispose();
 
 	}

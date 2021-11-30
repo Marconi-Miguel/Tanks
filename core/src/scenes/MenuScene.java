@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import utilities.Config;
-import utilities.Render;
+import utilities.ClientRender;
 import utilities.Resources;
 
 public class MenuScene {
@@ -66,10 +66,10 @@ public class MenuScene {
 		stage.addActor(table);
 	}
 	public void draw() {
-		Render.batch.begin();
+		ClientRender.batch.begin();
 		stage.act();
 		stage.draw();
-		Render.batch.end();
+		ClientRender.batch.end();
 	}
 	public String getIp() {
 		return ipTxtFld.getText();
