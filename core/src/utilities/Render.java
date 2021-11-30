@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
 
+import elements.ClientAnimation;
 import elements.ClientSprite;
 import input.Player;
 
@@ -18,7 +18,7 @@ public abstract class Render {
 	public static World world;
 	public static Player player;
 	public static ArrayList<ClientSprite> renderList = new ArrayList<ClientSprite>();
-	public static ArrayList<Sprite> renderAnimationList = new ArrayList<Sprite>();
+	public static ArrayList<ClientAnimation> renderAnimationList = new ArrayList<ClientAnimation>();
 
 	int renderID;
 
@@ -27,19 +27,19 @@ public abstract class Render {
 		for (int i = 0; i < renderList.size(); i++) {
 			if (renderList.get(i) != null) {
 				renderList.get(i).draw(batch);
+				try {
+					((ClientAnimation) renderList.get(i)).update();
+					if(((ClientAnimation) renderList.get(i)).end) {
+						renderList.remove(i);
+					}
+				}catch(Exception e) {
+					
+				}
 			}
 		}
 		batch.end();
 	}
-	public static void renderAnimations() { // Render everything in the renderList
-		batch.begin();
-		for (int i = 0; i < renderList.size(); i++) {
-			if (renderList.get(i) != null) {
-				renderList.get(i).draw(batch);
-			}
-		}
-		batch.end();
-	}
+
 
 	public static void disposeList() {
 		for (int i = 0; i < renderList.size(); i++) {
@@ -60,5 +60,6 @@ public abstract class Render {
 	public static void addSprite(ClientSprite sprite) {
 		renderList.add(sprite);
 	}
+	
 
 }

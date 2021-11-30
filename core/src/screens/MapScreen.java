@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import elements.ClientAnimation;
 import input.Player;
 import scenes.HudScene;
 import tiledMapObjects.World2D;
@@ -102,14 +103,10 @@ public class MapScreen implements Screen {
 		//if (tank.hull.getHp() > 0) {
 			//tank.Render(); TODO: Deletear hull en updatelist
 		//} else if (tank.hull.b2body != null) {
-
 		//	tank.destroy();
 		//}
-
 		Render.render();
-
 		// something happened when the hud was being drawd after the render.tank
-		// so i make it in another batch.begin();
 		hud.draw();
 	}
 
@@ -125,6 +122,12 @@ public class MapScreen implements Screen {
 		// sets whats the renderer gonna draw, that shows in camera
 		renderer.setView(camera);
 		time += delta;
+		
+	//testing
+		if(time>1 && time < 2) {
+			System.out.println("creando explosion en: x 3 y 3");
+			ClientAnimation explosion = new ClientAnimation(3, 3);
+		}
 	}
 
 
