@@ -13,16 +13,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import elements.BarrelEx;
-import elements.CooldownBuff;
-import elements.ExplosiveBuff;
-import elements.Obstacle;
-import elements.SpeedBuff;
-import elements.Tank;
 import input.Player;
 import scenes.HudScene;
 import tiledMapObjects.World2D;
-import tiledMapObjects.WorldListener;
 import utilities.Config;
 import utilities.Render;
 import utilities.Resources;
@@ -43,21 +36,13 @@ public class MapScreen implements Screen {
 	private Box2DDebugRenderer b2dr;
 	// we have to make the world2d and objects here
 	private World2D world2d;
-	// object listener
-	private WorldListener worldListener;
 
 	// hud
 	private HudScene hud;
 	// hull testing
-	private Tank tank;
+
 	private Player localPlayer;
-	private SpeedBuff buff;
-	private CooldownBuff buff2;
-	private ExplosiveBuff buff3;
-	private BarrelEx explosive1;
-	private BarrelEx explosive2;
-	private BarrelEx explosive3;
-	private Obstacle obstacle1;
+
 	float time;
 
 	public MapScreen(Player player) {
@@ -95,34 +80,10 @@ public class MapScreen implements Screen {
 
 		// creates 2dmap per layers
 		world2d = new World2D(map);
-
-		// set the world contact listener
-		worldListener = new WorldListener();
-		world.setContactListener(worldListener);
 		// working with tank
 		b = Render.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		hud = new HudScene();
-		
-		buff = new SpeedBuff();
-		buff2 = new CooldownBuff();
-		buff3 = new ExplosiveBuff();
-		Render.addSprite(buff);
-		Render.addSprite(buff2);
-		Render.addSprite(buff3);
-//		explosive1 = new BarrelEx();
-//		explosive2 = new BarrelEx();
-//		explosive3 = new BarrelEx();
-//		Render.addSprite(explosive1);
-//		Render.addSprite(explosive2);
-//		Render.addSprite(explosive3);
-		 obstacle1 = new Obstacle();
-		Render.addSprite(obstacle1);
-//		Obstacle obstacle2 = new Obstacle();
-//		Render.addSprite(obstacle2);
-//		Obstacle obstacle3 = new Obstacle();
-//		Render.addSprite(obstacle3);
-		tank = new Tank(localPlayer);
 	}
 
 	@Override
@@ -146,7 +107,6 @@ public class MapScreen implements Screen {
 		//}
 
 		Render.render();
-		Render.updateList();
 
 		// something happened when the hud was being drawd after the render.tank
 		// so i make it in another batch.begin();
@@ -165,23 +125,8 @@ public class MapScreen implements Screen {
 		// sets whats the renderer gonna draw, that shows in camera
 		renderer.setView(camera);
 		time += delta;
-		correctObstacle();
-
 	}
 
-	private void correctObstacle() {
-		
-		if(obstacle1.corrections>0 && time < 0.2f) {
-			obstacle1.correct();
-		}else {
-			obstacle1.fixed();
-		
-			if(obstacle1.corrections>0) {
-				time = 0;
-			}
-		}
-		
-	}
 
 	@Override
 	public void resize(int width, int height) {
