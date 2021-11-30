@@ -56,7 +56,12 @@ public class HudScene {
 
 	public void draw() {
 		ClientRender.batch.begin();
-		stage.act();
+		try {
+			stage.act();
+		}catch(Exception e){
+			
+		}
+	
 		stage.draw();
 		ClientRender.batch.end();
 	}
