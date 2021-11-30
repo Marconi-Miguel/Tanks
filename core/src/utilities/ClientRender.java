@@ -61,7 +61,7 @@ public abstract class ClientRender {
 	}
 
 	public static void addSprite(String[] args) {
-		ClientsideSprite sprite = new ClientsideSprite(new Texture(args[0]));
+		ClientsideSprite sprite = new ClientsideSprite(args[0]);
 		sprite.setID(Integer.parseInt(args[1]));
 		sprite.setX(Float.parseFloat(args[2]));
 		sprite.setY(Float.parseFloat(args[3]));

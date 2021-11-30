@@ -8,6 +8,8 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+
 import input.Client;
 import input.Player;
 import utilities.ClientRender;
@@ -53,7 +55,7 @@ public class ClientsideThread extends Thread {
 		String argumentString = msg.substring(NetworkCodes.CODELENGTH, msg.length()); // Everything after the network
 																						// code are the arguments (args)
 																						// of the network message.
-		String[] args = argumentString.split("/");
+		String[] args = argumentString.split("-");
 		if (!networkCode.equals(NetworkCodes.PING) && !networkCode.equals(NetworkCodes.UPDATESPRITE)) {
 			System.out.println(msg);
 		}
@@ -75,11 +77,11 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.NEWSPRITE:
-			ClientRender.addSprite(args);
+			addSprite(args);
 			break;
 		///
 		case NetworkCodes.UPDATESPRITE:
-			ClientRender.updateSprite(args);
+			updateSprite(args);
 			break;
 		///
 		case NetworkCodes.REMOVESPRITE:
@@ -155,5 +157,21 @@ public class ClientsideThread extends Thread {
 			sendMessage(NetworkCodes.DISCONNECT);
 		}
 	}
-
+////////sprite management
+	
+	private void addSprite(final String[] args) {
+		Gdx.app.postRunnable(new Runnable() {
+			public void run() {
+				ClientRender.addSprite(args);
+			}
+		});
+	}
+	
+	private void updateSprite(final String[] args) {
+		Gdx.app.postRunnable(new Runnable() {
+			public void run() {
+				ClientRender.updateSprite(args);
+			}
+		});
+	}
 }
