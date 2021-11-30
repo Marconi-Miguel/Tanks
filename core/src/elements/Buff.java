@@ -16,7 +16,7 @@ public abstract class Buff extends Entity2D {
 		//random position between the center map
 		setSize(40/Config.PPM,40/Config.PPM);
 		setPosition(Functions.randomFloat(10,50)*15/Config.PPM,Functions.randomFloat(10,50)*15/Config.PPM);
-//		setPosition(3,3);
+//		setPosition(1.5F,1.5f);
 		this.world = Render.world;
 		createBody();
 		fixtureDef();

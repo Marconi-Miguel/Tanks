@@ -38,16 +38,15 @@ public class WorldListener implements ContactListener {
 	
 
 	private void detectExplosion() {
+		
 		if (fixA.getUserData() instanceof Explosion || fixB.getUserData() instanceof Explosion) {
 			Fixture explosion = (fixA.getUserData() instanceof Explosion) ? fixA : fixB;
 			Fixture object = (explosion == fixA) ? fixB : fixA;
-
 			if (object.getUserData() != null && (object.getUserData() instanceof Hull)){
 				if(explosion != actualExplosion) {
 					((Hull) object.getUserData()).receiveExplosiveDamage(((Explosion) explosion.getUserData()).getDmg());
 					actualExplosion = explosion;
 				}
-				
 			}
 		}
 	}
@@ -58,13 +57,13 @@ public class WorldListener implements ContactListener {
 		if (fixA.getUserData() instanceof BarrelEx || fixB.getUserData() instanceof BarrelEx) {
 			Fixture barrel = (fixA.getUserData() instanceof BarrelEx) ? fixA : fixB;
 			Fixture object = (barrel == fixA) ? fixB : fixA;
-
+			
 			if (object.getUserData() != null && (object.getUserData() instanceof Hull || object.getUserData() instanceof Projectile || object.getUserData() instanceof Explosion )) {
+				
 				((BarrelEx) barrel.getUserData()).Hitted();
 			}
 			if (object.getUserData() != null && (object.getUserData() instanceof Projectile)) {
 				// the bullet just disappear
-				System.out.println("toco el barrel");
 					((Projectile) object.getUserData()).explode();
 
 			}
@@ -90,6 +89,10 @@ public class WorldListener implements ContactListener {
 
 				}
 
+			}
+			if (object.getUserData() != null && (object.getUserData().equals("obstacle"))) {
+				// trigger sensors
+					((Projectile) projectile.getUserData()).explode();
 			}
 			
 			

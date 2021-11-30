@@ -3,7 +3,6 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -17,10 +16,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import elements.BarrelEx;
 import elements.CooldownBuff;
 import elements.ExplosiveBuff;
+import elements.Obstacle;
 import elements.SpeedBuff;
 import elements.Tank;
 import input.Player;
-import input.PlayerInputManager;
 import scenes.HudScene;
 import tiledMapObjects.World2D;
 import tiledMapObjects.WorldListener;
@@ -104,18 +103,24 @@ public class MapScreen implements Screen {
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		hud = new HudScene();
 		
-		buff = new SpeedBuff();
-		buff2 = new CooldownBuff();
-		buff3 = new ExplosiveBuff();
+//		buff = new SpeedBuff();
+//		buff2 = new CooldownBuff();
+//		buff3 = new ExplosiveBuff();
 		Render.addSprite(buff);
 		Render.addSprite(buff2);
 		Render.addSprite(buff3);
-		explosive1 = new BarrelEx();
-		explosive2 = new BarrelEx();
-		explosive3 = new BarrelEx();
-		Render.addSprite(explosive1);
-		Render.addSprite(explosive2);
-		Render.addSprite(explosive3);
+//		explosive1 = new BarrelEx();
+//		explosive2 = new BarrelEx();
+//		explosive3 = new BarrelEx();
+//		Render.addSprite(explosive1);
+//		Render.addSprite(explosive2);
+//		Render.addSprite(explosive3);
+		Obstacle obstacle1 = new Obstacle();
+		Render.addSprite(obstacle1);
+//		Obstacle obstacle2 = new Obstacle();
+//		Render.addSprite(obstacle2);
+//		Obstacle obstacle3 = new Obstacle();
+//		Render.addSprite(obstacle3);
 		tank = new Tank(localPlayer);
 	}
 
@@ -140,7 +145,6 @@ public class MapScreen implements Screen {
 		//}
 
 		Render.render();
-		
 		Render.updateList();
 
 		// something happened when the hud was being drawd after the render.tank
