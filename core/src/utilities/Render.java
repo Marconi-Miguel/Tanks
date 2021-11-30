@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
 
 import elements.ClientAnimation;
-import elements.ClientSprite;
+import elements.ClientsideSprite;
 import input.Player;
 
 public abstract class Render {
@@ -19,7 +18,7 @@ public abstract class Render {
 	public static Tanks app;
 	public static World world;
 	public static Player player;
-	public static ArrayList<ClientSprite> renderList = new ArrayList<ClientSprite>();
+	public static ArrayList<ClientsideSprite> renderList = new ArrayList<ClientsideSprite>();
 	public static ArrayList<ClientAnimation> renderAnimationList = new ArrayList<ClientAnimation>();
 
 	int renderID;
@@ -38,6 +37,16 @@ public abstract class Render {
 				}catch(Exception e) {
 
 				}
+			}
+		}
+		for (int i = 0; i < renderAnimationList.size(); i++) {
+			if (renderAnimationList.get(i) != null) {
+				renderAnimationList.get(i).draw(batch);
+					renderAnimationList.get(i).update();
+					if(renderAnimationList.get(i).end) {
+						renderAnimationList.remove(i);
+					}
+				
 			}
 		}
 		batch.end();
@@ -66,9 +75,11 @@ public abstract class Render {
 		sprite.setX(Float.parseFloat(args[2]));
 		sprite.setY(Float.parseFloat(args[3]));
 		sprite.setRotation(Float.parseFloat(args[4]));
-		sprite.setRotation(Float.parseFloat(args[4]));
 		sprite.setSize(Float.parseFloat(args[5]),Float.parseFloat(args[6]));
 		renderList.add(sprite);
+	}
+	public static void addSprite(ClientAnimation animation) {
+		renderAnimationList.add(animation);
 	}
 
 

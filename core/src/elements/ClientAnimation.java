@@ -9,7 +9,7 @@ import utilities.Config;
 import utilities.Render;
 import utilities.Resources;
 
-public class ClientAnimation extends ClientSprite {
+public class ClientAnimation extends ClientsideSprite {
 
 	private float x, y;
 	private float counter;
@@ -22,7 +22,6 @@ public class ClientAnimation extends ClientSprite {
 		setPosition(x,y);
 		setAnimation();
 		setRegion(new Texture(Resources.EXPLOSION+1+".png"));
-		Render.addSprite(this);
 		super.setPosition(x, y);
 	}
 
