@@ -68,6 +68,9 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.PING: // Ping, are you there?
+			if(Integer.parseInt(args[0]) != ClientRender.renderList.size()){
+				sendMessage(NetworkCodes.RENDERSYNC);
+			}
 			sendMessage(NetworkCodes.PONG); // PONG! I'm still here!
 			break;
 		///
