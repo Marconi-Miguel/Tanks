@@ -15,10 +15,13 @@ public abstract class NetworkCodes {
 	public static final String INPUT = "INPUT-";
 	public static final String FORBIDDEN = "FRBDN-";
 	public static final String ERROR = "ERROR-";
-	public static final String PING = "SPING-";
-	public static final String PONG = "CPONG-"; //ServerPing and ClientPong!
-	public static final String TANKSYNC = "TSYNC-"; //TankSync. The format is TSYNC-PosX/PosY/Rotation
-	public static final String NEWTANK = "NTANK-"; 
+	public static final String PING = "PIING-";
+	public static final String PONG = "CPOONG-";
+	public static final String NEWSPRITE   = "SPRITE-";
+	public static final String UPDATESPRITE = "UPRITE-";
+	public static final String REMOVESPRITE  = "NORITE-"; 
+	public static final String EXPLOSION = "BOOOM-";
+	public static final String RENDERSYNC  ="RSYNC-";
 
 
 }

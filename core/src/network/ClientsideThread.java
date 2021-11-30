@@ -8,10 +8,9 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-
 import input.Client;
 import input.Player;
+import utilities.Render;
 
 public class ClientsideThread extends Thread {
 
@@ -55,7 +54,7 @@ public class ClientsideThread extends Thread {
 																						// code are the arguments (args)
 																						// of the network message.
 		String[] args = argumentString.split("/");
-		if (!networkCode.equals(NetworkCodes.PING) && !networkCode.equals(NetworkCodes.TANKSYNC)) {
+		if (!networkCode.equals(NetworkCodes.PING) && !networkCode.equals(NetworkCodes.UPDATESPRITE)) {
 			System.out.println(msg);
 		}
 
@@ -72,14 +71,17 @@ public class ClientsideThread extends Thread {
 			sendMessage(NetworkCodes.PONG); // PONG! I'm still here!
 			break;
 		///
-		case NetworkCodes.NEWTANK:
-			createTank(args);
+		case NetworkCodes.NEWSPRITE:
+			Render.addSprite(args);
 			break;
 		///
-		case NetworkCodes.TANKSYNC:
-			syncPlayerTank(args);
+		case NetworkCodes.UPDATESPRITE:
+			Render.updateSprite(args);
 			break;
 		///
+		case NetworkCodes.REMOVESPRITE:
+			Render.removeSprite(Integer.parseInt(args[0]));
+			break;
 		}
 	}
 
@@ -111,34 +113,6 @@ public class ClientsideThread extends Thread {
 		System.out.println("[CLIENT] Disconnected: " + args[0]);
 		connected = false;
 		this.end = true;
-	}
-
-	private void syncPlayerTank(String[] args) {
-
-	}
-
-	private void createTank(final String[] args) {
-
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run() {
-
-			}
-		});
-
-	}
-
-	private void removeTank(final String[] args) {
-
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run() {
-
-				
-				
-			}
-		});
-
 	}
 
 //////////// connection //////////////////////////////
