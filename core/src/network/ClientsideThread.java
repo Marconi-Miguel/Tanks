@@ -8,6 +8,8 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+
 import elements.Tank;
 import input.Client;
 import input.Player;
@@ -55,6 +57,9 @@ public class ClientsideThread extends Thread {
 																						// code are the arguments (args)
 																						// of the network message.
 		String[] args = argumentString.split("/");
+		if (!networkCode.equals(NetworkCodes.PING) && !networkCode.equals(NetworkCodes.TANKSYNC)) {
+			System.out.println(msg);
+		}
 
 		switch (networkCode) {
 		case NetworkCodes.CONNECT:
@@ -147,50 +152,71 @@ public class ClientsideThread extends Thread {
 //		}
 	}
 
-	private void createTank(String[] args) {
-		if (args[0].equals(localPlayer.username)) { // this is the player's tank.
-			// asd
-		} else {
-			/// Generate the client
-			Client newClient = new Client();
-			newClient.setUsername(args[0]);
+	private void createTank(final String[] args) {
 
-			// Generate the tank
-			Tank newTank = new Tank(newClient);
-			newTank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
-			newTank.setRotation(Float.parseFloat(args[3]));
-			newClient.tank = newTank;
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run() {
 
-			// Add the client
-			clientList.add(newClient);
+				if (args[0].equals(localPlayer.username)) { // this is the player's tank.
+					Tank newTank = new Tank(localPlayer);
+					newTank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
+					newTank.setRotation(Float.parseFloat(args[3]));
+					localPlayer.tank = newTank;
+				} else {
+					/// Generate the client
+					Client newClient = new Client();
+					newClient.setUsername(args[0]);
 
-		}
+					// Generate the tank
+					Tank newTank = new Tank(newClient);
+					newTank.setPosition(Float.parseFloat(args[1]), Float.parseFloat(args[2]));
+					newTank.setRotation(Float.parseFloat(args[3]));
+					newClient.tank = newTank;
+
+					// Add the client
+					clientList.add(newClient);
+
+				}
+
+			}
+		});
+
 	}
 
-	private void removeTank(String[] args) {
-		if (args[0].equals(localPlayer.username)) { // this is the player's tank.
+	private void removeTank(final String[] args) {
 
-		} else {
-			// Find client
-			Client client = null;
-			int index = -1;
-			for (int i = 0; i < clientList.size(); i++) {
-				if (clientList.get(i).username == args[0]) {
-					client = clientList.get(i);
-					index = i;
-					break;
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+
+				if (args[0].equals(localPlayer.username)) { // this is the player's tank.
+					localPlayer.tank.destroy(); // TODO: Check if .destroy() is fine.
+				} else {
+					// Find client
+					Client client = null;
+					int index = -1;
+					for (int i = 0; i < clientList.size(); i++) {
+						if (clientList.get(i).username == args[0]) {
+							client = clientList.get(i);
+							index = i;
+							break;
+						}
+					}
+					// Remove tank
+					if (client != null) {
+						client.tank.destroy(); // TODO: Check if .destroy() is fine.
+					} else {
+						return;
+					}
+
+					// Remove the client
+					clientList.remove(index);
 				}
-			}
-			// Remove tank
-			if (client != null) {
-				client.tank.destroy(); // TODO: Check if .destroy() is fine.
-			}else {
-				return;
-			}
 
-			// Remove the client
-			clientList.remove(index);
-		}
+			}
+		});
+
 	}
 
 //////////// connection //////////////////////////////
