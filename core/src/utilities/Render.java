@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bws.tanks.Tanks;
 
+import elements.ClientSprite;
 import input.Player;
 
 public abstract class Render {
@@ -16,11 +17,21 @@ public abstract class Render {
 	public static Tanks app;
 	public static World world;
 	public static Player player;
-	public static ArrayList<Sprite> renderList = new ArrayList<Sprite>();
+	public static ArrayList<ClientSprite> renderList = new ArrayList<ClientSprite>();
+	public static ArrayList<Sprite> renderAnimationList = new ArrayList<Sprite>();
 
 	int renderID;
 
 	public static void render() { // Render everything in the renderList
+		Render.batch.begin();
+		for (int i = 0; i < renderList.size(); i++) {
+			if (renderList.get(i) != null) {
+				renderList.get(i).draw(batch);
+			}
+		}
+		Render.batch.end();
+	}
+	public static void renderAnimations() { // Render everything in the renderList
 		Render.batch.begin();
 		for (int i = 0; i < renderList.size(); i++) {
 			if (renderList.get(i) != null) {
@@ -46,7 +57,7 @@ public abstract class Render {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 
-	public static void addSprite(Sprite sprite) {
+	public static void addSprite(ClientSprite sprite) {
 		renderList.add(sprite);
 	}
 
