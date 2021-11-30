@@ -82,6 +82,10 @@ public class ClientsideThread extends Thread {
 		case NetworkCodes.REMOVESPRITE:
 			Render.removeSprite(Integer.parseInt(args[0]));
 			break;
+		///
+		case NetworkCodes.EXPLOSION:
+		//TODO: hacer cosa acá
+			break;
 		}
 	}
 
