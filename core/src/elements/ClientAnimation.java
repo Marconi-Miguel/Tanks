@@ -22,7 +22,6 @@ public class ClientAnimation extends ClientsideSprite {
 		setPosition(x,y);
 		setAnimation();
 		setRegion(new Texture(Resources.EXPLOSION+1+".png"));
-		Render.addSprite(this);
 		super.setPosition(x, y);
 	}
 

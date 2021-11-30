@@ -39,6 +39,16 @@ public abstract class Render {
 				}
 			}
 		}
+		for (int i = 0; i < renderAnimationList.size(); i++) {
+			if (renderAnimationList.get(i) != null) {
+				renderAnimationList.get(i).draw(batch);
+					renderAnimationList.get(i).update();
+					if(renderAnimationList.get(i).end) {
+						renderAnimationList.remove(i);
+					}
+				
+			}
+		}
 		batch.end();
 	}
 
@@ -67,6 +77,9 @@ public abstract class Render {
 		sprite.setRotation(Float.parseFloat(args[4]));
 		sprite.setSize(Float.parseFloat(args[5]),Float.parseFloat(args[6]));
 		renderList.add(sprite);
+	}
+	public static void addSprite(ClientAnimation animation) {
+		renderAnimationList.add(animation);
 	}
 
 
