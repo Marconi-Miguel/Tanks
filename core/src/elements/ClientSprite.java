@@ -6,8 +6,7 @@ public class ClientSprite extends Sprite {
 	//Yes. We made an entire class just to add an int, because Marconi.
 	int id;
 	
-	public ClientSprite(int id) {
-		this.id = id;
+	public ClientSprite() {
 	}
 	
 	
@@ -18,6 +17,10 @@ public class ClientSprite extends Sprite {
 	
 	private void deleteSprite() {
 		
+	}
+	
+	public void setID(int id) {
+		this.id = id;
 	}
 	
 }
