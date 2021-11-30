@@ -7,7 +7,6 @@ public class Wall extends InteractiveObject{
 
 	public Wall(TiledMap map, Rectangle limits) {
 		super(map, limits);
-		
 	}
 
 }

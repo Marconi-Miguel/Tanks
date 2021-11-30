@@ -12,7 +12,7 @@ import utilities.Config;
 import utilities.Render;
 import utilities.Resources;
 
-public class Explosion extends Entidad2D implements Updateable{
+public class Explosion extends Entity2D implements Updateable{
 	//this is gonna be an animation, so we had to start with that.
 	private float radAux;
 	private Animation<Sprite> animation;

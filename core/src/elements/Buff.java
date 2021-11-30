@@ -1,7 +1,6 @@
 package elements;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -10,7 +9,7 @@ import utilities.Config;
 import utilities.Functions;
 import utilities.Render;
 
-public abstract class Buff extends Entidad2D {
+public abstract class Buff extends Entity2D {
 	private boolean picked;
 	public Buff(Texture texture) {
 		super(texture);

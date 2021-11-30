@@ -10,7 +10,7 @@ import utilities.Functions;
 import utilities.Render;
 import utilities.Resources;
 
-public class BarrelEx extends Entidad2D{
+public class BarrelEx extends Entity2D{
 	public boolean hitted;
 	public BarrelEx() {
 		super(new Texture(Resources.BARREL));
