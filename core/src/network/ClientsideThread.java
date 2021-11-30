@@ -10,10 +10,8 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 
-import elements.Tank;
 import input.Client;
 import input.Player;
-import utilities.Render;
 
 public class ClientsideThread extends Thread {
 
@@ -116,40 +114,7 @@ public class ClientsideThread extends Thread {
 	}
 
 	private void syncPlayerTank(String[] args) {
-		ArrayList<Tank> tanks = Render.tanks;
-		Tank tank = null;
-		Boolean found;
-		int cont = 0;
-		if (Render.tanks.size() == 0) {
-			return;
-		} // TODO hotfix
-		do {
 
-			found = false;
-
-			if (tanks.get(cont) != null && tanks.get(cont).owner.username.equals(args[0])) {
-				tank = tanks.get(cont);
-				found = true;
-			} // find the tank owned by this player
-			cont++;
-		} while (!found || cont < tanks.size());
-
-		if (tank == null) {
-			return;
-		}
-
-		if (tank.hull.getX() != Float.parseFloat(args[1]) || tank.hull.getY() != Float.parseFloat(args[2])) {
-			tank.correction = true;
-			tank.correction(cont, cont);
-		}
-
-		tank.hull.rotation = Float.parseFloat(args[3]);
-
-//		if (Boolean.parseBoolean(args[4])) {
-//			tank.hull.inRoad();
-//		}else {
-//			tank.hull.outRoad();
-//		}
 	}
 
 	private void createTank(final String[] args) {
