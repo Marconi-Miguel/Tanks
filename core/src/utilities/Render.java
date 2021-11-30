@@ -23,22 +23,22 @@ public abstract class Render {
 	int renderID;
 
 	public static void render() { // Render everything in the renderList
-		Render.batch.begin();
+		batch.begin();
 		for (int i = 0; i < renderList.size(); i++) {
 			if (renderList.get(i) != null) {
 				renderList.get(i).draw(batch);
 			}
 		}
-		Render.batch.end();
+		batch.end();
 	}
 	public static void renderAnimations() { // Render everything in the renderList
-		Render.batch.begin();
+		batch.begin();
 		for (int i = 0; i < renderList.size(); i++) {
 			if (renderList.get(i) != null) {
 				renderList.get(i).draw(batch);
 			}
 		}
-		Render.batch.end();
+		batch.end();
 	}
 
 	public static void disposeList() {
