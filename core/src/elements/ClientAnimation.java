@@ -9,7 +9,7 @@ import utilities.Config;
 import utilities.Render;
 import utilities.Resources;
 
-public class ClientAnimation extends ClientSprite {
+public class ClientAnimation extends ClientsideSprite {
 
 	private float x, y;
 	private float counter;
