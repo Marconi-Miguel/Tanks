@@ -84,7 +84,7 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.EXPLOSION:
-		//TODO: hacer cosa acá
+			Render.addAnimation(args);
 			break;
 		}
 	}

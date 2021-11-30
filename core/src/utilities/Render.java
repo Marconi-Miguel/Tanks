@@ -78,9 +78,12 @@ public abstract class Render {
 		sprite.setSize(Float.parseFloat(args[5]),Float.parseFloat(args[6]));
 		renderList.add(sprite);
 	}
-	public static void addSprite(ClientAnimation animation) {
+	public static void addAnimation(String[] args) {
+		ClientAnimation animation = new ClientAnimation(Float.parseFloat(args[0]), Float.parseFloat(args[1]));
 		renderAnimationList.add(animation);
+		
 	}
+
 
 
 	public static void updateSprite(String[] args) {
@@ -107,5 +110,8 @@ public abstract class Render {
 			}
 		}
 	}
+
+
+	
 
 }

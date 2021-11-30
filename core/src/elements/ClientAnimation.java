@@ -31,7 +31,7 @@ public class ClientAnimation extends ClientsideSprite {
 		if(counter < (framesSize/10)) {
 			setRegion(getFrame());
 			System.out.println(counter);
-			setSize(20/Config.PPM,20/Config.PPM);
+			setSize(getRegionWidth()/Config.PPM,getRegionHeight()/Config.PPM);
 				
 		}else {
 			end = true;
