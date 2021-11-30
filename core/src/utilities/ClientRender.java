@@ -80,16 +80,23 @@ public abstract class ClientRender {
 	public static void updateSprite(String[] args) {
 		ClientsideSprite sprite = null;
 		for (int i = 0; i < renderList.size(); i++) {
+			
 			if (renderList.get(i).getID() == Integer.parseInt(args[1])) {
 				sprite = renderList.get(i);
 				break;
 			}
 		}
 		if (sprite != null) {
-			sprite.setX(Float.parseFloat(args[2]));
-			sprite.setY(Float.parseFloat(args[3]));
-			sprite.setRotation(Float.parseFloat(args[4]));
-			sprite.setSize(Float.parseFloat(args[5]),Float.parseFloat(args[6]));
+			
+			try {
+				sprite.setX(Float.parseFloat(args[2]));
+				sprite.setY(Float.parseFloat(args[3]));
+				sprite.setRotation(Float.parseFloat(args[4]));
+				sprite.setSize(Float.parseFloat(args[5]),Float.parseFloat(args[6]));
+			}catch(NumberFormatException e) {
+				System.out.println("estoy vaciooooooooooooooooooooooooooo");
+			}
+			
 		}
 	}
 
