@@ -30,6 +30,7 @@ public abstract class Render {
 				try {
 					((ClientAnimation) renderList.get(i)).update();
 					if(((ClientAnimation) renderList.get(i)).end) {
+						
 						renderList.remove(i);
 					}
 				}catch(Exception e) {

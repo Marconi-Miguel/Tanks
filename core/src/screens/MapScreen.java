@@ -124,10 +124,6 @@ public class MapScreen implements Screen {
 		time += delta;
 		
 	//testing
-		if(time>1 && time < 2) {
-			System.out.println("creando explosion en: x 3 y 3");
-			ClientAnimation explosion = new ClientAnimation(3, 3);
-		}
 	}
 
 

@@ -23,13 +23,17 @@ public class ClientAnimation extends ClientSprite {
 		setAnimation();
 		setRegion(new Texture(Resources.EXPLOSION+1+".png"));
 		Render.addSprite(this);
+		super.setPosition(x, y);
 	}
 
 	public void update() {
+		
 		counter+= Config.delta;	
 		if(counter < (framesSize/10)) {
 			setRegion(getFrame());
-			//we define the explosion here cause the sensor would expand			
+			System.out.println(counter);
+			setSize(20/Config.PPM,20/Config.PPM);
+				
 		}else {
 			end = true;
 		}
