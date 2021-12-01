@@ -11,23 +11,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import elements.ButtonText;
 import input.Player;
 import scenes.MenuScene;
-import utilities.Config;
 import utilities.ClientRender;
+import utilities.Config;
 import utilities.Resources;
 
 public class MenuScreen implements Screen {
-	Sprite bg;
-	Sprite banner;
-	Sprite parchment;
-	Player localPlayer;
-	SpriteBatch b;
-	boolean connected;
-	ButtonText[] menuTexts = new ButtonText[2];
-	ButtonText connect;
-
-	float time;
-	MenuScene scene;
-	InputMultiplexer multiPlexer;
+	private Sprite bg;
+	private Sprite banner;
+	private Sprite parchment;
+	private Player localPlayer;
+	private SpriteBatch b;
+	private boolean connected;
+	private ButtonText[] menuTexts = new ButtonText[2];
+	private ButtonText connect;
+	private float time;
+	private MenuScene scene;
+	private InputMultiplexer multiPlexer;
+	private ButtonText warningText;
 
 	public MenuScreen() {
 
@@ -69,6 +69,9 @@ public class MenuScreen implements Screen {
 		connect.setText("Connect");
 		connect.setPosition(Config.WIDTH / 2 - connect.getWidth() / 2, Config.HEIGHT / 2 - parchment.getHeight() / 7f);
 
+		warningText = new ButtonText(Resources.FONT, 20, Color.WHITE, true);
+		warningText.setText("B&W INC");
+		warningText.setPosition(0, 20);
 	}
 
 	public float getHalfX(Sprite s) {
@@ -87,6 +90,7 @@ public class MenuScreen implements Screen {
 		banner.draw(b);
 		menuTexts[0].draw();
 		menuTexts[1].draw();
+		warningText.draw();
 		b.end();
 		if (connected) {
 			inputConnect();
@@ -113,26 +117,27 @@ public class MenuScreen implements Screen {
 		} else if (menuTexts[1].isPressed()) {
 			Gdx.app.exit();
 		} else if (connect.isPressed()) {
-			ClientRender.app.music.stop();
-			ClientRender.app.setScreen(new MapScreen(localPlayer));
+
 			// TODO: localPlayer.setUsername(scene.getUsername());
 			try {
-				String[] serverIp = scene.getIp().split(":");
-				String ip = serverIp[0];
-				int port = Integer.parseInt(serverIp[1]);
-				if (localPlayer.connect(ip, port) ) {
+				int port;
+				if (scene.getUsername().equals("")) {
+					port = 9995; // set to default port
+				} else {
+					port = scene.getUsername();
+				}
+				if (localPlayer.connect(scene.getIp(), port)) {
 					ClientRender.app.music.stop();
 					ClientRender.app.setScreen(new MapScreen(localPlayer));
 				} else {
+					warningText.setText("ERROR TRYING TO CONNECT TO THE SERVER");
+					warningText.setColor(Color.RED);
 					connect.reset();
 					// TODO: Mostrar que no se pudo conectar.
 				}
 			} catch (Exception e) {
-
 			}
-
 		}
-
 	}
 
 	private void mouseInputs() {

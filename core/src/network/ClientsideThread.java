@@ -42,7 +42,7 @@ public class ClientsideThread extends Thread {
 				socket.receive(packet);
 				processMessage(packet);
 			} catch (IOException e) {
-				e.printStackTrace();
+				
 			}
 		} while (!end);
 	}
@@ -107,7 +107,7 @@ public class ClientsideThread extends Thread {
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
-			e.printStackTrace();
+			
 		}
 	}
 
