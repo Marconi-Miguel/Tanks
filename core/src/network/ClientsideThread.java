@@ -94,9 +94,7 @@ public class ClientsideThread extends Thread {
 			handleEndMatch(args);
 
 		case NetworkCodes.RENDERSYNC:
-			for (int i = 0; i < ClientRender.renderList.size(); i++) { //Clear the list!
-				ClientRender.renderList.get(i).remove();
-			}
+			handleRenderSync();
 			break;
 		}
 	}
@@ -147,6 +145,17 @@ public class ClientsideThread extends Thread {
 		}else {
 			ClientRender.app.setScreen(new EndMatchScreen(false));
 		}
+	}
+	
+	private void handleRenderSync() {
+		String IDChain = "";
+		for (int i = 0; i < ClientRender.renderList.size(); i++) {
+			IDChain = IDChain+ClientRender.renderList.get(i).getID();
+			if(i != ClientRender.renderList.size() - 1) {
+				IDChain = IDChain+"-";
+			}
+		}
+		sendMessage(NetworkCodes.RENDERSYNC+IDChain);
 	}
 //////////// connection //////////////////////////////
 
