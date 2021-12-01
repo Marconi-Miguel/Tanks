@@ -2,6 +2,7 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -13,12 +14,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import elements.ClientAnimation;
+import elements.ButtonText;
 import input.Player;
 import scenes.HudScene;
 import tiledMapObjects.World2D;
-import utilities.Config;
 import utilities.ClientRender;
+import utilities.Config;
 import utilities.Resources;
 
 public class MapScreen implements Screen {
@@ -41,9 +42,9 @@ public class MapScreen implements Screen {
 	// hud
 	private HudScene hud;
 	// hull testing
-
 	private Player localPlayer;
-
+	//warning
+	
 	float time;
 
 	public MapScreen(Player player) {
@@ -85,6 +86,7 @@ public class MapScreen implements Screen {
 		b = ClientRender.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		hud = new HudScene();
+		
 	}
 
 	@Override
