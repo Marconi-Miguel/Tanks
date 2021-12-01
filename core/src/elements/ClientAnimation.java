@@ -26,7 +26,7 @@ public class ClientAnimation extends ClientsideSprite {
 	}
 
 	public void update() {
-		
+		System.out.println("estoy explotando");
 		counter+= Config.delta;	
 		if(counter < (framesSize/10)) {
 			setRegion(getFrame());

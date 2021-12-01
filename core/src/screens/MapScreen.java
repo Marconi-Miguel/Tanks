@@ -104,6 +104,7 @@ public class MapScreen implements Screen {
 
 		
 		ClientRender.render();
+		
 		// something happened when the hud was being drawd after the render.tank
 		hud.draw();
 	}
