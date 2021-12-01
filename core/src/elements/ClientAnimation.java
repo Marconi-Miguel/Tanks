@@ -1,12 +1,12 @@
 package elements;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 
 import utilities.Config;
-import utilities.ClientRender;
 import utilities.Resources;
 
 public class ClientAnimation extends ClientsideSprite {
@@ -45,11 +45,13 @@ public class ClientAnimation extends ClientsideSprite {
 		return animation.getKeyFrame(counter);
 	}
 	private void setAnimation() {
+		
 		frames = new Array<Sprite>();
 		for (int i = 0; i < framesSize; i++) {
 			//change the route when add another animation.
 			frames.add(new Sprite(new Texture(Resources.EXPLOSION+ (i+1)+".png")));
 		}
 		animation = new Animation<Sprite>(0.1f,frames);
+		
 	}
 }

@@ -87,8 +87,9 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.EXPLOSION:
-			System.out.println("clienteexplosion");
-			ClientRender.addAnimation(args);
+			handleExplosion(args);
+			
+			
 			break;
 		}
 	}
@@ -122,7 +123,14 @@ public class ClientsideThread extends Thread {
 		connected = false;
 		this.end = true;
 	}
-
+	private void handleExplosion(final String[] args) {
+		System.out.println("clienteexplosion");
+		Gdx.app.postRunnable(new Runnable() {
+            public void run() {
+            	ClientRender.addAnimation(args);
+            }
+        });
+	}
 //////////// connection //////////////////////////////
 
 	public boolean connect(String ip, int port) {
