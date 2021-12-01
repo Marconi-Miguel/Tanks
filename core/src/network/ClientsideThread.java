@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 
+import elements.ClientsideSprite;
 import input.Client;
 import input.Player;
 import utilities.ClientRender;
@@ -22,6 +23,7 @@ public class ClientsideThread extends Thread {
 	private int serverPort;
 	private Player localPlayer;
 	public ArrayList<Client> clientList;
+	private long lastResyncTick;
 
 	public ClientsideThread(Player localPlayer) {
 		this.localPlayer = localPlayer;
@@ -70,7 +72,7 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.PING: // Ping, are you there?
-			if(Integer.parseInt(args[0]) != ClientRender.renderList.size()){
+			if(Integer.parseInt(args[0]) != ClientRender.renderList.size() && Long.parseLong(args[1]) - localPlayer.firstTick > 100){
 				sendMessage(NetworkCodes.RENDERSYNC);
 			}
 			sendMessage(NetworkCodes.PONG); // PONG! I'm still here!
@@ -90,6 +92,10 @@ public class ClientsideThread extends Thread {
 		///
 		case NetworkCodes.EXPLOSION:
 			ClientRender.addAnimation(args);
+			break;
+		///
+		case NetworkCodes.RENDERSYNC: //Reset the renderList so we can resync!
+			handleResync(args);
 			break;
 		}
 	}
@@ -115,6 +121,7 @@ public class ClientsideThread extends Thread {
 
 	private void handleConnection(String[] args) {
 		System.out.println("[CLIENT] " + args[0]);
+		lastResyncTick = 0; //Since it's a new connection, the client has never had to re-sync.
 		connected = true;
 	}
 
@@ -122,6 +129,14 @@ public class ClientsideThread extends Thread {
 		System.out.println("[CLIENT] Disconnected: " + args[0]);
 		connected = false;
 		this.end = true;
+	}
+	
+	private void handleResync(String[] args) {
+		if(Long.parseLong(args[0])-lastResyncTick > 50) //If it's been more than 50 ticks since last resync request, allow this resync.
+		for (int i = 0; i < ClientRender.renderList.size(); i++) { 
+			ClientRender.renderList.get(i).remove();//Remove everything inside the render list.
+		}
+		lastResyncTick = Long.parseLong(args[0]);
 	}
 
 //////////// connection //////////////////////////////
