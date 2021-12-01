@@ -83,10 +83,11 @@ public abstract class ClientRender {
 		try {
 			float correctX, correctY;
 			System.out.println(args);
+			
 			correctX = Float.parseFloat(args[0]);
 			correctY = Float.parseFloat(args[1]);
 			correctX = (correctX == 0)?-0.5f:correctX;
-			correctY = (correctY == 0)?-0.5f:correctX;
+			correctY = (correctY == 0)?-0.5f:correctY;
 			ClientAnimation animation = new ClientAnimation(correctX, correctY);
 			renderAnimationList.add(animation);
 		} catch (NumberFormatException e) {
