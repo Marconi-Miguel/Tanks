@@ -35,7 +35,6 @@ public class MapScreen implements Screen {
 	private OrthogonalTiledMapRenderer renderer;
 	// world
 	private World world;
-	private Box2DDebugRenderer b2dr;
 	// we have to make the world2d and objects here
 	private World2D world2d;
 
@@ -73,8 +72,7 @@ public class MapScreen implements Screen {
 		ClientRender.world = new World(new Vector2(0, 0), true);
 		world = ClientRender.world;
 
-		// render which draws box2d Textures
-		b2dr = new Box2DDebugRenderer();
+		// render which draws box2d Texture
 		// then camera zoom
 		gamePort = new FitViewport(((64 * 15) / Config.PPM), ((64 * 15) / Config.PPM), camera);
 		// centers the camera to the new map
@@ -99,7 +97,6 @@ public class MapScreen implements Screen {
 		// loads map
 		renderer.render();
 		// loads box2dDebugLines hitboxes
-		b2dr.render(world, camera.combined);
 		// drawing
 
 		
