@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 
-import elements.ClientsideSprite;
 import input.Client;
 import input.Player;
+import screens.MenuScreen;
 import utilities.ClientRender;
 
 public class ClientsideThread extends Thread {
@@ -43,7 +43,7 @@ public class ClientsideThread extends Thread {
 				socket.receive(packet);
 				processMessage(packet);
 			} catch (IOException e) {
-				
+
 			}
 		} while (!end);
 	}
@@ -88,8 +88,10 @@ public class ClientsideThread extends Thread {
 		///
 		case NetworkCodes.EXPLOSION:
 			handleExplosion(args);
-			
-			
+			break;
+		case NetworkCodes.ENDMATCH:
+			handleEndMatch(args);
+
 			break;
 		}
 	}
@@ -107,7 +109,7 @@ public class ClientsideThread extends Thread {
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
-			
+
 		}
 	}
 
@@ -123,13 +125,21 @@ public class ClientsideThread extends Thread {
 		connected = false;
 		this.end = true;
 	}
+
 	private void handleExplosion(final String[] args) {
 		System.out.println("clienteexplosion");
 		Gdx.app.postRunnable(new Runnable() {
-            public void run() {
-            	ClientRender.addAnimation(args);
-            }
-        });
+			public void run() {
+				ClientRender.addAnimation(args);
+			}
+		});
+	}
+
+	private void handleEndMatch(String[] args) {
+		
+		if(clientList.get(0).username.equals(args[0])) {
+			ClientRender.app.setScreen(new MenuScreen());
+		}
 	}
 //////////// connection //////////////////////////////
 
@@ -165,7 +175,7 @@ public class ClientsideThread extends Thread {
 		}
 	}
 ////////sprite management
-	
+
 	private void addSprite(final String[] args) {
 		Gdx.app.postRunnable(new Runnable() {
 			public void run() {
@@ -173,7 +183,7 @@ public class ClientsideThread extends Thread {
 			}
 		});
 	}
-	
+
 	private void updateSprite(final String[] args) {
 		Gdx.app.postRunnable(new Runnable() {
 			public void run() {
