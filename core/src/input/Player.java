@@ -15,7 +15,6 @@ public class Player extends Client { // The player is a "local client"
 	public Player() {
 		this.username = "default";
 		PIM = new PlayerInputManager(this);
-
 		PNM = new PlayerNetworkManager(this);
 		localClient = PNM.client;
 	}
@@ -35,7 +34,7 @@ public class Player extends Client { // The player is a "local client"
 				return true;
 			} // Successful connection, thread exists.
 		} else {
-			return false; //todo true
+			return false; // todo true
 		} // thread already exists, so it IS connected.
 	}
 }
