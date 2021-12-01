@@ -16,7 +16,7 @@ public abstract class ClientRender {
 	public static SpriteBatch batch;
 	public static Tanks app;
 	public static World world;
-	public static Player player;
+	
 	public static ArrayList<ClientsideSprite> renderList = new ArrayList<ClientsideSprite>();
 	public static ArrayList<ClientAnimation> renderAnimationList = new ArrayList<ClientAnimation>();
 	public static int aux;
