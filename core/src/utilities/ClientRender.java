@@ -27,7 +27,7 @@ public abstract class ClientRender {
 		for (int i = 0; i < renderList.size(); i++) {
 			if (renderList.get(i) != null) {
 				renderList.get(i).draw(batch);
-				if(renderList.get(i).isRemoved()) {
+				if (renderList.get(i).isRemoved()) {
 					renderList.remove(i);
 				}
 			}
@@ -62,16 +62,19 @@ public abstract class ClientRender {
 	}
 
 	public static void addSprite(String[] args) {
-		ClientsideSprite sprite = new ClientsideSprite(args[0]);
-		sprite.setID(Integer.parseInt(args[1]));
-		sprite.setX(Float.parseFloat(args[2]));
-		sprite.setY(Float.parseFloat(args[3]));
-		sprite.setSize(Float.parseFloat(args[5]), Float.parseFloat(args[6]));
-		sprite.setOrigin(Float.parseFloat(args[7]), Float.parseFloat(args[8]));
-		sprite.setRotation(Float.parseFloat(args[4]));
+		try {
+			ClientsideSprite sprite = new ClientsideSprite(args[0]);
+			sprite.setID(Integer.parseInt(args[1]));
+			sprite.setX(Float.parseFloat(args[2]));
+			sprite.setY(Float.parseFloat(args[3]));
+			sprite.setSize(Float.parseFloat(args[5]), Float.parseFloat(args[6]));
+			sprite.setOrigin(Float.parseFloat(args[7]), Float.parseFloat(args[8]));
+			sprite.setRotation(Float.parseFloat(args[4]));
+			renderList.add(sprite);
+		} catch (Exception e) {
+
+		}
 		
-		
-		renderList.add(sprite);
 	}
 
 	public static void addAnimation(String[] args) {
@@ -101,7 +104,7 @@ public abstract class ClientRender {
 			} catch (NumberFormatException e) {
 			}
 
-		}else { //CONSIDER REMOVING THIS ELSE?
+		} else { // CONSIDER REMOVING THIS ELSE?
 			addSprite(args);
 		}
 	}
