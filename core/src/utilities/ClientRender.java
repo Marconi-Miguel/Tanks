@@ -28,6 +28,9 @@ public abstract class ClientRender {
 		for (int i = 0; i < renderList.size(); i++) {
 			if (renderList.get(i) != null) {
 				renderList.get(i).draw(batch);
+				if(renderList.get(i).isRemoved()) {
+					renderList.remove(i);
+				}
 			}
 		}
 		for (int i = 0; i < renderAnimationList.size(); i++) {
