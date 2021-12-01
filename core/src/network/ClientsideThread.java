@@ -23,7 +23,6 @@ public class ClientsideThread extends Thread {
 	private String serverIP;
 	private int serverPort;
 	private Player localPlayer;
-	public ArrayList<Client> clientList;
 
 	public ClientsideThread(Player localPlayer) {
 		this.localPlayer = localPlayer;
@@ -139,8 +138,7 @@ public class ClientsideThread extends Thread {
 	}
 
 	private void handleEndMatch(String[] args) {
-		
-		if(clientList.get(0).username.equals(args[0])) {
+		if(localPlayer.username.equals(args[0])) {
 			ClientRender.app.setScreen(new EndMatchScreen(true));
 		}else {
 			ClientRender.app.setScreen(new EndMatchScreen(false));
