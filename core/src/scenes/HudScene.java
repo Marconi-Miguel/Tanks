@@ -24,6 +24,7 @@ public class HudScene {
 	private Label score;
 	private ProgressBar hpBar;
 	private ProgressBar bulletBar;
+	private float timer;
 
 	public HudScene() {
 		camara = new OrthographicCamera();
@@ -41,28 +42,40 @@ public class HudScene {
 		table.add(score).expandX().align(Align.topLeft);
 		table.row();
 
-		hpBar = new ProgressBar(-5.0f, 100.0f, 1.0f, false, skin, "BulletBar");
-		hpBar.setValue(100.0f);
+		bulletBar = new ProgressBar(-5.0f, 100.0f, 1.0f, false, skin, "BulletBar");
+		bulletBar.setValue(100.0f);
 		
 		table.add(hpBar).padBottom(16.0f).expandY().align(Align.bottom).maxWidth(70.0f);
 
 		table.row();
-		bulletBar = new ProgressBar(0.0f, 100.0f, 1.0f, false, skin, "hpBar");
-		bulletBar.setValue(100.0f);
+		hpBar = new ProgressBar(0.0f, 100.0f, 1.0f, false, skin, "hpBar");
+		hpBar.setValue(100.0f);
 		
 		table.add(bulletBar).expandX().align(Align.bottom);
 		stage.addActor(table);
 	}
 
 	public void draw() {
+		timer += Config.delta;
 		ClientRender.batch.begin();
 		try {
 			stage.act();
 		}catch(Exception e){
 			
 		}
-	
+		cdBullet();
 		stage.draw();
 		ClientRender.batch.end();
+	}
+	public void changeLife(float value) {
+		hpBar.setValue(value);
+	}
+	public void cdBullet() {
+		if(bulletBar.getValue()<100) {
+			bulletBar.setValue(bulletBar.getValue()+1);
+		}
+	}
+	public void cannonFired() {
+		bulletBar.setValue(0);
 	}
 }

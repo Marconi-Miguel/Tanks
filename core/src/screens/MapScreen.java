@@ -86,7 +86,7 @@ public class MapScreen implements Screen {
 		b = ClientRender.batch;
 		gamePort.getCamera().position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		hud = new HudScene();
-		
+		hud.cannonFired();
 	}
 
 	@Override
@@ -102,11 +102,7 @@ public class MapScreen implements Screen {
 		b2dr.render(world, camera.combined);
 		// drawing
 
-		//if (tank.hull.getHp() > 0) {
-			//tank.Render(); TODO: Deletear hull en updatelist
-		//} else if (tank.hull.b2body != null) {
-		//	tank.destroy();
-		//}
+		
 		ClientRender.render();
 		// something happened when the hud was being drawd after the render.tank
 		hud.draw();

@@ -68,7 +68,7 @@ public class MenuScreen implements Screen {
 		connect = new ButtonText(Resources.FONT, 12, Color.GRAY, true);
 		connect.setText("Connect");
 		connect.setPosition(Config.WIDTH / 2 - connect.getWidth() / 2, Config.HEIGHT / 2 - parchment.getHeight() / 7f);
-		
+
 		warningText = new ButtonText(Resources.FONT, 20, Color.WHITE, true);
 		warningText.setText("B&W INC");
 		warningText.setPosition(0, 20);
@@ -117,16 +117,16 @@ public class MenuScreen implements Screen {
 		} else if (menuTexts[1].isPressed()) {
 			Gdx.app.exit();
 		} else if (connect.isPressed()) {
-			
+
 			// TODO: localPlayer.setUsername(scene.getUsername());
 			try {
 				int port;
-				if(scene.getPort().equals("")) {
-					port = 9995; //set to default port
-				}else {
+				if (scene.getPort().equals("")) {
+					port = 9995; // set to default port
+				} else {
 					port = Integer.parseInt(scene.getPort());
 				}
-				if (localPlayer.connect(scene.getIp(), port) ) {
+				if (localPlayer.connect(scene.getIp(), port)) {
 					ClientRender.app.music.stop();
 					ClientRender.app.setScreen(new MapScreen(localPlayer));
 				} else {
@@ -136,13 +136,10 @@ public class MenuScreen implements Screen {
 					// TODO: Mostrar que no se pudo conectar.
 				}
 			} catch (Exception e) {
-
 			}
-
 		}
-
 	}
-
+	
 	private void mouseInputs() {
 		hoverButtons();
 
