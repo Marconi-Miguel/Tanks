@@ -87,6 +87,7 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.EXPLOSION:
+			System.out.println("clienteexplosion");
 			ClientRender.addAnimation(args);
 			break;
 		}
