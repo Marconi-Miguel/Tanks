@@ -24,7 +24,7 @@ public class Tanks extends Game {
 		music = manager.get(Resources.MENUTHEME, Music.class);
 		music.setLooping(true);
 		music.play();		
-		music.setVolume(0.1f);
+		music.setVolume(7f);
 		this.setScreen(new MenuScreen());
 
 	}

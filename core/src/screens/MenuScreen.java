@@ -121,7 +121,7 @@ public class MenuScreen implements Screen {
 				localPlayer.setUsername(scene.getUsername());
 				String[] serverIp = scene.getIp().split(":");
 				if (localPlayer.connect(serverIp[0], Integer.parseInt(serverIp[1]))) {
-					ClientRender.app.music.stop();
+					ClientRender.app.music.setVolume(3);
 					ClientRender.app.setScreen(new MapScreen(localPlayer));
 				} else {
 					warningText.setText("ERROR TRYING TO CONNECT TO THE SERVER");
