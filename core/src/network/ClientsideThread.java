@@ -52,10 +52,10 @@ public class ClientsideThread extends Thread {
 	private void processMessage(DatagramPacket packet) {
 		String msg = new String(packet.getData()).trim();
 		String networkCode = msg.substring(0, NetworkCodes.CODELENGTH); // The first part of the message is the network
-																		// code.
-		String argumentString = msg.substring(NetworkCodes.CODELENGTH, msg.length()); // Everything after the network
+																		// // code.
+		String argumentString = msg.substring(NetworkCodes.CODELENGTH, msg.length()); // Everything after the network //
 																						// code are the arguments (args)
-																						// of the network message.
+																						// // of the network message.
 		String[] args = argumentString.split("-");
 		if (!networkCode.equals(NetworkCodes.PING) && !networkCode.equals(NetworkCodes.UPDATESPRITE)) {
 			System.out.println(msg);
@@ -71,7 +71,7 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.PING: // Ping, are you there?
-			sendMessage(NetworkCodes.PONG+ClientRender.renderList.size()); // PONG! I'm still here!
+			sendMessage(NetworkCodes.PONG + ClientRender.renderList.size()); // PONG! I'm still here!
 			break;
 		///
 		case NetworkCodes.NEWSPRITE:
@@ -90,7 +90,7 @@ public class ClientsideThread extends Thread {
 			handleExplosion(args);
 			break;
 		case NetworkCodes.ENDMATCH:
-			handleEndMatch(args);
+			handleEndMatch(args); //WIP
 
 		case NetworkCodes.RENDERSYNC:
 			handleRenderSync();
@@ -138,22 +138,22 @@ public class ClientsideThread extends Thread {
 	}
 
 	private void handleEndMatch(String[] args) {
-		if(localPlayer.username.equals(args[0])) {
+		if (localPlayer.username.equals(args[0])) {
 			ClientRender.app.setScreen(new EndMatchScreen(true));
-		}else {
+		} else {
 			ClientRender.app.setScreen(new EndMatchScreen(false));
 		}
 	}
-	
+
 	private void handleRenderSync() {
 		String IDChain = "";
 		for (int i = 0; i < ClientRender.renderList.size(); i++) {
-			IDChain = IDChain+ClientRender.renderList.get(i).getID();
-			if(i != ClientRender.renderList.size() - 1) {
-				IDChain = IDChain+"-";
+			IDChain = IDChain + ClientRender.renderList.get(i).getID();
+			if (i != ClientRender.renderList.size() - 1) {
+				IDChain = IDChain + "-";
 			}
 		}
-		sendMessage(NetworkCodes.RENDERSYNC+IDChain);
+		sendMessage(NetworkCodes.RENDERSYNC + IDChain);
 	}
 //////////// connection //////////////////////////////
 

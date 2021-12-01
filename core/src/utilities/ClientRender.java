@@ -96,7 +96,6 @@ public abstract class ClientRender {
 		if (sprite != null) {
 
 			try {
-//				System.out.println(args[0]);
 				sprite.setX(Float.parseFloat(args[2]));
 				sprite.setY(Float.parseFloat(args[3]));
 				if (!args[4].equals("")) {
@@ -105,7 +104,7 @@ public abstract class ClientRender {
 			} catch (NumberFormatException e) {
 			}
 
-		} else { // CONSIDER REMOVING THIS ELSE?
+		} else {//Add missing sprites.
 			addSprite(args);
 		}
 	}

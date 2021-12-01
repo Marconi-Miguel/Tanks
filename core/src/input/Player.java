@@ -34,7 +34,7 @@ public class Player extends Client { // The player is a "local client"
 				return true;
 			} // Successful connection, thread exists.
 		} else {
-			return false; // todo true
+			return true;
 		} // thread already exists, so it IS connected.
 	}
 }
