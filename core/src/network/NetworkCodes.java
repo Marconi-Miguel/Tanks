@@ -22,7 +22,7 @@ public abstract class NetworkCodes {
 	public static final String REMOVESPRITE  = "NORIT-"; 
 	public static final String EXPLOSION = "BOOOM-";
 	public static final String RENDERSYNC  ="RSYNC-";
-	public static final String ENDMATCH  ="ENDMT-";
+	public static final String ENDMATCH = "ENDMT-";
 
 
 }

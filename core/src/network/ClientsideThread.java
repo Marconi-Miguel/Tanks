@@ -71,7 +71,7 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.PING: // Ping, are you there?
-			sendMessage(NetworkCodes.PONG); // PONG! I'm still here!
+			sendMessage(NetworkCodes.PONG+ClientRender.renderList.size()); // PONG! I'm still here!
 			break;
 		///
 		case NetworkCodes.NEWSPRITE:
@@ -92,6 +92,10 @@ public class ClientsideThread extends Thread {
 		case NetworkCodes.ENDMATCH:
 			handleEndMatch(args);
 
+		case NetworkCodes.RENDERSYNC:
+			for (int i = 0; i < ClientRender.renderList.size(); i++) { //Clear the list!
+				ClientRender.renderList.get(i).remove();
+			}
 			break;
 		}
 	}
