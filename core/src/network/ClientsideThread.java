@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 
 import input.Client;
 import input.Player;
+import screens.EndMatchScreen;
 import screens.MenuScreen;
 import utilities.ClientRender;
 
@@ -142,7 +143,9 @@ public class ClientsideThread extends Thread {
 	private void handleEndMatch(String[] args) {
 		
 		if(clientList.get(0).username.equals(args[0])) {
-			ClientRender.app.setScreen(new MenuScreen());
+			ClientRender.app.setScreen(new EndMatchScreen(true));
+		}else {
+			ClientRender.app.setScreen(new EndMatchScreen(false));
 		}
 	}
 //////////// connection //////////////////////////////
