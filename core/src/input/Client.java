@@ -6,7 +6,6 @@ import java.util.Map;
 public class Client {
 
 	public String username;
-	public long firstTick;
 	public Map<InputKeys, Boolean> inputs = new HashMap<InputKeys, Boolean>();
 
 	public Client() {
