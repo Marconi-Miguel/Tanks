@@ -16,7 +16,7 @@ public abstract class ClientRender {
 	public static SpriteBatch batch;
 	public static Tanks app;
 	public static World world;
-	
+
 	public static ArrayList<ClientsideSprite> renderList = new ArrayList<ClientsideSprite>();
 	public static ArrayList<ClientAnimation> renderAnimationList = new ArrayList<ClientAnimation>();
 	public static int aux;
@@ -75,12 +75,23 @@ public abstract class ClientRender {
 		} catch (Exception e) {
 
 		}
-		
+
 	}
 
 	public static void addAnimation(String[] args) {
-		ClientAnimation animation = new ClientAnimation(Float.parseFloat(args[0]), Float.parseFloat(args[1]));
-		renderAnimationList.add(animation);
+
+		try {
+			float correctX, correctY;
+			System.out.println(args);
+			correctX = Float.parseFloat(args[0]);
+			correctY = Float.parseFloat(args[1]);
+			correctX = (correctX == 0)?-0.5f:correctX;
+			correctY = (correctY == 0)?-0.5f:correctX;
+			ClientAnimation animation = new ClientAnimation(correctX, correctY);
+			renderAnimationList.add(animation);
+		} catch (NumberFormatException e) {
+
+		}
 
 	}
 

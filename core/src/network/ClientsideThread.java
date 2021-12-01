@@ -87,6 +87,7 @@ public class ClientsideThread extends Thread {
 			break;
 		///
 		case NetworkCodes.EXPLOSION:
+			System.out.println(" x: " + args[0]);
 			handleExplosion(args);
 			break;
 		case NetworkCodes.ENDMATCH:
@@ -129,7 +130,7 @@ public class ClientsideThread extends Thread {
 	}
 
 	private void handleExplosion(final String[] args) {
-		System.out.println("clienteexplosion");
+		
 		Gdx.app.postRunnable(new Runnable() {
 			public void run() {
 				ClientRender.addAnimation(args);
