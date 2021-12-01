@@ -87,12 +87,15 @@ public abstract class ClientRender {
 		if (sprite != null) {
 
 			try {
+				System.out.println(args[0]);
+				System.out.println(args[4]);
 				sprite.setX(Float.parseFloat(args[2]));
 				sprite.setY(Float.parseFloat(args[3]));
-				sprite.setRotation(Float.parseFloat(args[4]));
 				sprite.setSize(Float.parseFloat(args[5]), Float.parseFloat(args[6]));
 				if (Float.parseFloat(args[4]) != 0) {
+
 					sprite.setOrigin(Float.parseFloat(args[7]), Float.parseFloat(args[8]));
+					sprite.setRotation(Float.parseFloat(args[4]));
 				}
 			} catch (NumberFormatException e) {
 			}
