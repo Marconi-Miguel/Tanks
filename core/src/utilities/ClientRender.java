@@ -64,8 +64,11 @@ public abstract class ClientRender {
 		sprite.setID(Integer.parseInt(args[1]));
 		sprite.setX(Float.parseFloat(args[2]));
 		sprite.setY(Float.parseFloat(args[3]));
-		sprite.setRotation(Float.parseFloat(args[4]));
 		sprite.setSize(Float.parseFloat(args[5]), Float.parseFloat(args[6]));
+		sprite.setOrigin(Float.parseFloat(args[7]), Float.parseFloat(args[8]));
+		sprite.setRotation(Float.parseFloat(args[4]));
+		
+		
 		renderList.add(sprite);
 	}
 
@@ -87,14 +90,10 @@ public abstract class ClientRender {
 		if (sprite != null) {
 
 			try {
-				System.out.println(args[0]);
-				System.out.println(args[4]);
+//				System.out.println(args[0]);
 				sprite.setX(Float.parseFloat(args[2]));
 				sprite.setY(Float.parseFloat(args[3]));
-				sprite.setSize(Float.parseFloat(args[5]), Float.parseFloat(args[6]));
-				if (Float.parseFloat(args[4]) != 0) {
-
-					sprite.setOrigin(Float.parseFloat(args[7]), Float.parseFloat(args[8]));
+				if (!args[4].equals("")) {
 					sprite.setRotation(Float.parseFloat(args[4]));
 				}
 			} catch (NumberFormatException e) {
