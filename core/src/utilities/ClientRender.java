@@ -82,7 +82,7 @@ public abstract class ClientRender {
 
 		try {
 			float correctX, correctY;
-			System.out.println(args);
+			
 			
 			correctX = Float.parseFloat(args[0]);
 			correctY = Float.parseFloat(args[1]);
@@ -108,7 +108,6 @@ public abstract class ClientRender {
 		if (sprite != null) {
 
 			try {
-//				System.out.println(args[0]);
 				sprite.setX(Float.parseFloat(args[2]));
 				sprite.setY(Float.parseFloat(args[3]));
 				if (!args[4].equals("")) {
