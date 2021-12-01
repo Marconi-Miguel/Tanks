@@ -94,7 +94,6 @@ public abstract class ClientRender {
 				sprite.setRotation(Float.parseFloat(args[4]));
 				sprite.setSize(Float.parseFloat(args[5]),Float.parseFloat(args[6]));
 			}catch(NumberFormatException e) {
-				System.out.println("estoy vaciooooooooooooooooooooooooooo");
 			}
 			
 		}
