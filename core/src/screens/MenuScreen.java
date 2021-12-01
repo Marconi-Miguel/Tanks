@@ -117,12 +117,10 @@ public class MenuScreen implements Screen {
 		} else if (menuTexts[1].isPressed()) {
 			Gdx.app.exit();
 		} else if (connect.isPressed()) {
-
-			// TODO: localPlayer.setUsername(scene.getUsername());
 			try {
+				localPlayer.setUsername(scene.getUsername());
 				String[] serverIp = scene.getIp().split(":");
 				if (localPlayer.connect(serverIp[0], Integer.parseInt(serverIp[1]))) {
-					localPlayer.setUsername(scene.getUsername());
 					ClientRender.app.music.stop();
 					ClientRender.app.setScreen(new MapScreen(localPlayer));
 				} else {
