@@ -19,6 +19,7 @@ public abstract class ClientRender {
 	public static Player player;
 	public static ArrayList<ClientsideSprite> renderList = new ArrayList<ClientsideSprite>();
 	public static ArrayList<ClientAnimation> renderAnimationList = new ArrayList<ClientAnimation>();
+	public static int aux;
 
 	int renderID;
 
