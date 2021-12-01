@@ -42,7 +42,7 @@ public class ButtonText {
 	public void update(float x, float y) {
 		if(inCoords(x,y)) {
 			pressed = true;
-
+			
 			
 		}else {
 			pressed = false;
@@ -94,7 +94,9 @@ public class ButtonText {
 	}
 
 	public void updateHover(float x, float y) {
+		
 		if(inCoords(x, y)) {
+			
 			setColor(Color.RED);
 			hovered = true;
 		}else {
