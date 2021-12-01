@@ -117,17 +117,13 @@ public class MenuScreen implements Screen {
 			ClientRender.app.setScreen(new MapScreen(localPlayer));
 			// TODO: localPlayer.setUsername(scene.getUsername());
 			try {
-				int port;
-				if(scene.getPort().equals("")) {
-					port = 9995; //set to default port
-				}else {
-					port = Integer.parseInt(scene.getPort());
-				}
-				if (localPlayer.connect(scene.getIp(), port) ) {
+				String[] serverIp = scene.getIp().split(":");
+				String ip = serverIp[0];
+				int port = Integer.parseInt(serverIp[1]);
+				if (localPlayer.connect(ip, port) ) {
 					ClientRender.app.music.stop();
 					ClientRender.app.setScreen(new MapScreen(localPlayer));
 				} else {
-					System.out.println("else");
 					connect.reset();
 					// TODO: Mostrar que no se pudo conectar.
 				}
