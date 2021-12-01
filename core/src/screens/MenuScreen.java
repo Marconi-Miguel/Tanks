@@ -121,10 +121,10 @@ public class MenuScreen implements Screen {
 			// TODO: localPlayer.setUsername(scene.getUsername());
 			try {
 				int port;
-				if (scene.getPort().equals("")) {
+				if (scene.getUsername().equals("")) {
 					port = 9995; // set to default port
 				} else {
-					port = Integer.parseInt(scene.getPort());
+					port = scene.getUsername();
 				}
 				if (localPlayer.connect(scene.getIp(), port)) {
 					ClientRender.app.music.stop();

@@ -52,13 +52,11 @@ public class MenuScene {
 		
 		table.row();
 		
-		port = new Label("port", skin);
+		port = new Label("username", skin);
 		port.setColor(Color.WHITE);
 		table.add(port).expandX().align(Align.center).padTop(-40);
 		
 		table.row();
-		
-		port = new Label("port", skin);
 		portTxtFld = new TextField("", skin);
 		table.add(portTxtFld).expandX().align(Align.center).padTop(-40).minWidth(100).maxHeight(30);
 
@@ -74,7 +72,7 @@ public class MenuScene {
 	public String getIp() {
 		return ipTxtFld.getText();
 	}
-	public String getPort() {
+	public String getUsername() {
 		return portTxtFld.getText();
 	}
 }
